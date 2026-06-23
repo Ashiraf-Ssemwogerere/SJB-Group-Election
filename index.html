@@ -13,7 +13,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 
   <style>
-    /* ── reset & base ── */
     :root {
       --navy: #1B2A4A;
       --gold: #C9972B;
@@ -23,7 +22,6 @@
       --white: #FFFFFF;
       --card-shadow: 0 8px 32px rgba(27, 42, 74, .13);
     }
-
     *, *::before, *::after { box-sizing: border-box; }
 
     body {
@@ -35,7 +33,6 @@
 
     .screen { display: none; animation: fadeUp .3s ease; }
     .screen.active { display: block; }
-
     @keyframes fadeUp {
       0% { opacity: 0; transform: translateY(12px); }
       100% { opacity: 1; transform: translateY(0); }
@@ -165,11 +162,6 @@
       box-shadow: 0 0 0 3px rgba(201, 151, 43, .2);
     }
 
-    .text-gold { color: var(--gold); }
-    footer a { color: var(--slate); text-decoration: none; }
-    footer a:hover { color: var(--navy); text-decoration: underline; }
-
-    /* demo note */
     .demo-note {
       background: #fff3cd;
       border-left: 4px solid #ffc107;
@@ -177,6 +169,9 @@
       border-radius: 6px;
       font-size: 0.9rem;
     }
+
+    footer a { color: var(--slate); text-decoration: none; }
+    footer a:hover { color: var(--navy); text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -209,16 +204,15 @@
 <div class="container pb-5">
   <div class="main-card">
 
-    <!-- ─── SCREEN 1 : REGISTER (LOGIN) ─── -->
+    <!-- ─── SCREEN 1 : REGISTER ─── -->
     <div class="screen active" id="screen-register">
       <h3 class="section-title">Voter Registration</h3>
       <p class="text-muted">Enter your details to receive a verification code.</p>
 
-      <!-- Demo notice -->
       <div class="demo-note mb-3">
         <i class="bi bi-info-circle-fill me-2"></i>
-        <strong>Demo mode:</strong> The OTP will be shown in an alert and the browser console.
-        To send real emails, configure EmailJS (see code comments).
+        <strong>Demo note:</strong> OTP will be shown in an alert if EmailJS isn't set up.
+        Votes are saved to your Google Sheet and also locally as a backup.
       </div>
 
       <div class="mb-3">
@@ -241,7 +235,7 @@
       </button>
     </div>
 
-    <!-- ─── SCREEN 2 : VERIFY OTP ─── -->
+    <!-- ─── SCREEN 2 : VERIFY ─── -->
     <div class="screen" id="screen-verify">
       <h3 class="section-title">Verify Your Identity</h3>
       <p class="text-muted">Enter the 6-digit code sent to <strong id="otp-email-display"></strong></p>
@@ -284,6 +278,9 @@
       <div class="alert alert-success mt-4">
         <i class="bi bi-check-circle-fill me-2"></i>A confirmation email has been sent to you.
       </div>
+
+      <!-- Show save status -->
+      <div class="mt-3 text-muted small" id="save-status"></div>
     </div>
 
   </div>
@@ -296,22 +293,22 @@
   <a href="https://wa.me/256701422100" target="_blank">WhatsApp +256 701 422 100</a>
 </footer>
 
-<!-- ═══ EmailJS library ═══ -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-</script>
+<!-- EmailJS library -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script>
-  // ─── CONFIG ──────────────────────────────────────────────
-  // For real email sending, replace these with your EmailJS credentials:
+  // ─── CONFIGURATION ────────────────────────────────────────────
+  // 1. Your Google Apps Script endpoint (updated with your new URL)
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbyJIcebS_-YYrcVONSj0R5vAi1yBNF_08CmMh4tOEL5qy2K-roMCnGvhwYrj4N0Q3tf/exec";
+
+  // 2. EmailJS – replace with your own credentials to send real OTP emails
   const EMAILJS_CONFIG = {
-    serviceID: 'service_xxxxxxxx',   // your EmailJS service ID
-    templateID: 'template_xxxxxxxx', // your EmailJS template ID
-    publicKey: 'xxxxxxxxxxxxxxxx'    // your EmailJS public key
+    serviceID: 'service_xxxxxxxx',   // e.g., 'service_abc123'
+    templateID: 'template_xxxxxxxx', // e.g., 'template_xyz789'
+    publicKey: 'xxxxxxxxxxxxxxxx'    // your public key
   };
-  // If you don't want to use EmailJS, leave them empty and the OTP will be shown in an alert.
 
-  const GAS_URL = "https://script.google.com/macros/s/AKfycbztjch3SjhR07yG-D8zmSh5DmTmBtAFDC9DjQ8eHW1PIm-3bZpDAof9uOLxJcSMo5vy/exec"; // optional backup
-
+  // 3. Candidate list
   const CANDIDATES = [
     { id: 1, name: "Buyondo Deus", initials: "BD" },
     { id: 2, name: "Magembe Michael", initials: "MM" },
@@ -320,9 +317,10 @@
     { id: 5, name: "Ssemwogerere Ashiraf", initials: "SA" }
   ];
 
+  // ─── STATE ──────────────────────────────────────────────────
   let voterData = {}, generatedOTP = "", selectedId = null;
 
-  // ─── INIT ──────────────────────────────────────────────
+  // ─── INIT ──────────────────────────────────────────────────
   (function init() {
     // Populate year dropdown
     const yearSelect = document.getElementById('reg-year');
@@ -419,7 +417,7 @@
     return Array.from(document.querySelectorAll('#otp-boxes input')).map(i => i.value).join('');
   }
 
-  // ─── STEP 1 : SEND OTP (with EmailJS + fallback) ──────
+  // ─── STEP 1 : SEND OTP ──────────────────────────────────
   async function sendOTP() {
     const name = document.getElementById('reg-name').value.trim();
     const year = document.getElementById('reg-year').value;
@@ -433,14 +431,13 @@
       return showError('reg-error', 'Please enter a valid email address.');
     }
 
-    // Generate OTP
     generatedOTP = String(Math.floor(100000 + Math.random() * 900000));
     voterData = { name, year, email };
 
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Sending...';
 
-    // Attempt to send via EmailJS if configured
+    // Attempt EmailJS if configured
     let emailSent = false;
     if (EMAILJS_CONFIG.serviceID && EMAILJS_CONFIG.publicKey && EMAILJS_CONFIG.templateID) {
       try {
@@ -458,21 +455,20 @@
         );
         if (response.status === 200) {
           emailSent = true;
-          console.log('✅ OTP email sent successfully');
+          console.log('✅ OTP email sent via EmailJS');
         }
       } catch (err) {
         console.warn('⚠️ EmailJS send failed:', err);
-        // fall through to fallback
       }
     }
 
-    // If EmailJS not configured or failed, show alert with OTP (demo mode)
+    // Fallback: show OTP in alert
     if (!emailSent) {
-      alert(`📧 Demo mode: Your OTP is ${generatedOTP}\n\nIn production, this would be sent to ${email}`);
+      alert(`📧 Demo mode: Your OTP is ${generatedOTP}\n\n(If you've configured EmailJS, this would be sent to ${email})`);
       console.log('🔑 OTP for', email, ':', generatedOTP);
     }
 
-    // Also attempt to store via GAS (optional, for backend recording)
+    // (Optional) call GAS to store OTP request – not required for voting
     try {
       await fetch(GAS_URL, {
         method: 'POST',
@@ -481,7 +477,6 @@
       });
     } catch (e) { /* ignore */ }
 
-    // Proceed to verify screen
     document.getElementById('otp-email-display').textContent = email;
     btn.disabled = false;
     btn.innerHTML = '<i class="bi bi-envelope-paper me-2"></i>Send Verification Code';
@@ -537,19 +532,52 @@
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Recording...';
 
+    // 1. Save to Google Sheet via GAS
+    let sheetSaved = false;
     try {
-      await fetch(GAS_URL, {
+      const response = await fetch(GAS_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-    } catch (e) { /* ignore */ }
+      const data = await response.json();
+      if (data.status === 'success') {
+        sheetSaved = true;
+        console.log('✅ Vote saved to Google Sheet');
+      } else {
+        console.warn('⚠️ GAS returned error:', data.message);
+      }
+    } catch (e) {
+      console.warn('⚠️ Could not reach GAS endpoint:', e);
+    }
 
-    // Show success
+    // 2. Always save to localStorage as a backup
+    let localSaved = false;
+    try {
+      const votes = JSON.parse(localStorage.getItem('sjb_votes') || '[]');
+      votes.push(payload);
+      localStorage.setItem('sjb_votes', JSON.stringify(votes));
+      localSaved = true;
+      console.log('✅ Vote saved to localStorage (backup)');
+    } catch (e) {
+      console.warn('⚠️ Could not save to localStorage:', e);
+    }
+
+    // Show success screen with details
     document.getElementById('rec-name').textContent = voterData.name;
     document.getElementById('rec-candidate').textContent = candidate.name;
     document.getElementById('rec-time').textContent = timestamp;
     document.getElementById('rec-ref').textContent = ref;
+
+    // Show save status
+    const statusEl = document.getElementById('save-status');
+    if (sheetSaved) {
+      statusEl.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> Vote saved to Google Sheet.';
+    } else if (localSaved) {
+      statusEl.innerHTML = '<i class="bi bi-exclamation-triangle-fill text-warning"></i> Could not reach Google Sheet, but vote is saved locally (browser storage).';
+    } else {
+      statusEl.innerHTML = '<i class="bi bi-x-circle-fill text-danger"></i> Vote could not be saved. Please try again.';
+    }
 
     btn.disabled = false;
     btn.innerHTML = '<i class="bi bi-check2-circle me-2"></i>Cast My Vote';
@@ -580,6 +608,7 @@
   });
 </script>
 
+<!-- Bootstrap bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
   </html>
