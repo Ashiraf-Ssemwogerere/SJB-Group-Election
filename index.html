@@ -211,8 +211,8 @@
 
       <div class="demo-note mb-3">
         <i class="bi bi-info-circle-fill me-2"></i>
-        <strong>Demo note:</strong> OTP will be shown in an alert if EmailJS isn't set up.
-        Votes are saved to your Google Sheet and also locally as a backup.
+        <strong>EmailJS configured:</strong> OTP codes will be sent to your email address.
+        Votes are saved to Google Sheet and locally as backup.
       </div>
 
       <div class="mb-3">
@@ -279,7 +279,6 @@
         <i class="bi bi-check-circle-fill me-2"></i>A confirmation email has been sent to you.
       </div>
 
-      <!-- Show save status -->
       <div class="mt-3 text-muted small" id="save-status"></div>
     </div>
 
@@ -298,14 +297,14 @@
 
 <script>
   // ─── CONFIGURATION ────────────────────────────────────────────
-  // 1. Your Google Apps Script endpoint (updated with your new URL)
+  // 1. Google Apps Script endpoint (your new URL)
   const GAS_URL = "https://script.google.com/macros/s/AKfycbyJIcebS_-YYrcVONSj0R5vAi1yBNF_08CmMh4tOEL5qy2K-roMCnGvhwYrj4N0Q3tf/exec";
 
-  // 2. EmailJS – replace with your own credentials to send real OTP emails
+  // 2. EmailJS credentials (now configured with your provided details)
   const EMAILJS_CONFIG = {
-    serviceID: 'service_xxxxxxxx',   // e.g., 'service_abc123'
-    templateID: 'template_xxxxxxxx', // e.g., 'template_xyz789'
-    publicKey: 'xxxxxxxxxxxxxxxx'    // your public key
+    serviceID: 'service_1doaoq6',
+    templateID: 'template_wlm4jaf',   // corrected from "template _wlm4jaf"
+    publicKey: 'QaU8bLtIvM0mzZpzY'
   };
 
   // 3. Candidate list
@@ -437,38 +436,37 @@
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Sending...';
 
-    // Attempt EmailJS if configured
+    // Attempt EmailJS (now configured)
     let emailSent = false;
-    if (EMAILJS_CONFIG.serviceID && EMAILJS_CONFIG.publicKey && EMAILJS_CONFIG.templateID) {
-      try {
-        await emailjs.init(EMAILJS_CONFIG.publicKey);
-        const templateParams = {
-          to_email: email,
-          to_name: name,
-          otp: generatedOTP,
-          subject: 'Your OTP for St. Josephine Bakhita Election'
-        };
-        const response = await emailjs.send(
-          EMAILJS_CONFIG.serviceID,
-          EMAILJS_CONFIG.templateID,
-          templateParams
-        );
-        if (response.status === 200) {
-          emailSent = true;
-          console.log('✅ OTP email sent via EmailJS');
-        }
-      } catch (err) {
-        console.warn('⚠️ EmailJS send failed:', err);
+    try {
+      await emailjs.init(EMAILJS_CONFIG.publicKey);
+      const templateParams = {
+        to_email: email,
+        to_name: name,
+        otp: generatedOTP,
+        subject: 'Your OTP for St. Josephine Bakhita Election'
+      };
+      const response = await emailjs.send(
+        EMAILJS_CONFIG.serviceID,
+        EMAILJS_CONFIG.templateID,
+        templateParams
+      );
+      if (response.status === 200) {
+        emailSent = true;
+        console.log('✅ OTP email sent via EmailJS');
       }
+    } catch (err) {
+      console.warn('⚠️ EmailJS send failed:', err);
+      // Fallback: show OTP in alert if email fails
+      alert(`⚠️ OTP could not be sent via email. Your OTP is: ${generatedOTP}\nPlease check your EmailJS configuration.`);
     }
 
-    // Fallback: show OTP in alert
-    if (!emailSent) {
-      alert(`📧 Demo mode: Your OTP is ${generatedOTP}\n\n(If you've configured EmailJS, this would be sent to ${email})`);
-      console.log('🔑 OTP for', email, ':', generatedOTP);
+    if (emailSent) {
+      // If email sent, no alert needed; the user will check their inbox.
+      console.log(`📧 OTP sent to ${email}`);
     }
 
-    // (Optional) call GAS to store OTP request – not required for voting
+    // (Optional) call GAS to store OTP request
     try {
       await fetch(GAS_URL, {
         method: 'POST',
