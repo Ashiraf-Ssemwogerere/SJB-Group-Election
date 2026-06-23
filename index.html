@@ -4,12 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>St. Josephine Bakhita – OBs & OGs Leadership Election</title>
-  <!-- Bootstrap, Icons, Fonts same as before – I'll keep them concise -->
+
+  <!-- Bootstrap 5 & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
   <style>
-    /* same styles as before – keep unchanged */
+    /* ─── styles (unchanged) ─── */
     :root {
       --navy: #1B2A4A;
       --gold: #C9972B;
@@ -194,8 +196,7 @@
       <p class="text-muted">Enter your details to receive a verification code.</p>
       <div class="demo-note mb-3">
         <i class="bi bi-info-circle-fill me-2"></i>
-        <strong>EmailJS configured:</strong> OTP will be sent to your email.
-        Votes are saved to Google Sheet and locally as backup.
+        <strong>Firebase + EmailJS:</strong> OTP via EmailJS, votes stored in Firebase Firestore.
       </div>
       <div class="mb-3">
         <label class="form-label fw-semibold">Full Name</label>
@@ -263,19 +264,48 @@
   <a href="https://wa.me/256701422100" target="_blank">WhatsApp +256 701 422 100</a>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>
-  // ─── CONFIG ────────────────────────────────────────────
-  // Use the URL you provided – change if needed
-  const GAS_URL = "https://script.google.com/macros/s/AKfycbyJIcebS_-YYrcVONSj0R5vAi1yBNF_08CmMh4tOEL5qy2K-roMCnGvhwYrj4N0Q3tf/exec";
+<!-- ═══ IMPORT MAPS (Firebase v9 modular) ═══ -->
+<script type="importmap">
+  {
+    "imports": {
+      "firebase/app": "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js",
+      "firebase/firestore": "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js"
+    }
+  }
+</script>
 
-  // EmailJS credentials (yours)
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script type="module">
+  // ─── FIREBASE IMPORTS ──────────────────────────────────────
+  import { initializeApp } from 'firebase/app';
+  import { getFirestore, collection, addDoc } from 'firebase/firestore';
+
+  // ─── YOUR FIREBASE CONFIG ──────────────────────────────────
+  const firebaseConfig = {
+    apiKey: "AIzaSyDJIln3O8kXuxAN3s9knr-2kVRGzczh6ZI",
+    authDomain: "election-9491c.firebaseapp.com",
+    projectId: "election-9491c",
+    storageBucket: "election-9491c.firebasestorage.app",
+    messagingSenderId: "444815730253",
+    appId: "1:444815730253:web:d0b51216904933e24d5e04",
+    measurementId: "G-VBQMT66WLE"   // (optional, not used here)
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const votesCollection = collection(db, 'votes');
+
+  // ─── EMAILJS CONFIG ────────────────────────────────────────
   const EMAILJS_CONFIG = {
     serviceID: 'service_1doaoq6',
     templateID: 'template_wlm4jaf',
     publicKey: 'QaU8bLtIvM0mzZpzY'
   };
 
+  // ─── CANDIDATES ─────────────────────────────────────────────
   const CANDIDATES = [
     { id: 1, name: "Buyondo Deus", initials: "BD" },
     { id: 2, name: "Magembe Michael", initials: "MM" },
@@ -284,20 +314,36 @@
     { id: 5, name: "Ssemwogerere Ashiraf", initials: "SA" }
   ];
 
+  // ─── STATE ──────────────────────────────────────────────────
   let voterData = {}, generatedOTP = "", selectedId = null;
 
-  // ─── INIT ──────────────────────────────────────────────
+  // ─── DOM REFS ──────────────────────────────────────────────
+  const screenRegister = document.getElementById('screen-register');
+  const screenVerify = document.getElementById('screen-verify');
+  const screenVote = document.getElementById('screen-vote');
+  const screenSuccess = document.getElementById('screen-success');
+  const regName = document.getElementById('reg-name');
+  const regYear = document.getElementById('reg-year');
+  const regEmail = document.getElementById('reg-email');
+  const regError = document.getElementById('reg-error');
+  const verifyError = document.getElementById('verify-error');
+  const voteError = document.getElementById('vote-error');
+  const otpBoxes = document.getElementById('otp-boxes');
+  const candidatesContainer = document.getElementById('candidates-container');
+  const saveStatus = document.getElementById('save-status');
+
+  // ─── INIT ──────────────────────────────────────────────────
   (function init() {
-    const yearSelect = document.getElementById('reg-year');
+    // Year dropdown
     const currentYear = new Date().getFullYear();
     for (let y = currentYear; y >= 1990; y--) {
       const opt = document.createElement('option');
       opt.value = y;
       opt.textContent = y;
-      yearSelect.appendChild(opt);
+      regYear.appendChild(opt);
     }
 
-    const otpContainer = document.getElementById('otp-boxes');
+    // OTP boxes
     for (let i = 0; i < 6; i++) {
       const input = document.createElement('input');
       input.type = 'text';
@@ -308,10 +354,10 @@
       input.addEventListener('input', onOtpInput);
       input.addEventListener('keydown', onOtpKeydown);
       input.addEventListener('focus', function() { this.select(); });
-      otpContainer.appendChild(input);
+      otpBoxes.appendChild(input);
     }
 
-    const container = document.getElementById('candidates-container');
+    // Candidate cards
     CANDIDATES.forEach(cand => {
       const col = document.createElement('div');
       col.className = 'col-6 col-md-4';
@@ -322,43 +368,43 @@
           <small class="text-muted">#${cand.id}</small>
         </div>`;
       col.querySelector('.candidate-card').addEventListener('click', () => selectCandidate(cand.id));
-      container.appendChild(col);
+      candidatesContainer.appendChild(col);
     });
 
+    // Auto-focus OTP on screen show
     const observer = new MutationObserver(() => {
-      const verifyScreen = document.getElementById('screen-verify');
-      if (verifyScreen.classList.contains('active')) {
+      if (screenVerify.classList.contains('active')) {
         setTimeout(() => {
-          const first = document.querySelector('#otp-boxes input');
+          const first = otpBoxes.querySelector('input');
           if (first) first.focus();
         }, 150);
       }
     });
-    observer.observe(document.getElementById('screen-verify'), { attributes: true, attributeFilter: ['class'] });
+    observer.observe(screenVerify, { attributes: true, attributeFilter: ['class'] });
   })();
 
-  // ─── NAVIGATION ──────────────────────────────────────
-  function goTo(screenId, resetOTP = true) {
+  // ─── NAVIGATION ──────────────────────────────────────────
+  window.goTo = function(screenId, resetOTP = true) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(screenId).classList.add('active');
     if (resetOTP && screenId !== 'screen-verify') {
-      document.querySelectorAll('#otp-boxes input').forEach(inp => inp.value = '');
-      document.getElementById('verify-error').style.display = 'none';
+      otpBoxes.querySelectorAll('input').forEach(inp => inp.value = '');
+      verifyError.style.display = 'none';
     }
     document.querySelectorAll('.alert').forEach(el => el.style.display = 'none');
-  }
+  };
 
-  // ─── OTP HANDLERS ────────────────────────────────────
+  // ─── OTP HANDLERS ──────────────────────────────────────
   function onOtpInput(e) {
     const input = e.target;
     const idx = +input.dataset.idx;
     input.value = input.value.replace(/\D/g, '').slice(0, 1);
     if (input.value && idx < 5) {
-      const next = document.querySelector(`#otp-boxes input[data-idx="${idx + 1}"]`);
+      const next = otpBoxes.querySelector(`input[data-idx="${idx + 1}"]`);
       if (next) next.focus();
     }
     if (getOTPValue().length === 6) {
-      setTimeout(verifyOTP, 200);
+      setTimeout(window.verifyOTP, 200);
     }
   }
 
@@ -366,7 +412,7 @@
     const input = e.target;
     const idx = +input.dataset.idx;
     if (e.key === 'Backspace' && !input.value && idx > 0) {
-      const prev = document.querySelector(`#otp-boxes input[data-idx="${idx - 1}"]`);
+      const prev = otpBoxes.querySelector(`input[data-idx="${idx - 1}"]`);
       if (prev) {
         prev.focus();
         prev.value = '';
@@ -376,21 +422,21 @@
   }
 
   function getOTPValue() {
-    return Array.from(document.querySelectorAll('#otp-boxes input')).map(i => i.value).join('');
+    return Array.from(otpBoxes.querySelectorAll('input')).map(i => i.value).join('');
   }
 
-  // ─── SEND OTP ──────────────────────────────────────
-  async function sendOTP() {
-    const name = document.getElementById('reg-name').value.trim();
-    const year = document.getElementById('reg-year').value;
-    const email = document.getElementById('reg-email').value.trim().toLowerCase();
+  // ─── SEND OTP (EmailJS) ──────────────────────────────
+  window.sendOTP = async function() {
+    const name = regName.value.trim();
+    const year = regYear.value;
+    const email = regEmail.value.trim().toLowerCase();
     const btn = document.getElementById('btn-send-otp');
 
     if (!name || !year || !email) {
-      return showError('reg-error', 'All fields are required.');
+      return showError(regError, 'All fields are required.');
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return showError('reg-error', 'Please enter a valid email address.');
+      return showError(regError, 'Please enter a valid email address.');
     }
 
     generatedOTP = String(Math.floor(100000 + Math.random() * 900000));
@@ -423,55 +469,45 @@
     }
 
     if (emailSent) {
-      // Show a small notification (optional)
       console.log(`📧 OTP sent to ${email}`);
     }
-
-    // (Optional) call GAS to store OTP request – not critical
-    try {
-      await fetch(GAS_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'sendOTP', email, name, otp: generatedOTP })
-      });
-    } catch (e) { /* ignore */ }
 
     document.getElementById('otp-email-display').textContent = email;
     btn.disabled = false;
     btn.innerHTML = '<i class="bi bi-envelope-paper me-2"></i>Send Verification Code';
-    goTo('screen-verify', true);
+    window.goTo('screen-verify', true);
 
     setTimeout(() => {
-      const first = document.querySelector('#otp-boxes input');
+      const first = otpBoxes.querySelector('input');
       if (first) first.focus();
     }, 200);
-  }
+  };
 
   // ─── VERIFY OTP ──────────────────────────────────────
-  async function verifyOTP() {
+  window.verifyOTP = async function() {
     const entered = getOTPValue();
     if (entered.length < 6) {
-      return showError('verify-error', 'Please enter the full 6-digit code.');
+      return showError(verifyError, 'Please enter the full 6-digit code.');
     }
     if (entered !== generatedOTP) {
-      return showError('verify-error', 'Incorrect verification code. Please try again.');
+      return showError(verifyError, 'Incorrect verification code. Please try again.');
     }
-    goTo('screen-vote', true);
-  }
+    window.goTo('screen-vote', true);
+  };
 
   // ─── SELECT CANDIDATE ──────────────────────────────
   function selectCandidate(id) {
     selectedId = id;
-    document.querySelectorAll('.candidate-card').forEach(c => {
+    candidatesContainer.querySelectorAll('.candidate-card').forEach(c => {
       c.classList.toggle('selected', +c.dataset.id === id);
     });
-    document.getElementById('vote-error').style.display = 'none';
+    voteError.style.display = 'none';
   }
 
-  // ─── CAST VOTE ──────────────────────────────────────
-  async function castVote() {
+  // ─── CAST VOTE (Firestore + localStorage) ──────────
+  window.castVote = async function() {
     if (!selectedId) {
-      return showError('vote-error', 'Please select a candidate before casting your vote.');
+      return showError(voteError, 'Please select a candidate before casting your vote.');
     }
 
     const candidate = CANDIDATES.find(c => c.id === selectedId);
@@ -479,42 +515,33 @@
     const timestamp = new Date().toLocaleString('en-UG', { timeZone: 'Africa/Kampala' });
 
     const payload = {
-      action: 'castVote',
       name: voterData.name,
       email: voterData.email,
       year: voterData.year,
       candidate: candidate.name,
       ref,
-      timestamp
+      timestamp,
+      createdAt: new Date().toISOString()
     };
 
     const btn = document.getElementById('btn-cast-vote');
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Recording...';
 
-    // 1. Try to save to Google Sheet
-    let sheetSaved = false;
-    let errorMessage = '';
+    let firebaseSaved = false;
+    let firebaseError = '';
+
     try {
-      const response = await fetch(GAS_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      const data = await response.json();
-      if (data.status === 'success') {
-        sheetSaved = true;
-        console.log('✅ Vote saved to Google Sheet');
-      } else {
-        errorMessage = data.message || 'Unknown error from GAS';
-        console.warn('⚠️ GAS returned error:', errorMessage);
-      }
-    } catch (e) {
-      errorMessage = e.message || 'Network error';
-      console.warn('⚠️ Could not reach GAS endpoint:', e);
+      // Add to Firestore
+      await addDoc(votesCollection, payload);
+      firebaseSaved = true;
+      console.log('✅ Vote saved to Firebase Firestore');
+    } catch (err) {
+      firebaseError = err.message || 'Firebase write error';
+      console.warn('⚠️ Firebase save failed:', err);
     }
 
-    // 2. Always save to localStorage as backup
+    // Always save to localStorage as backup
     let localSaved = false;
     try {
       const votes = JSON.parse(localStorage.getItem('sjb_votes') || '[]');
@@ -526,55 +553,56 @@
       console.warn('⚠️ Could not save to localStorage:', e);
     }
 
-    // Show success screen
+    // Show success
     document.getElementById('rec-name').textContent = voterData.name;
     document.getElementById('rec-candidate').textContent = candidate.name;
     document.getElementById('rec-time').textContent = timestamp;
     document.getElementById('rec-ref').textContent = ref;
 
-    // Show detailed save status
-    const statusEl = document.getElementById('save-status');
-    if (sheetSaved) {
-      statusEl.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> Vote saved to Google Sheet.';
+    // Save status message
+    if (firebaseSaved) {
+      saveStatus.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> Vote saved to Firebase Firestore.';
     } else {
-      let msg = `<i class="bi bi-exclamation-triangle-fill text-warning"></i> Could not save to Google Sheet. `;
+      let msg = `<i class="bi bi-exclamation-triangle-fill text-warning"></i> Could not save to Firebase. `;
       if (localSaved) {
         msg += 'Vote is saved locally (browser storage).';
       } else {
         msg += 'Vote could not be saved at all. Please try again.';
       }
-      if (errorMessage) {
-        msg += `<br><small class="text-danger">Error: ${errorMessage}</small>`;
+      if (firebaseError) {
+        msg += `<br><small class="text-danger">Error: ${firebaseError}</small>`;
       }
-      statusEl.innerHTML = msg;
+      saveStatus.innerHTML = msg;
     }
 
     btn.disabled = false;
     btn.innerHTML = '<i class="bi bi-check2-circle me-2"></i>Cast My Vote';
-    goTo('screen-success', true);
-  }
+    window.goTo('screen-success', true);
+  };
 
   // ─── HELPERS ──────────────────────────────────────────
-  function showError(id, msg) {
-    const el = document.getElementById(id);
+  function showError(el, msg) {
     el.textContent = msg;
     el.style.display = 'block';
     clearTimeout(el._hideTimer);
     el._hideTimer = setTimeout(() => { el.style.display = 'none'; }, 6000);
   }
 
+  // Enter key on OTP boxes triggers verify
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-      const verifyScreen = document.getElementById('screen-verify');
-      if (verifyScreen.classList.contains('active')) {
+      if (screenVerify.classList.contains('active')) {
         const activeInput = document.activeElement;
         if (activeInput && activeInput.closest('#otp-boxes')) {
           e.preventDefault();
-          verifyOTP();
+          window.verifyOTP();
         }
       }
     }
   });
 </script>
+
+<!-- Bootstrap bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
+  </html>
