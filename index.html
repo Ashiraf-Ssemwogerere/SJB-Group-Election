@@ -4,15 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>St. Josephine Bakhita – OBs & OGs Leadership Election</title>
-
-  <!-- Bootstrap 5 -->
+  <!-- Bootstrap, Icons, Fonts same as before – I'll keep them concise -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-
   <style>
+    /* same styles as before – keep unchanged */
     :root {
       --navy: #1B2A4A;
       --gold: #C9972B;
@@ -23,21 +20,18 @@
       --card-shadow: 0 8px 32px rgba(27, 42, 74, .13);
     }
     *, *::before, *::after { box-sizing: border-box; }
-
     body {
       font-family: 'Inter', sans-serif;
       background: var(--cream);
       color: var(--navy);
       min-height: 100vh;
     }
-
     .screen { display: none; animation: fadeUp .3s ease; }
     .screen.active { display: block; }
     @keyframes fadeUp {
       0% { opacity: 0; transform: translateY(12px); }
       100% { opacity: 1; transform: translateY(0); }
     }
-
     .site-header {
       background: var(--navy);
       padding: 18px 0 14px;
@@ -53,7 +47,6 @@
       font-family: 'Playfair Display', serif;
       flex-shrink: 0;
     }
-
     .hero-banner {
       background: linear-gradient(135deg, var(--navy) 60%, #2e4578 100%);
       color: var(--white);
@@ -66,7 +59,6 @@
       background: var(--gold) !important;
       color: var(--navy) !important;
     }
-
     .main-card {
       background: var(--white);
       border-radius: 16px;
@@ -80,12 +72,10 @@
     @media (max-width: 600px) {
       .main-card { padding: 28px 20px; border-radius: 12px; }
     }
-
     .section-title {
       font-family: 'Playfair Display', serif;
       font-size: 1.45rem; font-weight: 700; color: var(--navy);
     }
-
     .candidate-card {
       border: 2px solid #E2E6F0;
       border-radius: 14px;
@@ -117,7 +107,6 @@
       background: var(--gold);
       color: #fff;
     }
-
     .btn-primary-gold {
       background: var(--gold);
       color: var(--navy);
@@ -136,9 +125,7 @@
       opacity: .6;
       pointer-events: none;
     }
-
     .btn-outline-secondary { border-radius: 10px; }
-
     .success-seal {
       width: 90px; height: 90px; border-radius: 50%;
       background: linear-gradient(135deg, var(--gold) 0%, var(--gold-lt) 100%);
@@ -147,7 +134,6 @@
       display: flex; align-items: center; justify-content: center;
       margin: 0 auto 24px;
     }
-
     #otp-boxes input {
       width: 52px; height: 64px;
       font-size: 1.8rem; font-weight: 700; text-align: center;
@@ -161,7 +147,6 @@
       outline: none;
       box-shadow: 0 0 0 3px rgba(201, 151, 43, .2);
     }
-
     .demo-note {
       background: #fff3cd;
       border-left: 4px solid #ffc107;
@@ -169,7 +154,6 @@
       border-radius: 6px;
       font-size: 0.9rem;
     }
-
     footer a { color: var(--slate); text-decoration: none; }
     footer a:hover { color: var(--navy); text-decoration: underline; }
   </style>
@@ -204,17 +188,15 @@
 <div class="container pb-5">
   <div class="main-card">
 
-    <!-- ─── SCREEN 1 : REGISTER ─── -->
+    <!-- SCREEN 1: REGISTER -->
     <div class="screen active" id="screen-register">
       <h3 class="section-title">Voter Registration</h3>
       <p class="text-muted">Enter your details to receive a verification code.</p>
-
       <div class="demo-note mb-3">
         <i class="bi bi-info-circle-fill me-2"></i>
-        <strong>EmailJS configured:</strong> OTP codes will be sent to your email address.
+        <strong>EmailJS configured:</strong> OTP will be sent to your email.
         Votes are saved to Google Sheet and locally as backup.
       </div>
-
       <div class="mb-3">
         <label class="form-label fw-semibold">Full Name</label>
         <input type="text" class="form-control" id="reg-name" placeholder="e.g. Achom Christine" autocomplete="name">
@@ -227,58 +209,47 @@
         <label class="form-label fw-semibold">Email Address</label>
         <input type="email" class="form-control" id="reg-email" placeholder="yourname@email.com" autocomplete="email">
       </div>
-
       <div id="reg-error" class="alert alert-danger" style="display:none;"></div>
-
       <button class="btn btn-primary-gold" id="btn-send-otp" onclick="sendOTP()">
         <i class="bi bi-envelope-paper me-2"></i>Send Verification Code
       </button>
     </div>
 
-    <!-- ─── SCREEN 2 : VERIFY ─── -->
+    <!-- SCREEN 2: VERIFY -->
     <div class="screen" id="screen-verify">
       <h3 class="section-title">Verify Your Identity</h3>
       <p class="text-muted">Enter the 6-digit code sent to <strong id="otp-email-display"></strong></p>
-
       <div class="d-flex gap-2 justify-content-center mb-4" id="otp-boxes"></div>
-
       <div id="verify-error" class="alert alert-danger" style="display:none;"></div>
-
       <button class="btn btn-primary-gold" id="btn-verify-otp" onclick="verifyOTP()">Confirm Code</button>
       <button class="btn btn-outline-secondary w-100 mt-3" onclick="goTo('screen-register', true)">← Back</button>
     </div>
 
-    <!-- ─── SCREEN 3 : VOTE ─── -->
+    <!-- SCREEN 3: VOTE -->
     <div class="screen" id="screen-vote">
       <h3 class="section-title">Cast Your Vote</h3>
       <p class="text-muted">Select <strong>one</strong> candidate for Chairperson</p>
-
       <div class="candidates-grid row g-3" id="candidates-container"></div>
-
       <div id="vote-error" class="alert alert-danger mt-3" style="display:none;"></div>
-
       <button class="btn btn-primary-gold mt-4" id="btn-cast-vote" onclick="castVote()">
         <i class="bi bi-check2-circle me-2"></i>Cast My Vote
       </button>
     </div>
 
-    <!-- ─── SCREEN 4 : SUCCESS ─── -->
+    <!-- SCREEN 4: SUCCESS -->
     <div class="screen text-center" id="screen-success">
       <div class="success-seal mx-auto"><i class="bi bi-patch-check-fill"></i></div>
       <h3 class="fw-bold">Vote Cast Successfully!</h3>
       <p class="text-muted">Thank you for participating.</p>
-
       <div class="border border-success border-opacity-25 bg-light p-4 rounded-3 text-start mt-4">
         <div><strong>Voter:</strong> <span id="rec-name"></span></div>
         <div><strong>Voted for:</strong> <span id="rec-candidate"></span></div>
         <div><strong>Time:</strong> <span id="rec-time"></span></div>
         <div><strong>Reference:</strong> <span id="rec-ref"></span></div>
       </div>
-
       <div class="alert alert-success mt-4">
         <i class="bi bi-check-circle-fill me-2"></i>A confirmation email has been sent to you.
       </div>
-
       <div class="mt-3 text-muted small" id="save-status"></div>
     </div>
 
@@ -292,22 +263,19 @@
   <a href="https://wa.me/256701422100" target="_blank">WhatsApp +256 701 422 100</a>
 </footer>
 
-<!-- EmailJS library -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
 <script>
-  // ─── CONFIGURATION ────────────────────────────────────────────
-  // 1. Google Apps Script endpoint (your new URL)
+  // ─── CONFIG ────────────────────────────────────────────
+  // Use the URL you provided – change if needed
   const GAS_URL = "https://script.google.com/macros/s/AKfycbyJIcebS_-YYrcVONSj0R5vAi1yBNF_08CmMh4tOEL5qy2K-roMCnGvhwYrj4N0Q3tf/exec";
 
-  // 2. EmailJS credentials (now configured with your provided details)
+  // EmailJS credentials (yours)
   const EMAILJS_CONFIG = {
     serviceID: 'service_1doaoq6',
-    templateID: 'template_wlm4jaf',   // corrected from "template _wlm4jaf"
+    templateID: 'template_wlm4jaf',
     publicKey: 'QaU8bLtIvM0mzZpzY'
   };
 
-  // 3. Candidate list
   const CANDIDATES = [
     { id: 1, name: "Buyondo Deus", initials: "BD" },
     { id: 2, name: "Magembe Michael", initials: "MM" },
@@ -316,12 +284,10 @@
     { id: 5, name: "Ssemwogerere Ashiraf", initials: "SA" }
   ];
 
-  // ─── STATE ──────────────────────────────────────────────────
   let voterData = {}, generatedOTP = "", selectedId = null;
 
-  // ─── INIT ──────────────────────────────────────────────────
+  // ─── INIT ──────────────────────────────────────────────
   (function init() {
-    // Populate year dropdown
     const yearSelect = document.getElementById('reg-year');
     const currentYear = new Date().getFullYear();
     for (let y = currentYear; y >= 1990; y--) {
@@ -331,7 +297,6 @@
       yearSelect.appendChild(opt);
     }
 
-    // Build OTP input boxes
     const otpContainer = document.getElementById('otp-boxes');
     for (let i = 0; i < 6; i++) {
       const input = document.createElement('input');
@@ -346,7 +311,6 @@
       otpContainer.appendChild(input);
     }
 
-    // Build candidate cards
     const container = document.getElementById('candidates-container');
     CANDIDATES.forEach(cand => {
       const col = document.createElement('div');
@@ -361,7 +325,6 @@
       container.appendChild(col);
     });
 
-    // Auto-focus first OTP input when verify screen appears
     const observer = new MutationObserver(() => {
       const verifyScreen = document.getElementById('screen-verify');
       if (verifyScreen.classList.contains('active')) {
@@ -374,7 +337,7 @@
     observer.observe(document.getElementById('screen-verify'), { attributes: true, attributeFilter: ['class'] });
   })();
 
-  // ─── SCREEN NAVIGATION ──────────────────────────────────
+  // ─── NAVIGATION ──────────────────────────────────────
   function goTo(screenId, resetOTP = true) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(screenId).classList.add('active');
@@ -385,7 +348,7 @@
     document.querySelectorAll('.alert').forEach(el => el.style.display = 'none');
   }
 
-  // ─── OTP HANDLERS ──────────────────────────────────────
+  // ─── OTP HANDLERS ────────────────────────────────────
   function onOtpInput(e) {
     const input = e.target;
     const idx = +input.dataset.idx;
@@ -416,7 +379,7 @@
     return Array.from(document.querySelectorAll('#otp-boxes input')).map(i => i.value).join('');
   }
 
-  // ─── STEP 1 : SEND OTP ──────────────────────────────────
+  // ─── SEND OTP ──────────────────────────────────────
   async function sendOTP() {
     const name = document.getElementById('reg-name').value.trim();
     const year = document.getElementById('reg-year').value;
@@ -436,7 +399,6 @@
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Sending...';
 
-    // Attempt EmailJS (now configured)
     let emailSent = false;
     try {
       await emailjs.init(EMAILJS_CONFIG.publicKey);
@@ -457,16 +419,15 @@
       }
     } catch (err) {
       console.warn('⚠️ EmailJS send failed:', err);
-      // Fallback: show OTP in alert if email fails
       alert(`⚠️ OTP could not be sent via email. Your OTP is: ${generatedOTP}\nPlease check your EmailJS configuration.`);
     }
 
     if (emailSent) {
-      // If email sent, no alert needed; the user will check their inbox.
+      // Show a small notification (optional)
       console.log(`📧 OTP sent to ${email}`);
     }
 
-    // (Optional) call GAS to store OTP request
+    // (Optional) call GAS to store OTP request – not critical
     try {
       await fetch(GAS_URL, {
         method: 'POST',
@@ -486,7 +447,7 @@
     }, 200);
   }
 
-  // ─── STEP 2 : VERIFY OTP ──────────────────────────────
+  // ─── VERIFY OTP ──────────────────────────────────────
   async function verifyOTP() {
     const entered = getOTPValue();
     if (entered.length < 6) {
@@ -498,7 +459,7 @@
     goTo('screen-vote', true);
   }
 
-  // ─── STEP 3 : VOTE ──────────────────────────────────────
+  // ─── SELECT CANDIDATE ──────────────────────────────
   function selectCandidate(id) {
     selectedId = id;
     document.querySelectorAll('.candidate-card').forEach(c => {
@@ -507,6 +468,7 @@
     document.getElementById('vote-error').style.display = 'none';
   }
 
+  // ─── CAST VOTE ──────────────────────────────────────
   async function castVote() {
     if (!selectedId) {
       return showError('vote-error', 'Please select a candidate before casting your vote.');
@@ -530,8 +492,9 @@
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Recording...';
 
-    // 1. Save to Google Sheet via GAS
+    // 1. Try to save to Google Sheet
     let sheetSaved = false;
+    let errorMessage = '';
     try {
       const response = await fetch(GAS_URL, {
         method: 'POST',
@@ -543,13 +506,15 @@
         sheetSaved = true;
         console.log('✅ Vote saved to Google Sheet');
       } else {
-        console.warn('⚠️ GAS returned error:', data.message);
+        errorMessage = data.message || 'Unknown error from GAS';
+        console.warn('⚠️ GAS returned error:', errorMessage);
       }
     } catch (e) {
+      errorMessage = e.message || 'Network error';
       console.warn('⚠️ Could not reach GAS endpoint:', e);
     }
 
-    // 2. Always save to localStorage as a backup
+    // 2. Always save to localStorage as backup
     let localSaved = false;
     try {
       const votes = JSON.parse(localStorage.getItem('sjb_votes') || '[]');
@@ -561,20 +526,27 @@
       console.warn('⚠️ Could not save to localStorage:', e);
     }
 
-    // Show success screen with details
+    // Show success screen
     document.getElementById('rec-name').textContent = voterData.name;
     document.getElementById('rec-candidate').textContent = candidate.name;
     document.getElementById('rec-time').textContent = timestamp;
     document.getElementById('rec-ref').textContent = ref;
 
-    // Show save status
+    // Show detailed save status
     const statusEl = document.getElementById('save-status');
     if (sheetSaved) {
       statusEl.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> Vote saved to Google Sheet.';
-    } else if (localSaved) {
-      statusEl.innerHTML = '<i class="bi bi-exclamation-triangle-fill text-warning"></i> Could not reach Google Sheet, but vote is saved locally (browser storage).';
     } else {
-      statusEl.innerHTML = '<i class="bi bi-x-circle-fill text-danger"></i> Vote could not be saved. Please try again.';
+      let msg = `<i class="bi bi-exclamation-triangle-fill text-warning"></i> Could not save to Google Sheet. `;
+      if (localSaved) {
+        msg += 'Vote is saved locally (browser storage).';
+      } else {
+        msg += 'Vote could not be saved at all. Please try again.';
+      }
+      if (errorMessage) {
+        msg += `<br><small class="text-danger">Error: ${errorMessage}</small>`;
+      }
+      statusEl.innerHTML = msg;
     }
 
     btn.disabled = false;
@@ -591,7 +563,6 @@
     el._hideTimer = setTimeout(() => { el.style.display = 'none'; }, 6000);
   }
 
-  // Enter key on OTP boxes triggers verify
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
       const verifyScreen = document.getElementById('screen-verify');
@@ -605,8 +576,5 @@
     }
   });
 </script>
-
-<!-- Bootstrap bundle -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-  </html>
+</html>
