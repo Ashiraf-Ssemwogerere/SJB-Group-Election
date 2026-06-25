@@ -8,7 +8,7 @@
   <!-- Bootstrap 5 & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 
   <style>
     :root {
@@ -56,16 +56,38 @@
       position: relative;
       overflow: hidden;
     }
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 400px;
+      height: 400px;
+      background: rgba(201, 151, 43, 0.08);
+      border-radius: 50%;
+    }
+    .hero-banner::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 300px;
+      height: 300px;
+      background: rgba(201, 151, 43, 0.06);
+      border-radius: 50%;
+    }
     .badge-election {
       background: var(--gold) !important;
       color: var(--navy) !important;
+      font-weight: 700;
+      padding: 8px 20px !important;
     }
     .main-card {
       background: var(--white);
       border-radius: 16px;
       box-shadow: var(--card-shadow);
       padding: 40px 36px;
-      max-width: 580px;
+      max-width: 620px;
       margin: -24px auto 0;
       position: relative;
       z-index: 10;
@@ -76,6 +98,9 @@
     .section-title {
       font-family: 'Playfair Display', serif;
       font-size: 1.45rem; font-weight: 700; color: var(--navy);
+    }
+    .section-title i {
+      color: var(--gold);
     }
     .btn-primary-gold {
       background: var(--gold);
@@ -97,6 +122,22 @@
     .btn-primary-gold:disabled {
       opacity: .6;
       pointer-events: none;
+      cursor: not-allowed;
+    }
+    .btn-outline-gold {
+      background: transparent;
+      color: var(--gold);
+      border: 2px solid var(--gold);
+      border-radius: 10px;
+      padding: 12px 24px;
+      font-weight: 600;
+      transition: all .2s;
+      width: 100%;
+    }
+    .btn-outline-gold:hover {
+      background: var(--gold);
+      color: var(--navy);
+      transform: translateY(-2px);
     }
     .info-box {
       background: #f0f4ff;
@@ -156,6 +197,87 @@
       }
     }
     
+    /* ─── CANDIDATE CARDS ON HOME ─── */
+    .candidate-grid-home {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .candidate-card-home {
+      background: white;
+      border: 2px solid #e2e6f0;
+      border-radius: 12px;
+      padding: 16px 12px;
+      text-align: center;
+      transition: all .25s ease;
+      cursor: default;
+    }
+    .candidate-card-home:hover {
+      border-color: var(--gold);
+      transform: translateY(-4px);
+      box-shadow: 0 6px 20px rgba(201, 151, 43, .15);
+    }
+    .candidate-card-home .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      margin: 0 auto 6px;
+    }
+    .candidate-card-home .name {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+    .candidate-card-home .number {
+      font-size: 0.7rem;
+      color: var(--slate);
+    }
+    .candidate-card-home .badge-candidate {
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 0.6rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    /* ─── STATS BADGE ─── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .stat-item {
+      background: var(--cream);
+      padding: 12px 8px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .stat-item .number {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--gold);
+      display: block;
+    }
+    .stat-item .label {
+      font-size: 0.7rem;
+      color: var(--slate);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
     /* ─── STYLED ALERT OVERLAY ─── */
     .form-alert-overlay {
       position: absolute;
@@ -268,6 +390,105 @@
       word-break: break-word;
     }
 
+    /* ─── TIMER OVERLAY ─── */
+    .timer-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, var(--navy) 60%, #2e4578 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 60;
+      padding: 30px;
+      border-radius: 12px;
+      flex-direction: column;
+    }
+    .timer-overlay.hidden {
+      display: none;
+    }
+    .timer-overlay .timer-icon {
+      font-size: 3rem;
+      color: var(--gold);
+      margin-bottom: 16px;
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.7; }
+    }
+    .timer-overlay .timer-title {
+      color: white;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .timer-overlay .timer-subtitle {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.9rem;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .timer-display {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .timer-unit {
+      text-align: center;
+      background: rgba(255,255,255,0.1);
+      padding: 12px 16px;
+      border-radius: 12px;
+      min-width: 70px;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .timer-unit .number {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--gold);
+      font-family: 'Inter', sans-serif;
+      line-height: 1;
+      display: block;
+    }
+    .timer-unit .label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 1px;
+      margin-top: 4px;
+      display: block;
+    }
+    .timer-overlay .timer-message {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.8rem;
+      text-align: center;
+      margin-top: 4px;
+    }
+    .timer-overlay .timer-message strong {
+      color: var(--gold);
+    }
+    .timer-progress {
+      width: 100%;
+      max-width: 300px;
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      margin-top: 16px;
+      overflow: hidden;
+    }
+    .timer-progress .progress-bar {
+      height: 100%;
+      background: var(--gold);
+      border-radius: 2px;
+      transition: width 1s linear;
+      width: 0%;
+    }
+
     /* ─── EXCITING THANK YOU OVERLAY ─── */
     .thank-you-overlay {
       position: fixed;
@@ -335,10 +556,6 @@
       font-size: 3rem;
       color: white;
       animation: pulse 1s ease infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
     }
     .thank-you-card h2 {
       font-family: 'Playfair Display', serif;
@@ -423,6 +640,32 @@
     }
     footer a { color: var(--slate); text-decoration: none; }
     footer a:hover { color: var(--navy); text-decoration: underline; }
+
+    .feature-divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 20px 0 16px;
+    }
+    .feature-divider::before,
+    .feature-divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 2px solid #e2e6f0;
+    }
+    .feature-divider::before {
+      margin-right: 16px;
+    }
+    .feature-divider::after {
+      margin-left: 16px;
+    }
+    .feature-divider span {
+      font-size: 0.8rem;
+      color: var(--slate);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
   </style>
 </head>
 <body>
@@ -443,7 +686,7 @@
 <!-- ═══ HERO ═══ -->
 <div class="hero-banner">
   <div class="container">
-    <div class="badge-election mb-3 d-inline-block px-3 py-1 rounded-pill fw-bold">
+    <div class="badge-election mb-3 d-inline-block">
       <i class="bi bi-patch-check-fill"></i> 2025 / 2026 Elections
     </div>
     <h2 class="display-5 fw-bold">Elect Your Chairperson</h2>
@@ -455,16 +698,77 @@
 <div class="container pb-5">
   <div class="main-card">
 
-    <!-- SCREEN 1: REGISTER -->
+    <!-- SCREEN 1: HOME / REGISTER -->
     <div class="screen active" id="screen-register">
-      <h3 class="section-title">Voter Registration</h3>
+      <h3 class="section-title"><i class="bi bi-house-fill me-2"></i>Voter Registration</h3>
       <p class="text-muted">Enter your details to proceed to the voting form.</p>
       
+      <!-- Election Info -->
       <div class="info-box">
         <i class="bi bi-info-circle-fill me-2"></i>
         <strong>How it works:</strong> Fill in your details below, then click "Continue to Vote" to access the secure Google Form where you'll cast your vote.
       </div>
-      
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat-item">
+          <span class="number">5</span>
+          <span class="label">Candidates</span>
+        </div>
+        <div class="stat-item">
+          <span class="number">1</span>
+          <span class="label">Position</span>
+        </div>
+        <div class="stat-item">
+          <span class="number" id="votingStatus">7:30 AM</span>
+          <span class="label">Voting Opens</span>
+        </div>
+      </div>
+
+      <!-- Candidates Grid -->
+      <div style="margin-bottom: 20px;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+          <i class="bi bi-people-fill" style="color:var(--gold); font-size:1.1rem;"></i>
+          <span style="font-weight:600; font-size:0.95rem;">Candidates for Chairperson</span>
+        </div>
+        <div class="candidate-grid-home">
+          <div class="candidate-card-home">
+            <div class="avatar">BD</div>
+            <div class="name">Buyondo Deus</div>
+            <div class="number">#1</div>
+            <span class="badge-candidate">Candidate</span>
+          </div>
+          <div class="candidate-card-home">
+            <div class="avatar">MM</div>
+            <div class="name">Magembe Mike</div>
+            <div class="number">#2</div>
+            <span class="badge-candidate">Candidate</span>
+          </div>
+          <div class="candidate-card-home">
+            <div class="avatar">NH</div>
+            <div class="name">Nakaliisa Hadijah</div>
+            <div class="number">#3</div>
+            <span class="badge-candidate">Candidate</span>
+          </div>
+          <div class="candidate-card-home">
+            <div class="avatar">NJ</div>
+            <div class="name">Naluwaga Joan</div>
+            <div class="number">#4</div>
+            <span class="badge-candidate">Candidate</span>
+          </div>
+          <div class="candidate-card-home">
+            <div class="avatar">SA</div>
+            <div class="name">Ssemwogerere Ashiraf</div>
+            <div class="number">#5</div>
+            <span class="badge-candidate">Candidate</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-divider">
+        <span>Register to Vote</span>
+      </div>
+
       <div class="mb-3">
         <label class="form-label fw-semibold">Full Name</label>
         <input type="text" class="form-control" id="reg-name" placeholder="e.g. Achom Christine" autocomplete="name">
@@ -489,9 +793,9 @@
       </div>
     </div>
 
-    <!-- SCREEN 2: VOTE (Google Form with Styled Alert) -->
+    <!-- SCREEN 2: VOTE (Google Form with Styled Alert & Timer) -->
     <div class="screen" id="screen-vote">
-      <h3 class="section-title">Cast Your Vote</h3>
+      <h3 class="section-title"><i class="bi bi-check2-circle me-2"></i>Cast Your Vote</h3>
       <p class="text-muted">Complete the form below to vote for the Chairperson position.</p>
       
       <div class="voter-badge">
@@ -515,7 +819,7 @@
         <strong>Google Form:</strong> Select your preferred candidate from the form below and submit your vote.
       </div>
 
-      <!-- Embedded Google Form with Alert Overlay -->
+      <!-- Embedded Google Form with Alert & Timer Overlays -->
       <div class="google-form-wrapper" id="googleFormWrapper">
         <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd8Z0HY6vebD216QRXzms8orwkySR5xyriV-frbH_5bIKbxow/viewform?embedded=true" 
                 frameborder="0" 
@@ -525,7 +829,39 @@
           Loading…
         </iframe>
         
-        <!-- Styled Alert Overlay -->
+        <!-- Timer Overlay (shows before voting starts) -->
+        <div class="timer-overlay" id="timerOverlay">
+          <div class="timer-icon">
+            <i class="bi bi-clock-history"></i>
+          </div>
+          <div class="timer-title">Voting Starts Soon!</div>
+          <div class="timer-subtitle">The election opens at <strong style="color: var(--gold);">7:30 AM</strong></div>
+          
+          <div class="timer-display">
+            <div class="timer-unit">
+              <span class="number" id="hoursDisplay">00</span>
+              <span class="label">Hours</span>
+            </div>
+            <div class="timer-unit">
+              <span class="number" id="minutesDisplay">00</span>
+              <span class="label">Minutes</span>
+            </div>
+            <div class="timer-unit">
+              <span class="number" id="secondsDisplay">00</span>
+              <span class="label">Seconds</span>
+            </div>
+          </div>
+          
+          <div class="timer-message">
+            ⏰ Voting opens at <strong>7:30 AM</strong> — <span id="currentTimeDisplay">Loading time...</span>
+          </div>
+          
+          <div class="timer-progress">
+            <div class="progress-bar" id="timerProgressBar"></div>
+          </div>
+        </div>
+        
+        <!-- Styled Alert Overlay (shows after timer ends) -->
         <div class="form-alert-overlay" id="formAlertOverlay">
           <div class="form-alert-card">
             <div class="alert-icon">
@@ -599,10 +935,7 @@
 <!-- ═══ EXCITING THANK YOU OVERLAY ═══ -->
 <div class="thank-you-overlay" id="thankYouOverlay">
   <div class="thank-you-card">
-    <!-- Confetti Container -->
     <div class="confetti-container" id="confettiContainer"></div>
-    
-    <!-- Sparkle decorations -->
     <div class="sparkle" style="top: 20px; right: 30px;">✨</div>
     <div class="sparkle" style="bottom: 20px; left: 30px; animation-delay: 1s;">🌟</div>
     <div class="sparkle" style="top: 50%; left: 20px; animation-delay: 0.5s;">⭐</div>
@@ -643,8 +976,23 @@
 </footer>
 
 <script>
+  // ─── CONFIGURATION ─────────────────────────────────────────
+  // Voting opens at 7:30 AM (local time of the user)
+  const VOTING_START_HOUR = 7;
+  const VOTING_START_MINUTE = 30;
+
+  const CANDIDATES = [
+    { id: 1, name: "Buyondo Deus", initials: "BD" },
+    { id: 2, name: "Magembe Mike", initials: "MM" },
+    { id: 3, name: "Nakaliisa Hadijah", initials: "NH" },
+    { id: 4, name: "Naluwaga Joan", initials: "NJ" },
+    { id: 5, name: "Ssemwogerere Ashiraf", initials: "SA" }
+  ];
+
   // ─── STATE ──────────────────────────────────────────────────
   let voterData = { name: '', year: '', email: '' };
+  let timerInterval = null;
+  let isVotingOpen = false;
 
   // ─── DOM REFS ──────────────────────────────────────────────
   const screenRegister = document.getElementById('screen-register');
@@ -659,10 +1007,17 @@
   const voterEmailDisplay = document.getElementById('voter-email-display');
   const alertOverlay = document.getElementById('formAlertOverlay');
   const alertUserEmail = document.getElementById('alert-user-email');
+  const timerOverlay = document.getElementById('timerOverlay');
+  const hoursDisplay = document.getElementById('hoursDisplay');
+  const minutesDisplay = document.getElementById('minutesDisplay');
+  const secondsDisplay = document.getElementById('secondsDisplay');
+  const currentTimeDisplay = document.getElementById('currentTimeDisplay');
+  const timerProgressBar = document.getElementById('timerProgressBar');
   const thankYouOverlay = document.getElementById('thankYouOverlay');
   const thankYouName = document.getElementById('thankYouName');
   const thankYouEmail = document.getElementById('thankYouEmail');
   const confettiContainer = document.getElementById('confettiContainer');
+  const votingStatus = document.getElementById('votingStatus');
 
   // ─── INIT ──────────────────────────────────────────────────
   (function init() {
@@ -674,7 +1029,78 @@
       opt.textContent = y;
       regYear.appendChild(opt);
     }
+
+    // Update voting status display
+    const now = new Date();
+    const target = new Date(now);
+    target.setHours(VOTING_START_HOUR, VOTING_START_MINUTE, 0, 0);
+    if (target <= now) {
+      votingStatus.textContent = 'Live Now! 🎯';
+    } else {
+      votingStatus.textContent = `${String(VOTING_START_HOUR).padStart(2, '0')}:${String(VOTING_START_MINUTE).padStart(2, '0')} AM`;
+    }
+
+    // Start the timer immediately
+    startTimer();
   })();
+
+  // ─── TIMER FUNCTIONS ──────────────────────────────────────
+
+  function startTimer() {
+    // Calculate target time (today at 7:30 AM)
+    const now = new Date();
+    const target = new Date(now);
+    target.setHours(VOTING_START_HOUR, VOTING_START_MINUTE, 0, 0);
+    
+    // If target time has passed today, set for tomorrow
+    if (target <= now) {
+      target.setDate(target.getDate() + 1);
+    }
+
+    // Update timer every second
+    timerInterval = setInterval(() => {
+      const current = new Date();
+      const diff = target - current;
+      
+      // Update current time display
+      currentTimeDisplay.textContent = current.toLocaleTimeString('en-US', { 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        second: '2-digit',
+        hour12: true 
+      });
+
+      if (diff <= 0) {
+        // Voting has started!
+        clearInterval(timerInterval);
+        timerOverlay.classList.add('hidden');
+        isVotingOpen = true;
+        votingStatus.textContent = 'Live Now! 🎯';
+        // Only show alert if we're on the vote screen
+        if (screenVote.classList.contains('active')) {
+          setTimeout(() => showAlert(), 500);
+        }
+        return;
+      }
+
+      // Calculate hours, minutes, seconds
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      // Display with leading zeros
+      hoursDisplay.textContent = String(hours).padStart(2, '0');
+      minutesDisplay.textContent = String(minutes).padStart(2, '0');
+      secondsDisplay.textContent = String(seconds).padStart(2, '0');
+      
+      // Update progress bar
+      const totalSeconds = (target - new Date()) / 1000;
+      const maxSeconds = 12 * 60 * 60;
+      const progress = Math.min(((maxSeconds - totalSeconds) / maxSeconds) * 100, 100);
+      timerProgressBar.style.width = `${Math.max(0, progress)}%`;
+      
+    }, 1000);
+  }
 
   // ─── NAVIGATION ──────────────────────────────────────────
   window.goTo = function(screenId) {
@@ -708,10 +1134,20 @@
     // Navigate to vote screen
     goTo('screen-vote');
     
-    // Show the alert after a short delay (when Google Form loads)
-    setTimeout(() => {
-      showAlert();
-    }, 800);
+    // Check if voting is already open
+    if (isVotingOpen) {
+      // Show the alert after a short delay
+      setTimeout(() => {
+        showAlert();
+      }, 500);
+    } else {
+      // Timer overlay is already showing, but ensure it's visible
+      timerOverlay.classList.remove('hidden');
+      // Start timer if not already running
+      if (!timerInterval) {
+        startTimer();
+      }
+    }
   };
 
   // ─── ALERT FUNCTIONS ──────────────────────────────────
@@ -719,9 +1155,7 @@
     alertUserEmail.textContent = voterData.email || 'your.email@domain.com';
     alertOverlay.classList.add('show');
     
-    // Clear any existing timeout
     clearTimeout(alertTimeout);
-    // Auto-dismiss after 10 seconds
     alertTimeout = setTimeout(() => {
       if (alertOverlay.classList.contains('show')) {
         alertOverlay.classList.remove('show');
@@ -735,33 +1169,21 @@
 
   window.acceptAlert = function() {
     alertOverlay.classList.remove('show');
-    // Focus the iframe so user can interact with the form
     const iframe = document.getElementById('googleFormIframe');
     if (iframe) {
       iframe.focus();
       try {
         iframe.contentWindow.focus();
-      } catch(e) {
-        // Cross-origin, can't focus inside iframe
-      }
+      } catch(e) {}
     }
   };
 
   // ─── EXCITING THANK YOU ──────────────────────────────────
   function showThankYou() {
-    // Update thank you card with voter info
     thankYouName.textContent = voterData.name;
     thankYouEmail.textContent = voterData.email;
-    
-    // Generate confetti
     generateConfetti();
-    
-    // Show the overlay
     thankYouOverlay.classList.add('show');
-    
-    // Play celebration sound effect (optional)
-    // Uncomment if you want to add a subtle sound
-    // playCelebrationSound();
   }
 
   function generateConfetti() {
@@ -777,14 +1199,13 @@
       const left = Math.random() * 100;
       const duration = Math.random() * 2 + 2;
       const delay = Math.random() * 2;
-      const shape = Math.random() > 0.5 ? '50%' : '2px';
       
       piece.style.cssText = `
         left: ${left}%;
         width: ${size}px;
         height: ${size * 1.5}px;
         background: ${color};
-        border-radius: ${shape};
+        border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
         animation-duration: ${duration}s;
         animation-delay: ${delay}s;
         opacity: ${Math.random() * 0.5 + 0.5};
@@ -796,63 +1217,16 @@
 
   window.closeThankYou = function() {
     thankYouOverlay.classList.remove('show');
-    // Navigate to success screen
     goTo('screen-success');
   };
 
-  // ─── DETECT GOOGLE FORM SUBMISSION ──────────────────────
-  function detectFormSubmission() {
-    // We can't directly detect submission from the iframe due to cross-origin restrictions.
-    // Instead, we'll use a combination of:
-    // 1. The user clicking "I've submitted my vote" button
-    // 2. Or detecting if the form was submitted by checking if the iframe URL changed
-    // 3. Or using a MutationObserver to detect changes in the iframe
-    
-    // Method 1: User clicks the "I've submitted my vote" button
-    // This already calls markVoteComplete()
-  }
-
   // ─── MARK VOTE COMPLETE ──────────────────────────────────
   window.markVoteComplete = function() {
-    // Show the exciting thank you overlay
     showThankYou();
-    
-    // Update success screen data (for when they close the thank you)
     document.getElementById('rec-name').textContent = voterData.name;
     document.getElementById('rec-email').textContent = voterData.email;
     document.getElementById('rec-time').textContent = new Date().toLocaleString('en-UG', { timeZone: 'Africa/Kampala' });
   };
-
-  // ─── OPTIONAL: AUTO-DETECT FORM SUBMISSION ──────────────
-  // This attempts to detect when the Google Form is submitted
-  // by checking if the iframe URL changes to the "thank you" page
-  let submissionCheckInterval;
-
-  function startSubmissionDetection() {
-    const iframe = document.getElementById('googleFormIframe');
-    let previousSrc = iframe.src;
-    
-    submissionCheckInterval = setInterval(() => {
-      try {
-        // Check if the iframe content has changed
-        // Note: This may not work due to cross-origin restrictions
-        const currentSrc = iframe.src;
-        if (currentSrc !== previousSrc) {
-          previousSrc = currentSrc;
-          // If the URL contains "formResponse" or "thankyou", it was submitted
-          if (currentSrc.includes('formResponse') || currentSrc.includes('thankyou')) {
-            clearInterval(submissionCheckInterval);
-            setTimeout(() => {
-              markVoteComplete();
-            }, 1000);
-          }
-        }
-      } catch(e) {
-        // Cross-origin: can't access iframe content
-        // Fallback: user must click the "I've submitted" button
-      }
-    }, 2000);
-  }
 
   // ─── HELPERS ──────────────────────────────────────────
   function showError(el, msg) {
@@ -875,20 +1249,7 @@
     }
   });
 
-  // Auto-dismiss alert after 10 seconds (optional)
   let alertTimeout;
-  
-  // Start submission detection when vote screen becomes active
-  const voteObserver = new MutationObserver(() => {
-    if (screenVote.classList.contains('active')) {
-      startSubmissionDetection();
-    } else {
-      if (submissionCheckInterval) {
-        clearInterval(submissionCheckInterval);
-      }
-    }
-  });
-  voteObserver.observe(screenVote, { attributes: true, attributeFilter: ['class'] });
 </script>
 
 <!-- Bootstrap bundle -->
