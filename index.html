@@ -11,7 +11,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 
   <style>
-    /* ─── styles (unchanged) ─── */
     :root {
       --navy: #1B2A4A;
       --gold: #C9972B;
@@ -78,56 +77,324 @@
       font-family: 'Playfair Display', serif;
       font-size: 1.45rem; font-weight: 700; color: var(--navy);
     }
-    .candidate-card {
-      border: 2px solid #E2E6F0;
-      border-radius: 14px;
-      padding: 20px 16px 16px;
-      cursor: pointer;
-      transition: all .22s ease;
-      text-align: center;
-      background: white;
-      user-select: none;
-    }
-    .candidate-card:hover {
-      border-color: var(--gold);
-      transform: translateY(-3px);
-      box-shadow: 0 6px 24px rgba(201, 151, 43, .18);
-    }
-    .candidate-card.selected {
-      border-color: var(--gold);
-      background: #FFFBF2;
-      box-shadow: 0 0 0 4px rgba(201, 151, 43, .18);
-    }
-    .candidate-card .initials {
-      font-size: 2.2rem; font-weight: 700; color: var(--navy);
-      background: #f0f2f6;
-      width: 60px; height: 60px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 8px;
-    }
-    .candidate-card.selected .initials {
-      background: var(--gold);
-      color: #fff;
-    }
     .btn-primary-gold {
       background: var(--gold);
       color: var(--navy);
       border: none;
       border-radius: 10px;
-      padding: 12px 28px;
+      padding: 14px 28px;
       font-weight: 700;
       width: 100%;
-      transition: background .2s;
+      transition: all .2s;
+      font-size: 1.1rem;
     }
     .btn-primary-gold:hover {
       background: var(--gold-lt);
       color: var(--navy);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(201, 151, 43, .3);
     }
     .btn-primary-gold:disabled {
       opacity: .6;
       pointer-events: none;
     }
-    .btn-outline-secondary { border-radius: 10px; }
+    .info-box {
+      background: #f0f4ff;
+      border-left: 4px solid var(--gold);
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+    }
+    .info-box i {
+      color: var(--gold);
+      font-size: 1.2rem;
+    }
+    .voter-badge {
+      background: var(--navy);
+      color: white;
+      padding: 12px 16px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .voter-badge i {
+      font-size: 1.5rem;
+    }
+    .voter-badge .voter-info {
+      flex: 1;
+      min-width: 100px;
+    }
+    .voter-badge .voter-info .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+    .voter-badge .voter-info .value {
+      font-weight: 600;
+      word-break: break-word;
+    }
+    .google-form-wrapper {
+      margin-top: 16px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid #e2e6f0;
+      background: white;
+      position: relative;
+    }
+    .google-form-wrapper iframe {
+      border: 0;
+      width: 100%;
+      height: 700px;
+      display: block;
+    }
+    @media (max-width: 600px) {
+      .google-form-wrapper iframe {
+        height: 550px;
+      }
+    }
+    
+    /* ─── STYLED ALERT OVERLAY ─── */
+    .form-alert-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      padding: 20px;
+      border-radius: 12px;
+      backdrop-filter: blur(4px);
+    }
+    .form-alert-overlay.show {
+      display: flex;
+    }
+    .form-alert-card {
+      background: white;
+      max-width: 460px;
+      width: 100%;
+      border-radius: 16px;
+      padding: 32px 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      animation: slideUp 0.3s ease;
+      position: relative;
+    }
+    @keyframes slideUp {
+      0% { opacity: 0; transform: translateY(20px) scale(0.95); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .form-alert-card .alert-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #FFF3CD;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: #856404;
+      margin: 0 auto 16px;
+    }
+    .form-alert-card .alert-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--navy);
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .form-alert-card .alert-message {
+      color: #5a5a5a;
+      text-align: center;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .form-alert-card .alert-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .form-alert-card .alert-actions .btn {
+      min-width: 120px;
+      border-radius: 10px;
+      font-weight: 600;
+      padding: 10px 20px;
+    }
+    .form-alert-card .alert-actions .btn-outline-secondary {
+      border: 2px solid #dce0e8;
+      color: var(--slate);
+    }
+    .form-alert-card .alert-actions .btn-outline-secondary:hover {
+      background: #f5f5f5;
+      border-color: #b0b8c8;
+    }
+    .form-alert-card .alert-actions .btn-primary-gold-sm {
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      font-weight: 700;
+      transition: all .2s;
+    }
+    .form-alert-card .alert-actions .btn-primary-gold-sm:hover {
+      background: var(--gold-lt);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(201, 151, 43, .3);
+    }
+    .form-alert-card .email-notice {
+      background: #f0f4ff;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: var(--navy);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .form-alert-card .email-notice i {
+      color: var(--gold);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .form-alert-card .email-notice .email {
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    /* ─── EXCITING THANK YOU OVERLAY ─── */
+    .thank-you-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(27, 42, 74, 0.92);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 20000;
+      padding: 20px;
+      backdrop-filter: blur(8px);
+    }
+    .thank-you-overlay.show {
+      display: flex;
+      animation: fadeIn 0.5s ease;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    .thank-you-card {
+      background: white;
+      max-width: 520px;
+      width: 100%;
+      border-radius: 24px;
+      padding: 48px 36px;
+      text-align: center;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+      animation: celebrate 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    @keyframes celebrate {
+      0% { opacity: 0; transform: scale(0.5) rotate(-5deg); }
+      100% { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+    .thank-you-card .confetti-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .confetti-piece {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      animation: confettiFall linear forwards;
+    }
+    @keyframes confettiFall {
+      0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(400px) rotate(720deg); opacity: 0; }
+    }
+    .thank-you-card .check-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #28a745, #20c997);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 3rem;
+      color: white;
+      animation: pulse 1s ease infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .thank-you-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 8px;
+      font-size: 2rem;
+    }
+    .thank-you-card .subtitle {
+      color: var(--slate);
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+    .thank-you-card .voter-name {
+      font-weight: 700;
+      color: var(--gold);
+      font-size: 1.1rem;
+    }
+    .thank-you-card .divider {
+      width: 60px;
+      height: 3px;
+      background: var(--gold);
+      margin: 16px auto;
+      border-radius: 2px;
+    }
+    .thank-you-card .thank-you-message {
+      color: #5a5a5a;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .thank-you-card .btn-thanks {
+      background: var(--navy);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 32px;
+      font-weight: 600;
+      transition: all .2s;
+    }
+    .thank-you-card .btn-thanks:hover {
+      background: var(--gold);
+      color: var(--navy);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(201, 151, 43, .3);
+    }
+    .thank-you-card .sparkle {
+      position: absolute;
+      font-size: 2rem;
+      animation: sparkleFloat 3s ease infinite;
+    }
+    @keyframes sparkleFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+      50% { transform: translateY(-10px) rotate(180deg); opacity: 1; }
+    }
+
     .success-seal {
       width: 90px; height: 90px; border-radius: 50%;
       background: linear-gradient(135deg, var(--gold) 0%, var(--gold-lt) 100%);
@@ -136,25 +403,23 @@
       display: flex; align-items: center; justify-content: center;
       margin: 0 auto 24px;
     }
-    #otp-boxes input {
-      width: 52px; height: 64px;
-      font-size: 1.8rem; font-weight: 700; text-align: center;
+    .footer-actions {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-actions .btn-outline-secondary {
       border-radius: 10px;
-      border: 2px solid #dce0e8;
-      transition: border-color .2s;
-      background: #fafbfc;
     }
-    #otp-boxes input:focus {
-      border-color: var(--gold);
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(201, 151, 43, .2);
+    .footer-actions .btn-link {
+      text-decoration: none;
+      font-weight: 500;
+      color: #28a745;
     }
-    .demo-note {
-      background: #fff3cd;
-      border-left: 4px solid #ffc107;
-      padding: 10px 14px;
-      border-radius: 6px;
-      font-size: 0.9rem;
+    .footer-actions .btn-link:hover {
+      text-decoration: underline;
+      color: #1e7e34;
     }
     footer a { color: var(--slate); text-decoration: none; }
     footer a:hover { color: var(--navy); text-decoration: underline; }
@@ -193,11 +458,13 @@
     <!-- SCREEN 1: REGISTER -->
     <div class="screen active" id="screen-register">
       <h3 class="section-title">Voter Registration</h3>
-      <p class="text-muted">Enter your details to receive a verification code.</p>
-      <div class="demo-note mb-3">
+      <p class="text-muted">Enter your details to proceed to the voting form.</p>
+      
+      <div class="info-box">
         <i class="bi bi-info-circle-fill me-2"></i>
-        <strong>Firebase + EmailJS:</strong> OTP via EmailJS, votes stored in Firebase Firestore.
+        <strong>How it works:</strong> Fill in your details below, then click "Continue to Vote" to access the secure Google Form where you'll cast your vote.
       </div>
+      
       <div class="mb-3">
         <label class="form-label fw-semibold">Full Name</label>
         <input type="text" class="form-control" id="reg-name" placeholder="e.g. Achom Christine" autocomplete="name">
@@ -211,49 +478,160 @@
         <input type="email" class="form-control" id="reg-email" placeholder="yourname@email.com" autocomplete="email">
       </div>
       <div id="reg-error" class="alert alert-danger" style="display:none;"></div>
-      <button class="btn btn-primary-gold" id="btn-send-otp" onclick="sendOTP()">
-        <i class="bi bi-envelope-paper me-2"></i>Send Verification Code
+      
+      <button class="btn btn-primary-gold" onclick="continueToVote()">
+        <i class="bi bi-arrow-right-circle me-2"></i>Continue to Vote
       </button>
+      
+      <div class="mt-4 text-center text-muted small">
+        <i class="bi bi-shield-lock me-1"></i>
+        Your information is confidential and will only be used for election verification.
+      </div>
     </div>
 
-    <!-- SCREEN 2: VERIFY -->
-    <div class="screen" id="screen-verify">
-      <h3 class="section-title">Verify Your Identity</h3>
-      <p class="text-muted">Enter the 6-digit code sent to <strong id="otp-email-display"></strong></p>
-      <div class="d-flex gap-2 justify-content-center mb-4" id="otp-boxes"></div>
-      <div id="verify-error" class="alert alert-danger" style="display:none;"></div>
-      <button class="btn btn-primary-gold" id="btn-verify-otp" onclick="verifyOTP()">Confirm Code</button>
-      <button class="btn btn-outline-secondary w-100 mt-3" onclick="goTo('screen-register', true)">← Back</button>
-    </div>
-
-    <!-- SCREEN 3: VOTE -->
+    <!-- SCREEN 2: VOTE (Google Form with Styled Alert) -->
     <div class="screen" id="screen-vote">
       <h3 class="section-title">Cast Your Vote</h3>
-      <p class="text-muted">Select <strong>one</strong> candidate for Chairperson</p>
-      <div class="candidates-grid row g-3" id="candidates-container"></div>
-      <div id="vote-error" class="alert alert-danger mt-3" style="display:none;"></div>
-      <button class="btn btn-primary-gold mt-4" id="btn-cast-vote" onclick="castVote()">
-        <i class="bi bi-check2-circle me-2"></i>Cast My Vote
+      <p class="text-muted">Complete the form below to vote for the Chairperson position.</p>
+      
+      <div class="voter-badge">
+        <i class="bi bi-person-circle"></i>
+        <div class="voter-info">
+          <div class="label">Voter</div>
+          <div class="value" id="voter-name-display">-</div>
+        </div>
+        <div class="voter-info">
+          <div class="label">Year</div>
+          <div class="value" id="voter-year-display">-</div>
+        </div>
+        <div class="voter-info">
+          <div class="label">Email</div>
+          <div class="value" id="voter-email-display">-</div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <i class="bi bi-google me-2"></i>
+        <strong>Google Form:</strong> Select your preferred candidate from the form below and submit your vote.
+      </div>
+
+      <!-- Embedded Google Form with Alert Overlay -->
+      <div class="google-form-wrapper" id="googleFormWrapper">
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd8Z0HY6vebD216QRXzms8orwkySR5xyriV-frbH_5bIKbxow/viewform?embedded=true" 
+                frameborder="0" 
+                marginheight="0" 
+                marginwidth="0"
+                id="googleFormIframe">
+          Loading…
+        </iframe>
+        
+        <!-- Styled Alert Overlay -->
+        <div class="form-alert-overlay" id="formAlertOverlay">
+          <div class="form-alert-card">
+            <div class="alert-icon">
+              <i class="bi bi-shield-exclamation"></i>
+            </div>
+            <div class="alert-title">Email Address Confirmation</div>
+            <div class="alert-message">
+              Your email address will be recorded with your response. Make sure you trust this form before submitting.
+            </div>
+            
+            <div class="email-notice">
+              <i class="bi bi-envelope"></i>
+              <span>A copy of your responses will be emailed to <span class="email" id="alert-user-email">your.email@domain.com</span></span>
+            </div>
+            
+            <div class="alert-actions">
+              <button class="btn btn-outline-secondary" onclick="dismissAlert()">
+                <i class="bi bi-x-circle me-1"></i>Cancel
+              </button>
+              <button class="btn btn-primary-gold-sm" onclick="acceptAlert()">
+                <i class="bi bi-check-circle me-1"></i>OK, Continue
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-3 text-muted small text-center">
+        <i class="bi bi-shield-check me-1"></i>
+        Your vote is secure and confidential.
+      </div>
+      
+      <div class="footer-actions">
+        <button class="btn btn-outline-secondary w-100" onclick="goTo('screen-register')">
+          <i class="bi bi-arrow-left me-2"></i>Change Voter Details
+        </button>
+        
+        <button class="btn btn-link" onclick="markVoteComplete()">
+          <i class="bi bi-check-circle me-1"></i>
+          I've submitted my vote
+        </button>
+      </div>
+    </div>
+
+    <!-- SCREEN 3: SUCCESS -->
+    <div class="screen text-center" id="screen-success">
+      <div class="success-seal mx-auto"><i class="bi bi-patch-check-fill"></i></div>
+      <h3 class="fw-bold">Thank You for Voting!</h3>
+      <p class="text-muted">Your vote has been recorded successfully.</p>
+      
+      <div class="border border-success border-opacity-25 bg-light p-4 rounded-3 text-start mt-4">
+        <div><strong>Voter:</strong> <span id="rec-name"></span></div>
+        <div><strong>Email:</strong> <span id="rec-email"></span></div>
+        <div><strong>Status:</strong> <span class="text-success">✓ Vote Submitted via Google Forms</span></div>
+        <div><strong>Time:</strong> <span id="rec-time"></span></div>
+      </div>
+      
+      <div class="alert alert-success mt-4">
+        <i class="bi bi-check-circle-fill me-2"></i>
+        Your vote has been recorded. You can close this page now.
+      </div>
+      
+      <button class="btn btn-outline-secondary mt-3" onclick="location.reload()">
+        <i class="bi bi-house me-2"></i>Return to Home
       </button>
     </div>
 
-    <!-- SCREEN 4: SUCCESS -->
-    <div class="screen text-center" id="screen-success">
-      <div class="success-seal mx-auto"><i class="bi bi-patch-check-fill"></i></div>
-      <h3 class="fw-bold">Vote Cast Successfully!</h3>
-      <p class="text-muted">Thank you for participating.</p>
-      <div class="border border-success border-opacity-25 bg-light p-4 rounded-3 text-start mt-4">
-        <div><strong>Voter:</strong> <span id="rec-name"></span></div>
-        <div><strong>Voted for:</strong> <span id="rec-candidate"></span></div>
-        <div><strong>Time:</strong> <span id="rec-time"></span></div>
-        <div><strong>Reference:</strong> <span id="rec-ref"></span></div>
-      </div>
-      <div class="alert alert-success mt-4">
-        <i class="bi bi-check-circle-fill me-2"></i>A confirmation email has been sent to you.
-      </div>
-      <div class="mt-3 text-muted small" id="save-status"></div>
-    </div>
+  </div>
+</div>
 
+<!-- ═══ EXCITING THANK YOU OVERLAY ═══ -->
+<div class="thank-you-overlay" id="thankYouOverlay">
+  <div class="thank-you-card">
+    <!-- Confetti Container -->
+    <div class="confetti-container" id="confettiContainer"></div>
+    
+    <!-- Sparkle decorations -->
+    <div class="sparkle" style="top: 20px; right: 30px;">✨</div>
+    <div class="sparkle" style="bottom: 20px; left: 30px; animation-delay: 1s;">🌟</div>
+    <div class="sparkle" style="top: 50%; left: 20px; animation-delay: 0.5s;">⭐</div>
+    <div class="sparkle" style="bottom: 40%; right: 20px; animation-delay: 1.5s;">🎉</div>
+    
+    <div class="check-circle">
+      <i class="bi bi-check-lg"></i>
+    </div>
+    
+    <h2>Thank You! 🎊</h2>
+    <p class="subtitle">Your vote has been cast successfully</p>
+    <div class="divider"></div>
+    
+    <p class="thank-you-message">
+      <span class="voter-name" id="thankYouName">Voter</span>, thank you for participating in the 
+      <strong>St. Josephine Bakhita</strong> leadership election. 
+      Your voice matters in shaping our association's future!
+    </p>
+    
+    <div class="divider"></div>
+    
+    <p style="font-size: 0.85rem; color: var(--slate); margin-bottom: 16px;">
+      <i class="bi bi-envelope-check me-1"></i>
+      A confirmation has been sent to <strong id="thankYouEmail">your@email.com</strong>
+    </p>
+    
+    <button class="btn-thanks" onclick="closeThankYou()">
+      <i class="bi bi-arrow-right me-2"></i>Continue to Dashboard
+    </button>
   </div>
 </div>
 
@@ -264,73 +642,27 @@
   <a href="https://wa.me/256701422100" target="_blank">WhatsApp +256 701 422 100</a>
 </footer>
 
-<!-- ═══ IMPORT MAPS (Firebase v9 modular) ═══ -->
-<script type="importmap">
-  {
-    "imports": {
-      "firebase/app": "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js",
-      "firebase/firestore": "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js"
-    }
-  }
-</script>
-
-<!-- EmailJS -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-<script type="module">
-  // ─── FIREBASE IMPORTS ──────────────────────────────────────
-  import { initializeApp } from 'firebase/app';
-  import { getFirestore, collection, addDoc } from 'firebase/firestore';
-
-  // ─── YOUR FIREBASE CONFIG ──────────────────────────────────
-  const firebaseConfig = {
-    apiKey: "AIzaSyDJIln3O8kXuxAN3s9knr-2kVRGzczh6ZI",
-    authDomain: "election-9491c.firebaseapp.com",
-    projectId: "election-9491c",
-    storageBucket: "election-9491c.firebasestorage.app",
-    messagingSenderId: "444815730253",
-    appId: "1:444815730253:web:d0b51216904933e24d5e04",
-    measurementId: "G-VBQMT66WLE"   // (optional, not used here)
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const votesCollection = collection(db, 'votes');
-
-  // ─── EMAILJS CONFIG ────────────────────────────────────────
-  const EMAILJS_CONFIG = {
-    serviceID: 'service_1doaoq6',
-    templateID: 'template_wlm4jaf',
-    publicKey: 'QaU8bLtIvM0mzZpzY'
-  };
-
-  // ─── CANDIDATES ─────────────────────────────────────────────
-  const CANDIDATES = [
-    { id: 1, name: "Buyondo Deus", initials: "BD" },
-    { id: 2, name: "Magembe Michael", initials: "MM" },
-    { id: 3, name: "Naluwaga Joan", initials: "NJ" },
-    { id: 4, name: "Nakaliisa Hadijah", initials: "NH" },
-    { id: 5, name: "Ssemwogerere Ashiraf", initials: "SA" }
-  ];
-
+<script>
   // ─── STATE ──────────────────────────────────────────────────
-  let voterData = {}, generatedOTP = "", selectedId = null;
+  let voterData = { name: '', year: '', email: '' };
 
   // ─── DOM REFS ──────────────────────────────────────────────
   const screenRegister = document.getElementById('screen-register');
-  const screenVerify = document.getElementById('screen-verify');
   const screenVote = document.getElementById('screen-vote');
   const screenSuccess = document.getElementById('screen-success');
   const regName = document.getElementById('reg-name');
   const regYear = document.getElementById('reg-year');
   const regEmail = document.getElementById('reg-email');
   const regError = document.getElementById('reg-error');
-  const verifyError = document.getElementById('verify-error');
-  const voteError = document.getElementById('vote-error');
-  const otpBoxes = document.getElementById('otp-boxes');
-  const candidatesContainer = document.getElementById('candidates-container');
-  const saveStatus = document.getElementById('save-status');
+  const voterNameDisplay = document.getElementById('voter-name-display');
+  const voterYearDisplay = document.getElementById('voter-year-display');
+  const voterEmailDisplay = document.getElementById('voter-email-display');
+  const alertOverlay = document.getElementById('formAlertOverlay');
+  const alertUserEmail = document.getElementById('alert-user-email');
+  const thankYouOverlay = document.getElementById('thankYouOverlay');
+  const thankYouName = document.getElementById('thankYouName');
+  const thankYouEmail = document.getElementById('thankYouEmail');
+  const confettiContainer = document.getElementById('confettiContainer');
 
   // ─── INIT ──────────────────────────────────────────────────
   (function init() {
@@ -342,96 +674,22 @@
       opt.textContent = y;
       regYear.appendChild(opt);
     }
-
-    // OTP boxes
-    for (let i = 0; i < 6; i++) {
-      const input = document.createElement('input');
-      input.type = 'text';
-      input.maxLength = 1;
-      input.className = 'form-control text-center fw-bold';
-      input.dataset.idx = i;
-      input.autocomplete = 'off';
-      input.addEventListener('input', onOtpInput);
-      input.addEventListener('keydown', onOtpKeydown);
-      input.addEventListener('focus', function() { this.select(); });
-      otpBoxes.appendChild(input);
-    }
-
-    // Candidate cards
-    CANDIDATES.forEach(cand => {
-      const col = document.createElement('div');
-      col.className = 'col-6 col-md-4';
-      col.innerHTML = `
-        <div class="candidate-card h-100" data-id="${cand.id}">
-          <div class="initials">${cand.initials}</div>
-          <h6 class="mb-1">${cand.name}</h6>
-          <small class="text-muted">#${cand.id}</small>
-        </div>`;
-      col.querySelector('.candidate-card').addEventListener('click', () => selectCandidate(cand.id));
-      candidatesContainer.appendChild(col);
-    });
-
-    // Auto-focus OTP on screen show
-    const observer = new MutationObserver(() => {
-      if (screenVerify.classList.contains('active')) {
-        setTimeout(() => {
-          const first = otpBoxes.querySelector('input');
-          if (first) first.focus();
-        }, 150);
-      }
-    });
-    observer.observe(screenVerify, { attributes: true, attributeFilter: ['class'] });
   })();
 
   // ─── NAVIGATION ──────────────────────────────────────────
-  window.goTo = function(screenId, resetOTP = true) {
+  window.goTo = function(screenId) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(screenId).classList.add('active');
-    if (resetOTP && screenId !== 'screen-verify') {
-      otpBoxes.querySelectorAll('input').forEach(inp => inp.value = '');
-      verifyError.style.display = 'none';
-    }
     document.querySelectorAll('.alert').forEach(el => el.style.display = 'none');
   };
 
-  // ─── OTP HANDLERS ──────────────────────────────────────
-  function onOtpInput(e) {
-    const input = e.target;
-    const idx = +input.dataset.idx;
-    input.value = input.value.replace(/\D/g, '').slice(0, 1);
-    if (input.value && idx < 5) {
-      const next = otpBoxes.querySelector(`input[data-idx="${idx + 1}"]`);
-      if (next) next.focus();
-    }
-    if (getOTPValue().length === 6) {
-      setTimeout(window.verifyOTP, 200);
-    }
-  }
-
-  function onOtpKeydown(e) {
-    const input = e.target;
-    const idx = +input.dataset.idx;
-    if (e.key === 'Backspace' && !input.value && idx > 0) {
-      const prev = otpBoxes.querySelector(`input[data-idx="${idx - 1}"]`);
-      if (prev) {
-        prev.focus();
-        prev.value = '';
-      }
-      e.preventDefault();
-    }
-  }
-
-  function getOTPValue() {
-    return Array.from(otpBoxes.querySelectorAll('input')).map(i => i.value).join('');
-  }
-
-  // ─── SEND OTP (EmailJS) ──────────────────────────────
-  window.sendOTP = async function() {
+  // ─── CONTINUE TO VOTE ──────────────────────────────────
+  window.continueToVote = function() {
     const name = regName.value.trim();
     const year = regYear.value;
     const email = regEmail.value.trim().toLowerCase();
-    const btn = document.getElementById('btn-send-otp');
 
+    // Validation
     if (!name || !year || !email) {
       return showError(regError, 'All fields are required.');
     }
@@ -439,146 +697,162 @@
       return showError(regError, 'Please enter a valid email address.');
     }
 
-    generatedOTP = String(Math.floor(100000 + Math.random() * 900000));
+    // Save voter data
     voterData = { name, year, email };
+    
+    // Update voter badge in vote screen
+    voterNameDisplay.textContent = name;
+    voterYearDisplay.textContent = year;
+    voterEmailDisplay.textContent = email;
 
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Sending...';
-
-    let emailSent = false;
-    try {
-      await emailjs.init(EMAILJS_CONFIG.publicKey);
-      const templateParams = {
-        to_email: email,
-        to_name: name,
-        otp: generatedOTP,
-        subject: 'Your OTP for St. Josephine Bakhita Election'
-      };
-      const response = await emailjs.send(
-        EMAILJS_CONFIG.serviceID,
-        EMAILJS_CONFIG.templateID,
-        templateParams
-      );
-      if (response.status === 200) {
-        emailSent = true;
-        console.log('✅ OTP email sent via EmailJS');
-      }
-    } catch (err) {
-      console.warn('⚠️ EmailJS send failed:', err);
-      alert(`⚠️ OTP could not be sent via email. Your OTP is: ${generatedOTP}\nPlease check your EmailJS configuration.`);
-    }
-
-    if (emailSent) {
-      console.log(`📧 OTP sent to ${email}`);
-    }
-
-    document.getElementById('otp-email-display').textContent = email;
-    btn.disabled = false;
-    btn.innerHTML = '<i class="bi bi-envelope-paper me-2"></i>Send Verification Code';
-    window.goTo('screen-verify', true);
-
+    // Navigate to vote screen
+    goTo('screen-vote');
+    
+    // Show the alert after a short delay (when Google Form loads)
     setTimeout(() => {
-      const first = otpBoxes.querySelector('input');
-      if (first) first.focus();
-    }, 200);
+      showAlert();
+    }, 800);
   };
 
-  // ─── VERIFY OTP ──────────────────────────────────────
-  window.verifyOTP = async function() {
-    const entered = getOTPValue();
-    if (entered.length < 6) {
-      return showError(verifyError, 'Please enter the full 6-digit code.');
-    }
-    if (entered !== generatedOTP) {
-      return showError(verifyError, 'Incorrect verification code. Please try again.');
-    }
-    window.goTo('screen-vote', true);
-  };
-
-  // ─── SELECT CANDIDATE ──────────────────────────────
-  function selectCandidate(id) {
-    selectedId = id;
-    candidatesContainer.querySelectorAll('.candidate-card').forEach(c => {
-      c.classList.toggle('selected', +c.dataset.id === id);
-    });
-    voteError.style.display = 'none';
+  // ─── ALERT FUNCTIONS ──────────────────────────────────
+  function showAlert() {
+    alertUserEmail.textContent = voterData.email || 'your.email@domain.com';
+    alertOverlay.classList.add('show');
+    
+    // Clear any existing timeout
+    clearTimeout(alertTimeout);
+    // Auto-dismiss after 10 seconds
+    alertTimeout = setTimeout(() => {
+      if (alertOverlay.classList.contains('show')) {
+        alertOverlay.classList.remove('show');
+      }
+    }, 10000);
   }
 
-  // ─── CAST VOTE (Firestore + localStorage) ──────────
-  window.castVote = async function() {
-    if (!selectedId) {
-      return showError(voteError, 'Please select a candidate before casting your vote.');
-    }
-
-    const candidate = CANDIDATES.find(c => c.id === selectedId);
-    const ref = 'SJB-' + Date.now().toString(36).toUpperCase();
-    const timestamp = new Date().toLocaleString('en-UG', { timeZone: 'Africa/Kampala' });
-
-    const payload = {
-      name: voterData.name,
-      email: voterData.email,
-      year: voterData.year,
-      candidate: candidate.name,
-      ref,
-      timestamp,
-      createdAt: new Date().toISOString()
-    };
-
-    const btn = document.getElementById('btn-cast-vote');
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Recording...';
-
-    let firebaseSaved = false;
-    let firebaseError = '';
-
-    try {
-      // Add to Firestore
-      await addDoc(votesCollection, payload);
-      firebaseSaved = true;
-      console.log('✅ Vote saved to Firebase Firestore');
-    } catch (err) {
-      firebaseError = err.message || 'Firebase write error';
-      console.warn('⚠️ Firebase save failed:', err);
-    }
-
-    // Always save to localStorage as backup
-    let localSaved = false;
-    try {
-      const votes = JSON.parse(localStorage.getItem('sjb_votes') || '[]');
-      votes.push(payload);
-      localStorage.setItem('sjb_votes', JSON.stringify(votes));
-      localSaved = true;
-      console.log('✅ Vote saved to localStorage (backup)');
-    } catch (e) {
-      console.warn('⚠️ Could not save to localStorage:', e);
-    }
-
-    // Show success
-    document.getElementById('rec-name').textContent = voterData.name;
-    document.getElementById('rec-candidate').textContent = candidate.name;
-    document.getElementById('rec-time').textContent = timestamp;
-    document.getElementById('rec-ref').textContent = ref;
-
-    // Save status message
-    if (firebaseSaved) {
-      saveStatus.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> Vote saved to Firebase Firestore.';
-    } else {
-      let msg = `<i class="bi bi-exclamation-triangle-fill text-warning"></i> Could not save to Firebase. `;
-      if (localSaved) {
-        msg += 'Vote is saved locally (browser storage).';
-      } else {
-        msg += 'Vote could not be saved at all. Please try again.';
-      }
-      if (firebaseError) {
-        msg += `<br><small class="text-danger">Error: ${firebaseError}</small>`;
-      }
-      saveStatus.innerHTML = msg;
-    }
-
-    btn.disabled = false;
-    btn.innerHTML = '<i class="bi bi-check2-circle me-2"></i>Cast My Vote';
-    window.goTo('screen-success', true);
+  window.dismissAlert = function() {
+    alertOverlay.classList.remove('show');
   };
+
+  window.acceptAlert = function() {
+    alertOverlay.classList.remove('show');
+    // Focus the iframe so user can interact with the form
+    const iframe = document.getElementById('googleFormIframe');
+    if (iframe) {
+      iframe.focus();
+      try {
+        iframe.contentWindow.focus();
+      } catch(e) {
+        // Cross-origin, can't focus inside iframe
+      }
+    }
+  };
+
+  // ─── EXCITING THANK YOU ──────────────────────────────────
+  function showThankYou() {
+    // Update thank you card with voter info
+    thankYouName.textContent = voterData.name;
+    thankYouEmail.textContent = voterData.email;
+    
+    // Generate confetti
+    generateConfetti();
+    
+    // Show the overlay
+    thankYouOverlay.classList.add('show');
+    
+    // Play celebration sound effect (optional)
+    // Uncomment if you want to add a subtle sound
+    // playCelebrationSound();
+  }
+
+  function generateConfetti() {
+    const colors = ['#C9972B', '#E8B84B', '#1B2A4A', '#28a745', '#dc3545', '#17a2b8', '#ffc107', '#6f42c1'];
+    const container = confettiContainer;
+    container.innerHTML = '';
+    
+    for (let i = 0; i < 60; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const size = Math.random() * 8 + 4;
+      const left = Math.random() * 100;
+      const duration = Math.random() * 2 + 2;
+      const delay = Math.random() * 2;
+      const shape = Math.random() > 0.5 ? '50%' : '2px';
+      
+      piece.style.cssText = `
+        left: ${left}%;
+        width: ${size}px;
+        height: ${size * 1.5}px;
+        background: ${color};
+        border-radius: ${shape};
+        animation-duration: ${duration}s;
+        animation-delay: ${delay}s;
+        opacity: ${Math.random() * 0.5 + 0.5};
+      `;
+      
+      container.appendChild(piece);
+    }
+  }
+
+  window.closeThankYou = function() {
+    thankYouOverlay.classList.remove('show');
+    // Navigate to success screen
+    goTo('screen-success');
+  };
+
+  // ─── DETECT GOOGLE FORM SUBMISSION ──────────────────────
+  function detectFormSubmission() {
+    // We can't directly detect submission from the iframe due to cross-origin restrictions.
+    // Instead, we'll use a combination of:
+    // 1. The user clicking "I've submitted my vote" button
+    // 2. Or detecting if the form was submitted by checking if the iframe URL changed
+    // 3. Or using a MutationObserver to detect changes in the iframe
+    
+    // Method 1: User clicks the "I've submitted my vote" button
+    // This already calls markVoteComplete()
+  }
+
+  // ─── MARK VOTE COMPLETE ──────────────────────────────────
+  window.markVoteComplete = function() {
+    // Show the exciting thank you overlay
+    showThankYou();
+    
+    // Update success screen data (for when they close the thank you)
+    document.getElementById('rec-name').textContent = voterData.name;
+    document.getElementById('rec-email').textContent = voterData.email;
+    document.getElementById('rec-time').textContent = new Date().toLocaleString('en-UG', { timeZone: 'Africa/Kampala' });
+  };
+
+  // ─── OPTIONAL: AUTO-DETECT FORM SUBMISSION ──────────────
+  // This attempts to detect when the Google Form is submitted
+  // by checking if the iframe URL changes to the "thank you" page
+  let submissionCheckInterval;
+
+  function startSubmissionDetection() {
+    const iframe = document.getElementById('googleFormIframe');
+    let previousSrc = iframe.src;
+    
+    submissionCheckInterval = setInterval(() => {
+      try {
+        // Check if the iframe content has changed
+        // Note: This may not work due to cross-origin restrictions
+        const currentSrc = iframe.src;
+        if (currentSrc !== previousSrc) {
+          previousSrc = currentSrc;
+          // If the URL contains "formResponse" or "thankyou", it was submitted
+          if (currentSrc.includes('formResponse') || currentSrc.includes('thankyou')) {
+            clearInterval(submissionCheckInterval);
+            setTimeout(() => {
+              markVoteComplete();
+            }, 1000);
+          }
+        }
+      } catch(e) {
+        // Cross-origin: can't access iframe content
+        // Fallback: user must click the "I've submitted" button
+      }
+    }, 2000);
+  }
 
   // ─── HELPERS ──────────────────────────────────────────
   function showError(el, msg) {
@@ -588,21 +862,36 @@
     el._hideTimer = setTimeout(() => { el.style.display = 'none'; }, 6000);
   }
 
-  // Enter key on OTP boxes triggers verify
+  // Enter key triggers continue
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-      if (screenVerify.classList.contains('active')) {
-        const activeInput = document.activeElement;
-        if (activeInput && activeInput.closest('#otp-boxes')) {
+      if (screenRegister.classList.contains('active')) {
+        const activeElement = document.activeElement;
+        if (activeElement && (activeElement.id === 'reg-name' || activeElement.id === 'reg-email' || activeElement.id === 'reg-year')) {
           e.preventDefault();
-          window.verifyOTP();
+          window.continueToVote();
         }
       }
     }
   });
+
+  // Auto-dismiss alert after 10 seconds (optional)
+  let alertTimeout;
+  
+  // Start submission detection when vote screen becomes active
+  const voteObserver = new MutationObserver(() => {
+    if (screenVote.classList.contains('active')) {
+      startSubmissionDetection();
+    } else {
+      if (submissionCheckInterval) {
+        clearInterval(submissionCheckInterval);
+      }
+    }
+  });
+  voteObserver.observe(screenVote, { attributes: true, attributeFilter: ['class'] });
 </script>
 
 <!-- Bootstrap bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-  </html>
+</html>
