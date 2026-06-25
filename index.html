@@ -19,6 +19,7 @@
       --slate: #6B7A99;
       --white: #FFFFFF;
       --card-shadow: 0 8px 32px rgba(27, 42, 74, .13);
+      --red: #dc3545;
     }
     *, *::before, *::after { box-sizing: border-box; }
     body {
@@ -150,6 +151,17 @@
       color: var(--gold);
       font-size: 1.2rem;
     }
+    .info-box-closed {
+      background: #fff0f0;
+      border-left: 4px solid var(--red);
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+    }
+    .info-box-closed i {
+      color: var(--red);
+      font-size: 1.2rem;
+    }
     .voter-badge {
       background: var(--navy);
       color: white;
@@ -266,13 +278,16 @@
       text-align: center;
     }
     .stat-item .number {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-weight: 800;
       color: var(--gold);
       display: block;
     }
+    .stat-item .number.closed {
+      color: var(--red);
+    }
     .stat-item .label {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: var(--slate);
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -489,6 +504,51 @@
       width: 0%;
     }
 
+    /* ─── CLOSED OVERLAY ─── */
+    .closed-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(27, 42, 74, 0.92);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 70;
+      padding: 30px;
+      border-radius: 12px;
+      flex-direction: column;
+      backdrop-filter: blur(4px);
+    }
+    .closed-overlay.show {
+      display: flex;
+    }
+    .closed-overlay .closed-icon {
+      font-size: 4rem;
+      color: var(--red);
+      margin-bottom: 16px;
+    }
+    .closed-overlay .closed-title {
+      color: white;
+      font-size: 1.6rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .closed-overlay .closed-subtitle {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.95rem;
+      text-align: center;
+      max-width: 350px;
+      margin-bottom: 8px;
+    }
+    .closed-overlay .closed-date {
+      color: var(--gold);
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
     /* ─── EXCITING THANK YOU OVERLAY ─── */
     .thank-you-overlay {
       position: fixed;
@@ -666,6 +726,12 @@
       text-transform: uppercase;
       letter-spacing: 1px;
     }
+
+    .btn-disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
@@ -704,7 +770,7 @@
       <p class="text-muted">Enter your details to proceed to the voting form.</p>
       
       <!-- Election Info -->
-      <div class="info-box">
+      <div class="info-box" id="electionInfoBox">
         <i class="bi bi-info-circle-fill me-2"></i>
         <strong>How it works:</strong> Fill in your details below, then click "Continue to Vote" to access the secure Google Form where you'll cast your vote.
       </div>
@@ -721,7 +787,7 @@
         </div>
         <div class="stat-item">
           <span class="number" id="votingStatus">7:30 AM</span>
-          <span class="label">Voting Opens</span>
+          <span class="label" id="votingStatusLabel">Opens</span>
         </div>
       </div>
 
@@ -765,6 +831,15 @@
         </div>
       </div>
 
+      <!-- Election Period -->
+      <div style="background:#f8f9fa; padding:12px 16px; border-radius:10px; margin-bottom:16px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+        <i class="bi bi-calendar-event" style="color:var(--gold); font-size:1.2rem;"></i>
+        <div style="flex:1; font-size:0.9rem;">
+          <span style="font-weight:600;">🗳️ Voting Period:</span>
+          <span id="votingPeriodDisplay">Opens at 7:30 AM — Closes June 26, 2026 at 6:00 PM</span>
+        </div>
+      </div>
+
       <div class="feature-divider">
         <span>Register to Vote</span>
       </div>
@@ -783,7 +858,7 @@
       </div>
       <div id="reg-error" class="alert alert-danger" style="display:none;"></div>
       
-      <button class="btn btn-primary-gold" onclick="continueToVote()">
+      <button class="btn btn-primary-gold" id="continueBtn" onclick="continueToVote()">
         <i class="bi bi-arrow-right-circle me-2"></i>Continue to Vote
       </button>
       
@@ -814,7 +889,7 @@
         </div>
       </div>
 
-      <div class="info-box">
+      <div class="info-box" id="voteInfoBox">
         <i class="bi bi-google me-2"></i>
         <strong>Google Form:</strong> Select your preferred candidate from the form below and submit your vote.
       </div>
@@ -861,6 +936,20 @@
           </div>
         </div>
         
+        <!-- Closed Overlay (shows after voting ends) -->
+        <div class="closed-overlay" id="closedOverlay">
+          <div class="closed-icon">
+            <i class="bi bi-clock-fill"></i>
+          </div>
+          <div class="closed-title">Voting Has Closed</div>
+          <div class="closed-subtitle">
+            The election period has ended. Thank you to all who participated!
+          </div>
+          <div class="closed-date">
+            Closed: June 26, 2026 at 6:00 PM
+          </div>
+        </div>
+        
         <!-- Styled Alert Overlay (shows after timer ends) -->
         <div class="form-alert-overlay" id="formAlertOverlay">
           <div class="form-alert-card">
@@ -899,7 +988,7 @@
           <i class="bi bi-arrow-left me-2"></i>Change Voter Details
         </button>
         
-        <button class="btn btn-link" onclick="markVoteComplete()">
+        <button class="btn btn-link" id="submitVoteBtn" onclick="markVoteComplete()">
           <i class="bi bi-check-circle me-1"></i>
           I've submitted my vote
         </button>
@@ -980,6 +1069,13 @@
   // Voting opens at 7:30 AM (local time of the user)
   const VOTING_START_HOUR = 7;
   const VOTING_START_MINUTE = 30;
+  
+  // Voting closes on June 26, 2026 at 6:00 PM
+  const VOTING_CLOSE_YEAR = 2026;
+  const VOTING_CLOSE_MONTH = 5; // June is month 5 (0-indexed)
+  const VOTING_CLOSE_DAY = 26;
+  const VOTING_CLOSE_HOUR = 18;
+  const VOTING_CLOSE_MINUTE = 0;
 
   const CANDIDATES = [
     { id: 1, name: "Buyondo Deus", initials: "BD" },
@@ -993,6 +1089,7 @@
   let voterData = { name: '', year: '', email: '' };
   let timerInterval = null;
   let isVotingOpen = false;
+  let isVotingClosed = false;
 
   // ─── DOM REFS ──────────────────────────────────────────────
   const screenRegister = document.getElementById('screen-register');
@@ -1008,6 +1105,7 @@
   const alertOverlay = document.getElementById('formAlertOverlay');
   const alertUserEmail = document.getElementById('alert-user-email');
   const timerOverlay = document.getElementById('timerOverlay');
+  const closedOverlay = document.getElementById('closedOverlay');
   const hoursDisplay = document.getElementById('hoursDisplay');
   const minutesDisplay = document.getElementById('minutesDisplay');
   const secondsDisplay = document.getElementById('secondsDisplay');
@@ -1018,6 +1116,10 @@
   const thankYouEmail = document.getElementById('thankYouEmail');
   const confettiContainer = document.getElementById('confettiContainer');
   const votingStatus = document.getElementById('votingStatus');
+  const votingStatusLabel = document.getElementById('votingStatusLabel');
+  const continueBtn = document.getElementById('continueBtn');
+  const submitVoteBtn = document.getElementById('submitVoteBtn');
+  const votingPeriodDisplay = document.getElementById('votingPeriodDisplay');
 
   // ─── INIT ──────────────────────────────────────────────────
   (function init() {
@@ -1030,25 +1132,72 @@
       regYear.appendChild(opt);
     }
 
-    // Update voting status display
-    const now = new Date();
-    const target = new Date(now);
-    target.setHours(VOTING_START_HOUR, VOTING_START_MINUTE, 0, 0);
-    if (target <= now) {
-      votingStatus.textContent = 'Live Now! 🎯';
-    } else {
-      votingStatus.textContent = `${String(VOTING_START_HOUR).padStart(2, '0')}:${String(VOTING_START_MINUTE).padStart(2, '0')} AM`;
-    }
-
-    // Start the timer immediately
+    // Check if voting is already closed
+    checkVotingStatus();
+    
+    // Start the timer
     startTimer();
   })();
+
+  // ─── CHECK VOTING STATUS ──────────────────────────────────
+  function checkVotingStatus() {
+    const now = new Date();
+    const closeDate = new Date(VOTING_CLOSE_YEAR, VOTING_CLOSE_MONTH, VOTING_CLOSE_DAY, 
+                               VOTING_CLOSE_HOUR, VOTING_CLOSE_MINUTE, 0, 0);
+    
+    // Check if voting has closed
+    if (now >= closeDate) {
+      isVotingClosed = true;
+      isVotingOpen = false;
+      votingStatus.textContent = 'Closed';
+      votingStatus.classList.add('closed');
+      votingStatusLabel.textContent = 'Status';
+      votingPeriodDisplay.textContent = '🗳️ Voting Closed — Thank you for participating!';
+      continueBtn.disabled = true;
+      continueBtn.innerHTML = '<i class="bi bi-lock-fill me-2"></i>Voting Closed';
+      continueBtn.classList.add('btn-disabled');
+      
+      // Update info box
+      const infoBox = document.getElementById('electionInfoBox');
+      infoBox.className = 'info-box-closed';
+      infoBox.innerHTML = `
+        <i class="bi bi-clock-fill me-2"></i>
+        <strong>Voting Has Closed:</strong> The election period ended on June 26, 2026 at 6:00 PM. 
+        Thank you to all who participated!
+      `;
+      
+      return true;
+    }
+    
+    // Check if voting has started
+    const startDate = new Date(now);
+    startDate.setHours(VOTING_START_HOUR, VOTING_START_MINUTE, 0, 0);
+    
+    if (now >= startDate) {
+      isVotingOpen = true;
+      votingStatus.textContent = 'Live Now! 🎯';
+      votingStatus.classList.remove('closed');
+      votingStatusLabel.textContent = 'Status';
+      return true;
+    }
+    
+    return false;
+  }
 
   // ─── TIMER FUNCTIONS ──────────────────────────────────────
 
   function startTimer() {
-    // Calculate target time (today at 7:30 AM)
     const now = new Date();
+    
+    // First check if voting is closed
+    const closeDate = new Date(VOTING_CLOSE_YEAR, VOTING_CLOSE_MONTH, VOTING_CLOSE_DAY, 
+                               VOTING_CLOSE_HOUR, VOTING_CLOSE_MINUTE, 0, 0);
+    if (now >= closeDate) {
+      checkVotingStatus();
+      return;
+    }
+    
+    // Calculate target time (today at 7:30 AM)
     const target = new Date(now);
     target.setHours(VOTING_START_HOUR, VOTING_START_MINUTE, 0, 0);
     
@@ -1060,6 +1209,18 @@
     // Update timer every second
     timerInterval = setInterval(() => {
       const current = new Date();
+      
+      // Check if voting is closed
+      if (current >= closeDate) {
+        clearInterval(timerInterval);
+        checkVotingStatus();
+        if (screenVote.classList.contains('active')) {
+          timerOverlay.classList.add('hidden');
+          closedOverlay.classList.add('show');
+        }
+        return;
+      }
+      
       const diff = target - current;
       
       // Update current time display
@@ -1076,6 +1237,8 @@
         timerOverlay.classList.add('hidden');
         isVotingOpen = true;
         votingStatus.textContent = 'Live Now! 🎯';
+        votingStatus.classList.remove('closed');
+        votingStatusLabel.textContent = 'Status';
         // Only show alert if we're on the vote screen
         if (screenVote.classList.contains('active')) {
           setTimeout(() => showAlert(), 500);
@@ -1111,6 +1274,12 @@
 
   // ─── CONTINUE TO VOTE ──────────────────────────────────
   window.continueToVote = function() {
+    // Check if voting is closed
+    if (isVotingClosed) {
+      showError(regError, 'Voting has closed. The election period ended on June 26, 2026 at 6:00 PM.');
+      return;
+    }
+    
     const name = regName.value.trim();
     const year = regYear.value;
     const email = regEmail.value.trim().toLowerCase();
@@ -1134,6 +1303,13 @@
     // Navigate to vote screen
     goTo('screen-vote');
     
+    // Check if voting is closed
+    if (isVotingClosed) {
+      timerOverlay.classList.add('hidden');
+      closedOverlay.classList.add('show');
+      return;
+    }
+    
     // Check if voting is already open
     if (isVotingOpen) {
       // Show the alert after a short delay
@@ -1143,6 +1319,7 @@
     } else {
       // Timer overlay is already showing, but ensure it's visible
       timerOverlay.classList.remove('hidden');
+      closedOverlay.classList.remove('show');
       // Start timer if not already running
       if (!timerInterval) {
         startTimer();
@@ -1222,6 +1399,14 @@
 
   // ─── MARK VOTE COMPLETE ──────────────────────────────────
   window.markVoteComplete = function() {
+    if (isVotingClosed) {
+      // If voting is closed, just show success screen without thank you
+      document.getElementById('rec-name').textContent = voterData.name;
+      document.getElementById('rec-email').textContent = voterData.email;
+      document.getElementById('rec-time').textContent = new Date().toLocaleString('en-UG', { timeZone: 'Africa/Kampala' });
+      goTo('screen-success');
+      return;
+    }
     showThankYou();
     document.getElementById('rec-name').textContent = voterData.name;
     document.getElementById('rec-email').textContent = voterData.email;
