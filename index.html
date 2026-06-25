@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 
   <style>
+    /* ─── All your existing styles remain unchanged ─── */
     :root {
       --navy: #1B2A4A;
       --gold: #C9972B;
@@ -196,6 +197,7 @@
       border: 2px solid #e2e6f0;
       background: white;
       position: relative;
+      min-height: 500px;
     }
     .google-form-wrapper iframe {
       border: 0;
@@ -209,7 +211,6 @@
       }
     }
     
-    /* ─── CANDIDATE CARDS ON HOME ─── */
     .candidate-grid-home {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -264,7 +265,6 @@
       margin-top: 4px;
     }
 
-    /* ─── STATS BADGE ─── */
     .stats-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -293,7 +293,6 @@
       letter-spacing: 0.5px;
     }
 
-    /* ─── STYLED ALERT OVERLAY ─── */
     .form-alert-overlay {
       position: absolute;
       top: 0;
@@ -405,8 +404,7 @@
       word-break: break-word;
     }
 
-    /* ─── TIMER OVERLAY ─── */
-    .timer-overlay {
+    .countdown-overlay {
       position: absolute;
       top: 0;
       left: 0;
@@ -421,10 +419,10 @@
       border-radius: 12px;
       flex-direction: column;
     }
-    .timer-overlay.hidden {
+    .countdown-overlay.hidden {
       display: none;
     }
-    .timer-overlay .timer-icon {
+    .countdown-overlay .countdown-icon {
       font-size: 3rem;
       color: var(--gold);
       margin-bottom: 16px;
@@ -434,26 +432,26 @@
       0%, 100% { transform: scale(1); opacity: 1; }
       50% { transform: scale(1.1); opacity: 0.7; }
     }
-    .timer-overlay .timer-title {
+    .countdown-overlay .countdown-title {
       color: white;
       font-size: 1.3rem;
       font-weight: 700;
       margin-bottom: 8px;
       text-align: center;
     }
-    .timer-overlay .timer-subtitle {
+    .countdown-overlay .countdown-subtitle {
       color: rgba(255,255,255,0.7);
       font-size: 0.9rem;
       text-align: center;
       margin-bottom: 20px;
     }
-    .timer-display {
+    .countdown-display {
       display: flex;
       gap: 16px;
       justify-content: center;
       margin-bottom: 20px;
     }
-    .timer-unit {
+    .countdown-unit {
       text-align: center;
       background: rgba(255,255,255,0.1);
       padding: 12px 16px;
@@ -462,7 +460,7 @@
       backdrop-filter: blur(4px);
       border: 1px solid rgba(255,255,255,0.1);
     }
-    .timer-unit .number {
+    .countdown-unit .number {
       font-size: 2.4rem;
       font-weight: 800;
       color: var(--gold);
@@ -470,7 +468,7 @@
       line-height: 1;
       display: block;
     }
-    .timer-unit .label {
+    .countdown-unit .label {
       font-size: 0.65rem;
       text-transform: uppercase;
       color: rgba(255,255,255,0.6);
@@ -478,16 +476,16 @@
       margin-top: 4px;
       display: block;
     }
-    .timer-overlay .timer-message {
+    .countdown-overlay .countdown-message {
       color: rgba(255,255,255,0.6);
       font-size: 0.8rem;
       text-align: center;
       margin-top: 4px;
     }
-    .timer-overlay .timer-message strong {
+    .countdown-overlay .countdown-message strong {
       color: var(--gold);
     }
-    .timer-progress {
+    .countdown-progress {
       width: 100%;
       max-width: 300px;
       height: 4px;
@@ -496,7 +494,7 @@
       margin-top: 16px;
       overflow: hidden;
     }
-    .timer-progress .progress-bar {
+    .countdown-progress .progress-bar {
       height: 100%;
       background: var(--gold);
       border-radius: 2px;
@@ -504,7 +502,6 @@
       width: 0%;
     }
 
-    /* ─── CLOSED OVERLAY ─── */
     .closed-overlay {
       position: absolute;
       top: 0;
@@ -549,7 +546,6 @@
       font-size: 1.1rem;
     }
 
-    /* ─── EXCITING THANK YOU OVERLAY ─── */
     .thank-you-overlay {
       position: fixed;
       inset: 0;
@@ -769,13 +765,11 @@
       <h3 class="section-title"><i class="bi bi-house-fill me-2"></i>Voter Registration</h3>
       <p class="text-muted">Enter your details to proceed to the voting form.</p>
       
-      <!-- Election Info -->
       <div class="info-box" id="electionInfoBox">
         <i class="bi bi-info-circle-fill me-2"></i>
         <strong>How it works:</strong> Fill in your details below, then click "Continue to Vote" to access the secure Google Form where you'll cast your vote.
       </div>
 
-      <!-- Stats -->
       <div class="stats-row">
         <div class="stat-item">
           <span class="number">5</span>
@@ -791,7 +785,6 @@
         </div>
       </div>
 
-      <!-- Candidates Grid -->
       <div style="margin-bottom: 20px;">
         <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
           <i class="bi bi-people-fill" style="color:var(--gold); font-size:1.1rem;"></i>
@@ -831,7 +824,6 @@
         </div>
       </div>
 
-      <!-- Election Period -->
       <div style="background:#f8f9fa; padding:12px 16px; border-radius:10px; margin-bottom:16px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
         <i class="bi bi-calendar-event" style="color:var(--gold); font-size:1.2rem;"></i>
         <div style="flex:1; font-size:0.9rem;">
@@ -868,7 +860,7 @@
       </div>
     </div>
 
-    <!-- SCREEN 2: VOTE (Google Form with Styled Alert & Timer) -->
+    <!-- SCREEN 2: VOTE -->
     <div class="screen" id="screen-vote">
       <h3 class="section-title"><i class="bi bi-check2-circle me-2"></i>Cast Your Vote</h3>
       <p class="text-muted">Complete the form below to vote for the Chairperson position.</p>
@@ -894,49 +886,51 @@
         <strong>Google Form:</strong> Select your preferred candidate from the form below and submit your vote.
       </div>
 
-      <!-- Embedded Google Form with Alert & Timer Overlays -->
+      <!-- Embedded Google Form with Overlays -->
       <div class="google-form-wrapper" id="googleFormWrapper">
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd8Z0HY6vebD216QRXzms8orwkySR5xyriV-frbH_5bIKbxow/viewform?embedded=true" 
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd8Z0HY6vebD216QRXzms8orwkySR5xyriV-frbH_5bIKbxow/viewform?usp=header" 
                 frameborder="0" 
                 marginheight="0" 
                 marginwidth="0"
-                id="googleFormIframe">
+                id="googleFormIframe"
+                width="100%"
+                height="700">
           Loading…
         </iframe>
         
-        <!-- Timer Overlay (shows before voting starts) -->
-        <div class="timer-overlay" id="timerOverlay">
-          <div class="timer-icon">
+        <!-- Countdown Overlay -->
+        <div class="countdown-overlay" id="countdownOverlay">
+          <div class="countdown-icon">
             <i class="bi bi-clock-history"></i>
           </div>
-          <div class="timer-title">Voting Starts Soon!</div>
-          <div class="timer-subtitle">The election opens at <strong style="color: var(--gold);">7:30 AM</strong></div>
+          <div class="countdown-title">Voting Starts Soon!</div>
+          <div class="countdown-subtitle">The election opens at <strong style="color: var(--gold);">7:30 AM</strong></div>
           
-          <div class="timer-display">
-            <div class="timer-unit">
+          <div class="countdown-display">
+            <div class="countdown-unit">
               <span class="number" id="hoursDisplay">00</span>
               <span class="label">Hours</span>
             </div>
-            <div class="timer-unit">
+            <div class="countdown-unit">
               <span class="number" id="minutesDisplay">00</span>
               <span class="label">Minutes</span>
             </div>
-            <div class="timer-unit">
+            <div class="countdown-unit">
               <span class="number" id="secondsDisplay">00</span>
               <span class="label">Seconds</span>
             </div>
           </div>
           
-          <div class="timer-message">
+          <div class="countdown-message">
             ⏰ Voting opens at <strong>7:30 AM</strong> — <span id="currentTimeDisplay">Loading time...</span>
           </div>
           
-          <div class="timer-progress">
+          <div class="countdown-progress">
             <div class="progress-bar" id="timerProgressBar"></div>
           </div>
         </div>
         
-        <!-- Closed Overlay (shows after voting ends) -->
+        <!-- Closed Overlay -->
         <div class="closed-overlay" id="closedOverlay">
           <div class="closed-icon">
             <i class="bi bi-clock-fill"></i>
@@ -950,7 +944,7 @@
           </div>
         </div>
         
-        <!-- Styled Alert Overlay (shows after timer ends) -->
+        <!-- Alert Overlay -->
         <div class="form-alert-overlay" id="formAlertOverlay">
           <div class="form-alert-card">
             <div class="alert-icon">
@@ -1021,7 +1015,7 @@
   </div>
 </div>
 
-<!-- ═══ EXCITING THANK YOU OVERLAY ═══ -->
+<!-- ═══ THANK YOU OVERLAY ═══ -->
 <div class="thank-you-overlay" id="thankYouOverlay">
   <div class="thank-you-card">
     <div class="confetti-container" id="confettiContainer"></div>
@@ -1066,24 +1060,13 @@
 
 <script>
   // ─── CONFIGURATION ─────────────────────────────────────────
-  // Voting opens at 7:30 AM (local time of the user)
   const VOTING_START_HOUR = 7;
   const VOTING_START_MINUTE = 30;
-  
-  // Voting closes on June 26, 2026 at 6:00 PM
   const VOTING_CLOSE_YEAR = 2026;
-  const VOTING_CLOSE_MONTH = 5; // June is month 5 (0-indexed)
+  const VOTING_CLOSE_MONTH = 5; // June
   const VOTING_CLOSE_DAY = 26;
   const VOTING_CLOSE_HOUR = 18;
   const VOTING_CLOSE_MINUTE = 0;
-
-  const CANDIDATES = [
-    { id: 1, name: "Buyondo Deus", initials: "BD" },
-    { id: 2, name: "Magembe Mike", initials: "MM" },
-    { id: 3, name: "Nakaliisa Hadijah", initials: "NH" },
-    { id: 4, name: "Naluwaga Joan", initials: "NJ" },
-    { id: 5, name: "Ssemwogerere Ashiraf", initials: "SA" }
-  ];
 
   // ─── STATE ──────────────────────────────────────────────────
   let voterData = { name: '', year: '', email: '' };
@@ -1104,7 +1087,7 @@
   const voterEmailDisplay = document.getElementById('voter-email-display');
   const alertOverlay = document.getElementById('formAlertOverlay');
   const alertUserEmail = document.getElementById('alert-user-email');
-  const timerOverlay = document.getElementById('timerOverlay');
+  const countdownOverlay = document.getElementById('countdownOverlay');
   const closedOverlay = document.getElementById('closedOverlay');
   const hoursDisplay = document.getElementById('hoursDisplay');
   const minutesDisplay = document.getElementById('minutesDisplay');
@@ -1123,7 +1106,6 @@
 
   // ─── INIT ──────────────────────────────────────────────────
   (function init() {
-    // Year dropdown
     const currentYear = new Date().getFullYear();
     for (let y = currentYear; y >= 1990; y--) {
       const opt = document.createElement('option');
@@ -1131,12 +1113,8 @@
       opt.textContent = y;
       regYear.appendChild(opt);
     }
-
-    // Check if voting is already closed
     checkVotingStatus();
-    
-    // Start the timer
-    startTimer();
+    startCountdown();
   })();
 
   // ─── CHECK VOTING STATUS ──────────────────────────────────
@@ -1145,7 +1123,6 @@
     const closeDate = new Date(VOTING_CLOSE_YEAR, VOTING_CLOSE_MONTH, VOTING_CLOSE_DAY, 
                                VOTING_CLOSE_HOUR, VOTING_CLOSE_MINUTE, 0, 0);
     
-    // Check if voting has closed
     if (now >= closeDate) {
       isVotingClosed = true;
       isVotingOpen = false;
@@ -1157,7 +1134,6 @@
       continueBtn.innerHTML = '<i class="bi bi-lock-fill me-2"></i>Voting Closed';
       continueBtn.classList.add('btn-disabled');
       
-      // Update info box
       const infoBox = document.getElementById('electionInfoBox');
       infoBox.className = 'info-box-closed';
       infoBox.innerHTML = `
@@ -1165,11 +1141,9 @@
         <strong>Voting Has Closed:</strong> The election period ended on June 26, 2026 at 6:00 PM. 
         Thank you to all who participated!
       `;
-      
       return true;
     }
     
-    // Check if voting has started
     const startDate = new Date(now);
     startDate.setHours(VOTING_START_HOUR, VOTING_START_MINUTE, 0, 0);
     
@@ -1180,16 +1154,12 @@
       votingStatusLabel.textContent = 'Status';
       return true;
     }
-    
     return false;
   }
 
-  // ─── TIMER FUNCTIONS ──────────────────────────────────────
-
-  function startTimer() {
+  // ─── COUNTDOWN FUNCTIONS ──────────────────────────────────
+  function startCountdown() {
     const now = new Date();
-    
-    // First check if voting is closed
     const closeDate = new Date(VOTING_CLOSE_YEAR, VOTING_CLOSE_MONTH, VOTING_CLOSE_DAY, 
                                VOTING_CLOSE_HOUR, VOTING_CLOSE_MINUTE, 0, 0);
     if (now >= closeDate) {
@@ -1197,71 +1167,54 @@
       return;
     }
     
-    // Calculate target time (today at 7:30 AM)
     const target = new Date(now);
     target.setHours(VOTING_START_HOUR, VOTING_START_MINUTE, 0, 0);
-    
-    // If target time has passed today, set for tomorrow
     if (target <= now) {
       target.setDate(target.getDate() + 1);
     }
 
-    // Update timer every second
     timerInterval = setInterval(() => {
       const current = new Date();
-      
-      // Check if voting is closed
       if (current >= closeDate) {
         clearInterval(timerInterval);
         checkVotingStatus();
         if (screenVote.classList.contains('active')) {
-          timerOverlay.classList.add('hidden');
+          countdownOverlay.classList.add('hidden');
           closedOverlay.classList.add('show');
         }
         return;
       }
       
       const diff = target - current;
-      
-      // Update current time display
       currentTimeDisplay.textContent = current.toLocaleTimeString('en-US', { 
-        hour: '2-digit', 
-        minute: '2-digit', 
-        second: '2-digit',
-        hour12: true 
+        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true 
       });
 
       if (diff <= 0) {
-        // Voting has started!
         clearInterval(timerInterval);
-        timerOverlay.classList.add('hidden');
+        countdownOverlay.classList.add('hidden');
         isVotingOpen = true;
         votingStatus.textContent = 'Live Now! 🎯';
         votingStatus.classList.remove('closed');
         votingStatusLabel.textContent = 'Status';
-        // Only show alert if we're on the vote screen
         if (screenVote.classList.contains('active')) {
           setTimeout(() => showAlert(), 500);
         }
         return;
       }
 
-      // Calculate hours, minutes, seconds
       const hours = Math.floor(diff / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
       
-      // Display with leading zeros
       hoursDisplay.textContent = String(hours).padStart(2, '0');
       minutesDisplay.textContent = String(minutes).padStart(2, '0');
       secondsDisplay.textContent = String(seconds).padStart(2, '0');
       
-      // Update progress bar
       const totalSeconds = (target - new Date()) / 1000;
       const maxSeconds = 12 * 60 * 60;
       const progress = Math.min(((maxSeconds - totalSeconds) / maxSeconds) * 100, 100);
       timerProgressBar.style.width = `${Math.max(0, progress)}%`;
-      
     }, 1000);
   }
 
@@ -1274,7 +1227,6 @@
 
   // ─── CONTINUE TO VOTE ──────────────────────────────────
   window.continueToVote = function() {
-    // Check if voting is closed
     if (isVotingClosed) {
       showError(regError, 'Voting has closed. The election period ended on June 26, 2026 at 6:00 PM.');
       return;
@@ -1284,7 +1236,6 @@
     const year = regYear.value;
     const email = regEmail.value.trim().toLowerCase();
 
-    // Validation
     if (!name || !year || !email) {
       return showError(regError, 'All fields are required.');
     }
@@ -1292,38 +1243,30 @@
       return showError(regError, 'Please enter a valid email address.');
     }
 
-    // Save voter data
     voterData = { name, year, email };
-    
-    // Update voter badge in vote screen
     voterNameDisplay.textContent = name;
     voterYearDisplay.textContent = year;
     voterEmailDisplay.textContent = email;
 
-    // Navigate to vote screen
-    goTo('screen-vote');
-    
-    // Check if voting is closed
+    // Decide overlays + start state BEFORE switching screens so the iframe isn't blocked unexpectedly.
     if (isVotingClosed) {
-      timerOverlay.classList.add('hidden');
+      countdownOverlay.classList.add('hidden');
       closedOverlay.classList.add('show');
-      return;
-    }
-    
-    // Check if voting is already open
-    if (isVotingOpen) {
-      // Show the alert after a short delay
-      setTimeout(() => {
-        showAlert();
-      }, 500);
     } else {
-      // Timer overlay is already showing, but ensure it's visible
-      timerOverlay.classList.remove('hidden');
       closedOverlay.classList.remove('show');
-      // Start timer if not already running
-      if (!timerInterval) {
-        startTimer();
-      }
+      // Default to hiding countdown; show it only when voting is not open yet.
+      countdownOverlay.classList.add('hidden');
+    }
+
+    goTo('screen-vote');
+
+    if (isVotingClosed) return;
+
+    if (isVotingOpen) {
+      setTimeout(() => showAlert(), 500);
+    } else {
+      countdownOverlay.classList.remove('hidden');
+      if (!timerInterval) startCountdown();
     }
   };
 
@@ -1331,31 +1274,23 @@
   function showAlert() {
     alertUserEmail.textContent = voterData.email || 'your.email@domain.com';
     alertOverlay.classList.add('show');
-    
     clearTimeout(alertTimeout);
     alertTimeout = setTimeout(() => {
-      if (alertOverlay.classList.contains('show')) {
-        alertOverlay.classList.remove('show');
-      }
+      if (alertOverlay.classList.contains('show')) alertOverlay.classList.remove('show');
     }, 10000);
   }
 
-  window.dismissAlert = function() {
-    alertOverlay.classList.remove('show');
-  };
-
+  window.dismissAlert = function() { alertOverlay.classList.remove('show'); };
   window.acceptAlert = function() {
     alertOverlay.classList.remove('show');
     const iframe = document.getElementById('googleFormIframe');
     if (iframe) {
       iframe.focus();
-      try {
-        iframe.contentWindow.focus();
-      } catch(e) {}
+      try { iframe.contentWindow.focus(); } catch(e) {}
     }
   };
 
-  // ─── EXCITING THANK YOU ──────────────────────────────────
+  // ─── THANK YOU ──────────────────────────────────────────
   function showThankYou() {
     thankYouName.textContent = voterData.name;
     thankYouEmail.textContent = voterData.email;
@@ -1367,7 +1302,6 @@
     const colors = ['#C9972B', '#E8B84B', '#1B2A4A', '#28a745', '#dc3545', '#17a2b8', '#ffc107', '#6f42c1'];
     const container = confettiContainer;
     container.innerHTML = '';
-    
     for (let i = 0; i < 60; i++) {
       const piece = document.createElement('div');
       piece.className = 'confetti-piece';
@@ -1376,7 +1310,6 @@
       const left = Math.random() * 100;
       const duration = Math.random() * 2 + 2;
       const delay = Math.random() * 2;
-      
       piece.style.cssText = `
         left: ${left}%;
         width: ${size}px;
@@ -1387,7 +1320,6 @@
         animation-delay: ${delay}s;
         opacity: ${Math.random() * 0.5 + 0.5};
       `;
-      
       container.appendChild(piece);
     }
   }
@@ -1400,7 +1332,6 @@
   // ─── MARK VOTE COMPLETE ──────────────────────────────────
   window.markVoteComplete = function() {
     if (isVotingClosed) {
-      // If voting is closed, just show success screen without thank you
       document.getElementById('rec-name').textContent = voterData.name;
       document.getElementById('rec-email').textContent = voterData.email;
       document.getElementById('rec-time').textContent = new Date().toLocaleString('en-UG', { timeZone: 'Africa/Kampala' });
@@ -1421,15 +1352,12 @@
     el._hideTimer = setTimeout(() => { el.style.display = 'none'; }, 6000);
   }
 
-  // Enter key triggers continue
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      if (screenRegister.classList.contains('active')) {
-        const activeElement = document.activeElement;
-        if (activeElement && (activeElement.id === 'reg-name' || activeElement.id === 'reg-email' || activeElement.id === 'reg-year')) {
-          e.preventDefault();
-          window.continueToVote();
-        }
+    if (e.key === 'Enter' && screenRegister.classList.contains('active')) {
+      const activeElement = document.activeElement;
+      if (activeElement && (activeElement.id === 'reg-name' || activeElement.id === 'reg-email' || activeElement.id === 'reg-year')) {
+        e.preventDefault();
+        window.continueToVote();
       }
     }
   });
