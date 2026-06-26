@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thank You — SJB Leadership Election</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --navy: #1B2A4A;
+      --gold: #C9972B;
+      --gold-lt: #E8B84B;
+      --cream: #F8F5EF;
+      --slate: #6B7A99;
+      --white: #FFFFFF;
+      --card-shadow: 0 8px 32px rgba(27, 42, 74, .13);
+      --red: #dc3545;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body{
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--navy);
+      min-height: 100vh;
+    }
+
+    .paper{
+      max-width: 980px;
+      margin: 34px auto;
+      padding: 0 16px;
+    }
+
+    .sheet{
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      border: 1px solid rgba(27,42,74,.08);
+    }
+
+    .topbar{
+      background: linear-gradient(135deg, var(--navy) 60%, #2e4578 100%);
+      color: var(--white);
+      padding: 28px 22px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 4px solid var(--gold);
+    }
+    .topbar::before{
+      content:'';
+      position:absolute;
+      top:-60px; right:-80px;
+      width: 260px; height: 260px;
+      border-radius: 50%;
+      background: rgba(201,151,43,.16);
+    }
+    .topbar::after{
+      content:'';
+      position:absolute;
+      bottom:-90px; left:-90px;
+      width: 260px; height: 260px;
+      border-radius: 50%;
+      background: rgba(201,151,43,.10);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 14px;
+      position: relative;
+      z-index: 2;
+    }
+    .crest{
+      width: 54px; height: 54px;
+      background: var(--gold);
+      border-radius: 50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight: 900;
+      color: var(--navy);
+      font-family: 'Playfair Display', serif;
+      box-shadow: 0 18px 45px rgba(201,151,43,.2);
+      flex-shrink: 0;
+    }
+    .brand h1{
+      margin:0;
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+    .brand small{
+      color: rgba(255,255,255,.75);
+      display:block;
+      margin-top: 2px;
+      font-weight: 500;
+    }
+
+    .hero{
+      padding: 30px 22px 10px;
+      text-align: center;
+      position: relative;
+    }
+
+    .title{
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      color: var(--navy);
+      font-size: 2.1rem;
+      margin-bottom: 6px;
+      letter-spacing: .2px;
+    }
+
+    .subtitle{
+      color: var(--slate);
+      font-weight: 600;
+      margin: 0 auto 18px;
+      max-width: 720px;
+      line-height: 1.6;
+    }
+
+    .gold-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-lt) 100%);
+      color: var(--navy);
+      font-weight: 900;
+      box-shadow: 0 10px 30px rgba(201,151,43,.18);
+      margin-bottom: 14px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      padding: 18px 22px 24px;
+    }
+    @media (max-width: 860px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      border-radius: 18px;
+      border: 1px solid rgba(27,42,74,.08);
+      background: linear-gradient(180deg, rgba(248,245,239,1) 0%, rgba(255,255,255,1) 100%);
+      padding: 18px 16px;
+      box-shadow: 0 14px 40px rgba(27,42,74,.06);
+    }
+
+    .card h3{
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      color: var(--navy);
+      font-size: 1.35rem;
+      margin-bottom: 10px;
+    }
+
+    .kpi{
+      display:flex;
+      gap: 14px;
+      align-items:center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 10px 6px 0;
+    }
+
+    .kpi .num{
+      color: var(--navy);
+      font-weight: 1000;
+      font-size: 2.2rem;
+      letter-spacing: .4px;
+    }
+    .kpi .lbl{
+      color: var(--slate);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      font-size: .8rem;
+    }
+
+    .list{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:grid;
+      gap: 10px;
+    }
+
+    .row-item{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(27,42,74,.08);
+      background: rgba(255,255,255,.8);
+    }
+
+    .num-badge{
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: rgba(201,151,43,.14);
+      border: 1px solid rgba(201,151,43,.35);
+      color: var(--navy);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight: 1000;
+      flex-shrink: 0;
+    }
+
+    .row-item .name{
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+    .row-item .role{
+      color: var(--slate);
+      font-weight: 700;
+      font-size: .9rem;
+      margin-top: 1px;
+    }
+
+    .thankyou{
+      padding: 0 22px 22px;
+      text-align:center;
+    }
+    .thankyou .msg{
+      color:#4f5b7a;
+      font-weight: 650;
+      line-height: 1.7;
+      margin: 0 auto;
+      max-width: 760px;
+      padding-top: 6px;
+    }
+
+    .footer{
+      background: rgba(27,42,74,.04);
+      padding: 14px 22px;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-top: 1px solid rgba(27,42,74,.08);
+    }
+
+    .footer span{
+      color: var(--slate);
+      font-weight: 650;
+      font-size: .9rem;
+    }
+
+    @media print{
+      body{ background: #fff; }
+      .paper{ margin: 0; padding: 0; }
+      .sheet{ border-radius: 0; box-shadow: none; border: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="paper">
+    <div class="sheet">
+      <div class="topbar">
+        <div class="brand">
+          <div class="crest">SJB</div>
+          <div>
+            <h1>St. Josephine Bakhita</h1>
+            <small>United OBs &amp; OGs — Official Election Portal</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero">
+        <div class="gold-pill">
+          <i class="bi bi-patch-check-fill"></i>
+          Thank You for Voting!
+        </div>
+
+        <div class="title">Leadership Election — Chairperson</div>
+        <div class="subtitle">
+          Your participation strengthens our community. Below are the contestants and the total number of voters.
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3><i class="bi bi-people-fill me-2" style="color:var(--gold)"></i>Total Voters</h3>
+          <div class="kpi">
+            <div>
+              <div class="num">18</div>
+              <div class="lbl">Voters Cast</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="lbl" style="letter-spacing:.5px; text-transform:none; font-size:.9rem; color:var(--slate); font-weight:800;">
+                Election Status: Closed
+              </div>
+              <div style="font-weight:900; color:var(--navy); margin-top: 6px;">
+                Thank you!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3><i class="bi bi-list-check me-2" style="color:var(--gold)"></i>Contestants (Chairperson)</h3>
+          <ul class="list">
+            <li class="row-item">
+              <div class="num-badge">#1</div>
+              <div>
+                <div class="name">Buyondo Deus</div>
+                <div class="role">Chairperson Candidate</div>
+              </div>
+            </li>
+            <li class="row-item">
+              <div class="num-badge">#2</div>
+              <div>
+                <div class="name">Magembe Mike</div>
+                <div class="role">Chairperson Candidate</div>
+              </div>
+            </li>
+            <li class="row-item">
+              <div class="num-badge">#3</div>
+              <div>
+                <div class="name">Nakaliisa Hadijah</div>
+                <div class="role">Chairperson Candidate</div>
+              </div>
+            </li>
+            <li class="row-item">
+              <div class="num-badge">#4</div>
+              <div>
+                <div class="name">Naluwaga Joan</div>
+                <div class="role">Chairperson Candidate</div>
+              </div>
+            </li>
+            <li class="row-item">
+              <div class="num-badge">#5</div>
+              <div>
+                <div class="name">Ssemwogerere Ashiraf</div>
+                <div class="role">Chairperson Candidate</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="thankyou">
+        <div class="msg">
+          Thank you to all who registered and voted. This election reflects our commitment to unity, service, and leadership.
+        </div>
+      </div>
+
+      <div class="footer">
+        <span><i class="bi bi-shield-lock me-1" style="color:var(--gold)"></i>Confidential &amp; secure voting portal</span>
+        <span>© St. Josephine Bakhita Election Committee</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- No JS needed -->
+</body>
+</html>
