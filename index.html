@@ -184,47 +184,147 @@
     </div>
   </header>
 
-  <section class="hero">
+  <!-- Pre-announcement UI (visible before 4:00PM on 26 June 2026) -->
+  <section class="hero" id="preAnnounce">
     <div class="container">
       <div class="badge-election mb-2">
-        <i class="bi bi-patch-check-fill"></i> 2025 / 2026 Elections
+        <i class="bi bi-hourglass-split"></i> Announcement Coming Up
       </div>
-      <div class="hero-title">Voting Closed</div>
-      <div class="hero-sub">
-        No one is supposed to vote now. Proceed to the announced results and the printable thank-you document.
+      <div class="hero-title">Please Keep Patient</div>
+      <div class="hero-sub" id="countdownMessage">
+        Results will be announced exactly at <strong>4:00PM</strong> on <strong>26th June 2026</strong>.
       </div>
+
+      <div class="mt-4" style="max-width:720px; margin-left:auto; margin-right:auto;">
+        <div class="card" style="background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.18); border-radius:16px; backdrop-filter: blur(4px);">
+          <div class="card-body p-4">
+            <div class="text-white" style="font-weight:900; font-size:1.05rem;">Time Remaining</div>
+            <div class="d-flex flex-wrap gap-3 justify-content-center mt-2" style="font-weight:900;">
+              <div class="text-center" style="min-width:110px;">
+                <div style="font-size:2rem;" id="cdDays">--</div>
+                <div style="font-size:.95rem; color:rgba(255,255,255,.78);">Days</div>
+              </div>
+              <div class="text-center" style="min-width:110px;">
+                <div style="font-size:2rem;" id="cdHours">--</div>
+                <div style="font-size:.95rem; color:rgba(255,255,255,.78);">Hours</div>
+              </div>
+              <div class="text-center" style="min-width:110px;">
+                <div style="font-size:2rem;" id="cdMinutes">--</div>
+                <div style="font-size:.95rem; color:rgba(255,255,255,.78);">Minutes</div>
+              </div>
+              <div class="text-center" style="min-width:110px;">
+                <div style="font-size:2rem;" id="cdSeconds">--</div>
+                <div style="font-size:.95rem; color:rgba(255,255,255,.78);">Seconds</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <main class="main">
-    <div class="container">
-      <div class="card-landing text-center">
-        <div class="winner-chip">
-          <i class="bi bi-trophy-fill"></i>
-          Winner: <span style="color:var(--gold);">Nakaliisa Hadijah</span>
+  <!-- Announced UI (visible at/after 4:00PM on 26 June 2026) -->
+  <div id="announced" style="display:none;">
+    <section class="hero">
+      <div class="container">
+        <div class="badge-election mb-2">
+          <i class="bi bi-patch-check-fill"></i> 2025 / 2026 Elections
         </div>
+        <div class="hero-title">Voting Closed</div>
+        <div class="hero-sub">
+          Proceed to the announced results and the printable thank-you document.
+        </div>
+      </div>
+    </section>
 
-        <div class="btn-row">
-          <a class="btn-gold" href="results.html">
-            <i class="bi bi-bar-chart-fill"></i>
-            View Results
-          </a>
-          <a class="btn-outline-navy" href="thank_you_participants.html" target="_blank">
-            <i class="bi bi-file-earmark-pdf"></i>
-            Thank You (PDF)
-          </a>
-        </div>
+    <main class="main">
+      <div class="container">
+        <div class="card-landing text-center">
+          <div class="winner-chip">
+            <i class="bi bi-trophy-fill"></i>
+            Winner: <span style="color:var(--gold);">Nakaliisa Hadijah</span>
+          </div>
 
-        <div class="note">
-          Chairperson: <strong>Nakaliisa Hadijah</strong> <span style="color:rgba(27,42,74,.45);">•</span>
-          Total votes cast: <strong>18</strong>
+          <div class="btn-row">
+            <a class="btn-gold" href="results.html">
+              <i class="bi bi-bar-chart-fill"></i>
+              View Results
+            </a>
+            <a class="btn-outline-navy" href="thank_you_participants.html" target="_blank">
+              <i class="bi bi-file-earmark-pdf"></i>
+              Thank You (PDF)
+            </a>
+          </div>
+
+          <div class="note">
+            Chairperson: <strong>Nakaliisa Hadijah</strong> <span style="color:rgba(27,42,74,.45);">•</span>
+            Total votes cast: <strong>18</strong>
+          </div>
         </div>
-    </div>
-  </main>
+      </div>
+    </main>
+  </div>
+
 
   <footer class="text-center py-4 text-muted small">
     United OBs &amp; OGs of St. Josephine Bakhita<br>
     Contact: <a href="mailto:ssemwogerere.ashiraf@stud.umu.ac.ug">ssemwogerere.ashiraf@stud.umu.ac.ug</a> |
     <a href="https://wa.me/256701422100" target="_blank">WhatsApp +256 701 422 100</a>
   </footer>
+
+  <script>
+    (function () {
+      // Uses the viewer's local timezone.
+      const target = new Date(2026, 5, 26, 16, 10, 0, 0); // 2026-06-26 16:00:00 local
+
+      const pre = document.getElementById('preAnnounce');
+      const announced = document.getElementById('announced');
+
+      const cdDays = document.getElementById('cdDays');
+      const cdHours = document.getElementById('cdHours');
+      const cdMinutes = document.getElementById('cdMinutes');
+      const cdSeconds = document.getElementById('cdSeconds');
+
+      function pad2(n) {
+        return String(n).padStart(2, '0');
+      }
+
+      function renderCountdown(msRemaining) {
+        msRemaining = Math.max(0, msRemaining);
+        const totalSeconds = Math.floor(msRemaining / 1000);
+
+        const days = Math.floor(totalSeconds / (24 * 3600));
+        const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        cdDays.textContent = String(days);
+        cdHours.textContent = pad2(hours);
+        cdMinutes.textContent = pad2(minutes);
+        cdSeconds.textContent = pad2(seconds);
+      }
+
+      function tick() {
+        const now = new Date();
+        const msRemaining = target - now;
+
+        if (msRemaining <= 0) {
+          if (pre) pre.style.display = 'none';
+          if (announced) announced.style.display = 'block';
+          // One last paint to avoid showing 00 before switching.
+          renderCountdown(0);
+          return;
+        }
+
+        if (pre) pre.style.display = 'block';
+        if (announced) announced.style.display = 'none';
+        renderCountdown(msRemaining);
+      }
+
+      tick();
+      setInterval(tick, 1000);
+    })();
+  </script>
 </body>
 </html>
+
