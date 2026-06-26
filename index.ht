@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>St. Josephine Bakhita – OBs & OGs Leadership Election</title>
+  <title>SJB — Election Results</title>
 
   <!-- Bootstrap 5 & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
@@ -11,1689 +11,220 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 
   <style>
-    /* ─── All your existing styles remain unchanged ─── */
-    :root {
-      --navy: #1B2A4A;
-      --gold: #C9972B;
-      --gold-lt: #E8B84B;
-      --cream: #F8F5EF;
-      --slate: #6B7A99;
-      --white: #FFFFFF;
-      --card-shadow: 0 8px 32px rgba(27, 42, 74, .13);
-      --red: #dc3545;
-    }
-    *, *::before, *::after { box-sizing: border-box; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--cream);
-      color: var(--navy);
-      min-height: 100vh;
-    }
-    .screen { display: none; animation: fadeUp .3s ease; }
-    .screen.active { display: block; }
-    @keyframes fadeUp {
-      0% { opacity: 0; transform: translateY(12px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    .site-header {
-      background: var(--navy);
-      padding: 18px 0 14px;
-      border-bottom: 4px solid var(--gold);
-      position: sticky; top: 0; z-index: 100;
-    }
-    .school-crest {
-      width: 54px; height: 54px;
-      background: var(--gold);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.6rem; font-weight: 800; color: var(--navy);
-      font-family: 'Playfair Display', serif;
-      flex-shrink: 0;
-    }
-    .hero-banner {
-      background: linear-gradient(135deg, var(--navy) 60%, #2e4578 100%);
-      color: var(--white);
-      padding: 56px 0 48px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-banner::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -20%;
-      width: 400px;
-      height: 400px;
-      background: rgba(201, 151, 43, 0.08);
-      border-radius: 50%;
-    }
-    .hero-banner::after {
-      content: '';
-      position: absolute;
-      bottom: -30%;
-      left: -10%;
-      width: 300px;
-      height: 300px;
-      background: rgba(201, 151, 43, 0.06);
-      border-radius: 50%;
-    }
-    .badge-election {
-      background: var(--gold) !important;
-      color: var(--navy) !important;
-      font-weight: 700;
-      padding: 8px 20px !important;
-    }
-    .main-card {
-      background: var(--white);
-      border-radius: 16px;
-      box-shadow: var(--card-shadow);
-      padding: 40px 36px;
-      max-width: 620px;
-      margin: -24px auto 0;
-      position: relative;
-      z-index: 10;
-    }
-    @media (max-width: 600px) {
-      .main-card { padding: 28px 20px; border-radius: 12px; }
-    }
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.45rem; font-weight: 700; color: var(--navy);
-    }
-    .section-title i {
-      color: var(--gold);
-    }
-    .btn-primary-gold {
-      background: var(--gold);
-      color: var(--navy);
-      border: none;
-      border-radius: 10px;
-      padding: 14px 28px;
-      font-weight: 700;
-      width: 100%;
-      transition: all .2s;
-      font-size: 1.1rem;
-    }
-    .btn-primary-gold:hover {
-      background: var(--gold-lt);
-      color: var(--navy);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(201, 151, 43, .3);
-    }
-    .btn-primary-gold:disabled {
-      opacity: .6;
-      pointer-events: none;
-      cursor: not-allowed;
-    }
-    .btn-outline-gold {
-      background: transparent;
-      color: var(--gold);
-      border: 2px solid var(--gold);
-      border-radius: 10px;
-      padding: 12px 24px;
-      font-weight: 600;
-      transition: all .2s;
-      width: 100%;
-    }
-    .btn-outline-gold:hover {
-      background: var(--gold);
-      color: var(--navy);
-      transform: translateY(-2px);
-    }
-    .info-box {
-      background: #f0f4ff;
-      border-left: 4px solid var(--gold);
-      padding: 16px 20px;
-      border-radius: 8px;
-      margin-bottom: 24px;
-    }
-    .info-box i {
-      color: var(--gold);
-      font-size: 1.2rem;
-    }
-    .info-box-closed {
-      background: #fff0f0;
-      border-left: 4px solid var(--red);
-      padding: 16px 20px;
-      border-radius: 8px;
-      margin-bottom: 24px;
-    }
-    .info-box-closed i {
-      color: var(--red);
-      font-size: 1.2rem;
-    }
-    .voter-badge {
-      background: var(--navy);
-      color: white;
-      padding: 12px 16px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    .voter-badge i {
-      font-size: 1.5rem;
-    }
-    .voter-badge .voter-info {
-      flex: 1;
-      min-width: 100px;
-    }
-    .voter-badge .voter-info .label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      opacity: 0.7;
-    }
-    .voter-badge .voter-info .value {
-      font-weight: 600;
-      word-break: break-word;
-    }
-    .google-form-wrapper {
-      margin-top: 16px;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 2px solid #e2e6f0;
-      background: white;
-      position: relative;
-      min-height: 500px;
-    }
-    .google-form-wrapper iframe {
-      border: 0;
-      width: 100%;
-      height: 700px;
-      display: block;
-    }
-    @media (max-width: 600px) {
-      .google-form-wrapper iframe {
-        height: 550px;
-      }
-    }
-    
-    .candidate-grid-home {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 12px;
-      margin: 16px 0;
-    }
-    .candidate-card-home {
-      background: white;
-      border: 2px solid #e2e6f0;
-      border-radius: 12px;
-      padding: 16px 12px;
-      text-align: center;
-      transition: all .25s ease;
-      cursor: default;
-    }
-    .candidate-card-home:hover {
-      border-color: var(--gold);
-      transform: translateY(-4px);
-      box-shadow: 0 6px 20px rgba(201, 151, 43, .15);
-    }
-    .candidate-card-home .avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--navy);
-      color: var(--gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 1.1rem;
-      margin: 0 auto 6px;
-    }
-    .candidate-card-home .name {
-      font-weight: 600;
-      font-size: 0.85rem;
-      color: var(--navy);
-      line-height: 1.2;
-    }
-    .candidate-card-home .number {
-      font-size: 0.7rem;
-      color: var(--slate);
-    }
-    .candidate-card-home .badge-candidate {
-      background: var(--gold);
-      color: var(--navy);
-      font-size: 0.6rem;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 10px;
-      display: inline-block;
-      margin-top: 4px;
-    }
-
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin: 16px 0;
-    }
-    .stat-item {
-      background: var(--cream);
-      padding: 12px 8px;
-      border-radius: 10px;
-      text-align: center;
-    }
-    .stat-item .number {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: var(--gold);
-      display: block;
-    }
-    .stat-item .number.closed {
-      color: var(--red);
-    }
-    .stat-item .label {
-      font-size: 0.65rem;
-      color: var(--slate);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .form-alert-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 50;
-      padding: 20px;
-      border-radius: 12px;
-      backdrop-filter: blur(4px);
-    }
-    .form-alert-overlay.show {
-      display: flex;
-    }
-    .form-alert-card {
-      background: white;
-      max-width: 460px;
-      width: 100%;
-      border-radius: 16px;
-      padding: 32px 28px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-      animation: slideUp 0.3s ease;
-      position: relative;
-    }
-    @keyframes slideUp {
-      0% { opacity: 0; transform: translateY(20px) scale(0.95); }
-      100% { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    .form-alert-card .alert-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: #FFF3CD;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
-      color: #856404;
-      margin: 0 auto 16px;
-    }
-    .form-alert-card .alert-title {
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--navy);
-      text-align: center;
-      margin-bottom: 8px;
-    }
-    .form-alert-card .alert-message {
-      color: #5a5a5a;
-      text-align: center;
-      font-size: 0.95rem;
-      line-height: 1.5;
-      margin-bottom: 20px;
-    }
-    .form-alert-card .alert-actions {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .form-alert-card .alert-actions .btn {
-      min-width: 120px;
-      border-radius: 10px;
-      font-weight: 600;
-      padding: 10px 20px;
-    }
-    .form-alert-card .alert-actions .btn-outline-secondary {
-      border: 2px solid #dce0e8;
-      color: var(--slate);
-    }
-    .form-alert-card .alert-actions .btn-outline-secondary:hover {
-      background: #f5f5f5;
-      border-color: #b0b8c8;
-    }
-    .form-alert-card .alert-actions .btn-primary-gold-sm {
-      background: var(--gold);
-      color: var(--navy);
-      border: none;
-      font-weight: 700;
-      transition: all .2s;
-    }
-    .form-alert-card .alert-actions .btn-primary-gold-sm:hover {
-      background: var(--gold-lt);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(201, 151, 43, .3);
-    }
-    .form-alert-card .email-notice {
-      background: #f0f4ff;
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      color: var(--navy);
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .form-alert-card .email-notice i {
-      color: var(--gold);
-      font-size: 1.1rem;
-      flex-shrink: 0;
-    }
-    .form-alert-card .email-notice .email {
-      font-weight: 600;
-      word-break: break-word;
-    }
-
-    .countdown-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, var(--navy) 60%, #2e4578 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 60;
-      padding: 30px;
-      border-radius: 12px;
-      flex-direction: column;
-    }
-    .countdown-overlay.hidden {
-      display: none;
-    }
-    .countdown-overlay .countdown-icon {
-      font-size: 3rem;
-      color: var(--gold);
-      margin-bottom: 16px;
-      animation: pulse 2s ease infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.1); opacity: 0.7; }
-    }
-    .countdown-overlay .countdown-title {
-      color: white;
-      font-size: 1.3rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-      text-align: center;
-    }
-    .countdown-overlay .countdown-subtitle {
-      color: rgba(255,255,255,0.7);
-      font-size: 0.9rem;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .countdown-display {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-    .countdown-unit {
-      text-align: center;
-      background: rgba(255,255,255,0.1);
-      padding: 12px 16px;
-      border-radius: 12px;
-      min-width: 70px;
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-    .countdown-unit .number {
-      font-size: 2.4rem;
-      font-weight: 800;
-      color: var(--gold);
-      font-family: 'Inter', sans-serif;
-      line-height: 1;
-      display: block;
-    }
-    .countdown-unit .label {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
-      letter-spacing: 1px;
-      margin-top: 4px;
-      display: block;
-    }
-    .countdown-overlay .countdown-message {
-      color: rgba(255,255,255,0.6);
-      font-size: 0.8rem;
-      text-align: center;
-      margin-top: 4px;
-    }
-    .countdown-overlay .countdown-message strong {
-      color: var(--gold);
-    }
-    .countdown-progress {
-      width: 100%;
-      max-width: 300px;
-      height: 4px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 2px;
-      margin-top: 16px;
-      overflow: hidden;
-    }
-    .countdown-progress .progress-bar {
-      height: 100%;
-      background: var(--gold);
-      border-radius: 2px;
-      transition: width 1s linear;
-      width: 0%;
-    }
-
-    .closed-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(27, 42, 74, 0.92);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 70;
-      padding: 30px;
-      border-radius: 12px;
-      flex-direction: column;
-      backdrop-filter: blur(4px);
-    }
-    .closed-overlay.show {
-      display: flex;
-    }
-    .closed-overlay .closed-icon {
-      font-size: 4rem;
-      color: var(--red);
-      margin-bottom: 16px;
-    }
-    .closed-overlay .closed-title {
-      color: white;
-      font-size: 1.6rem;
-      font-weight: 800;
-      text-align: center;
-      margin-bottom: 8px;
-    }
-    .closed-overlay .closed-subtitle {
-      color: rgba(255,255,255,0.7);
-      font-size: 0.95rem;
-      text-align: center;
-      max-width: 350px;
-      margin-bottom: 8px;
-    }
-    .closed-overlay .closed-date {
-      color: var(--gold);
-      font-weight: 600;
-      font-size: 1.1rem;
-    }
-
-    .thank-you-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(27, 42, 74, 0.92);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 20000;
-      padding: 20px;
-      backdrop-filter: blur(8px);
-    }
-    .thank-you-overlay.show {
-      display: flex;
-      animation: fadeIn 0.5s ease;
-    }
-    @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
-    }
-    .thank-you-card {
-      background: white;
-      max-width: 520px;
-      width: 100%;
-      border-radius: 24px;
-      padding: 48px 36px;
-      text-align: center;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
-      animation: celebrate 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-      position: relative;
-      overflow: hidden;
-    }
-    @keyframes celebrate {
-      0% { opacity: 0; transform: scale(0.5) rotate(-5deg); }
-      100% { opacity: 1; transform: scale(1) rotate(0deg); }
-    }
-    .thank-you-card .confetti-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .confetti-piece {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      animation: confettiFall linear forwards;
-    }
-    @keyframes confettiFall {
-      0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(400px) rotate(720deg); opacity: 0; }
-    }
-    .thank-you-card .check-circle {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #28a745, #20c997);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-      font-size: 3rem;
-      color: white;
-      animation: pulse 1s ease infinite;
-    }
-    .thank-you-card h2 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 800;
-      color: var(--navy);
-      margin-bottom: 8px;
-      font-size: 2rem;
-    }
-    .thank-you-card .subtitle {
-      color: var(--slate);
-      font-size: 1rem;
-      margin-bottom: 4px;
-    }
-    .thank-you-card .voter-name {
-      font-weight: 700;
-      color: var(--gold);
-      font-size: 1.1rem;
-    }
-    .thank-you-card .divider {
-      width: 60px;
-      height: 3px;
-      background: var(--gold);
-      margin: 16px auto;
-      border-radius: 2px;
-    }
-    .thank-you-card .thank-you-message {
-      color: #5a5a5a;
-      font-size: 0.95rem;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-    .thank-you-card .btn-thanks {
-      background: var(--navy);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      padding: 12px 32px;
-      font-weight: 600;
-      transition: all .2s;
-    }
-    .thank-you-card .btn-thanks:hover {
-      background: var(--gold);
-      color: var(--navy);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(201, 151, 43, .3);
-    }
-    .thank-you-card .sparkle {
-      position: absolute;
-      font-size: 2rem;
-      animation: sparkleFloat 3s ease infinite;
-    }
-    @keyframes sparkleFloat {
-      0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
-      50% { transform: translateY(-10px) rotate(180deg); opacity: 1; }
-    }
-
-    .success-seal {
-      width: 90px; height: 90px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-lt) 100%);
-      color: var(--navy);
-      font-size: 2.4rem;
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 24px;
-    }
-    .footer-actions {
-      margin-top: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .footer-actions .btn-outline-secondary {
-      border-radius: 10px;
-    }
-    .footer-actions .btn-link {
-      text-decoration: none;
-      font-weight: 500;
-      color: #28a745;
-    }
-    .footer-actions .btn-link:hover {
-      text-decoration: underline;
-      color: #1e7e34;
-    }
-    footer a { color: var(--slate); text-decoration: none; }
-    footer a:hover { color: var(--navy); text-decoration: underline; }
-
-    .feature-divider {
-      display: flex;
-      align-items: center;
-      text-align: center;
-      margin: 20px 0 16px;
-    }
-    .feature-divider::before,
-    .feature-divider::after {
-      content: '';
-      flex: 1;
-      border-bottom: 2px solid #e2e6f0;
-    }
-    .feature-divider::before {
-      margin-right: 16px;
-    }
-    .feature-divider::after {
-      margin-left: 16px;
-    }
-    .feature-divider span {
-      font-size: 0.8rem;
-      color: var(--slate);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .btn-disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      pointer-events: none;
-    }
-
-    /* ─── WINNER DASHBOARD ─────────────────────────────────── */
-    .winner-wrap{
-      padding-top: 6px;
-    }
-    .winner-card{
-      background: #ffffff;
-      border-radius: 18px;
-      box-shadow: var(--card-shadow);
-      padding: 26px 22px;
-    }
-    .winner-title{
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
-      color: var(--navy);
-      font-size: 1.8rem;
-    }
-    .gold-pill{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding: 10px 16px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-lt) 100%);
-      color: var(--navy);
-      font-weight: 800;
-    }
-    .pie-shell{
-      background: linear-gradient(180deg, rgba(201,151,43,.09) 0%, rgba(27,42,74,.03) 100%);
-      border: 1px solid rgba(201,151,43,.25);
-      border-radius: 16px;
-      padding: 18px 14px;
-    }
-    .pie-center{
-      position: relative;
-      width: 280px;
-      height: 280px;
-      margin: 0 auto;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    .pie-ring{
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at center, rgba(255,255,255,.96) 0 56%, rgba(0,0,0,0) 57%);
-      position:absolute;
-      top:0;left:0;
-      box-shadow: inset 0 0 0 10px rgba(27,42,74,.03);
-      pointer-events:none;
-    }
-    .pie-svg{
-      width: 280px;
-      height: 280px;
-      transform: rotate(-90deg);
-      display:block;
-    }
-    .winner-center-name{
-      position:absolute;
+    :root{
+      --navy:#1B2A4A;
+      --gold:#C9972B;
+      --gold-lt:#E8B84B;
+      --cream:#F8F5EF;
+      --slate:#6B7A99;
+      --white:#fff;
+      --card-shadow:0 8px 32px rgba(27, 42, 74, .13);
+    }
+    *{ box-sizing:border-box; }
+    body{
+      font-family:'Inter', sans-serif;
+      background:var(--cream);
+      color:var(--navy);
+      min-height:100vh;
+    }
+    .site-header{
+      background:var(--navy);
+      padding:18px 0 14px;
+      border-bottom:4px solid var(--gold);
+      position:sticky; top:0; z-index:100;
+    }
+    .school-crest{
+      width:54px; height:54px;
+      background:var(--gold);
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.6rem; font-weight:800; color:var(--navy);
+      font-family:'Playfair Display', serif;
+      flex-shrink:0;
+    }
+    .hero{
+      background:linear-gradient(135deg, var(--navy) 60%, #2e4578 100%);
+      color:var(--white);
+      padding:56px 0 44px;
       text-align:center;
-      padding: 0 16px;
-    }
-    .winner-center-name .name{
-      font-weight: 900;
-      font-size: 1.35rem;
-      color: var(--navy);
-      margin-bottom: 6px;
-    }
-    .winner-center-name .chair{
-      display:inline-block;
-      padding: 7px 14px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-lt) 100%);
-      color: var(--navy);
-      font-weight: 900;
-      letter-spacing: .4px;
-      font-size: .9rem;
-    }
-    .winner-photo{
-      border-radius: 16px;
+      position:relative;
       overflow:hidden;
-      border: 1px solid rgba(201,151,43,.25);
-      box-shadow: 0 10px 30px rgba(27,42,74,.12);
     }
-    .winner-photo img{
-      width:100%;
-      height: 320px;
-      object-fit: cover;
-      display:block;
-      filter: contrast(1.02) saturate(1.05);
+    .hero::before{
+      content:'';
+      position:absolute;
+      top:-50%; right:-20%;
+      width:400px; height:400px;
+      background:rgba(201,151,43,.08);
+      border-radius:50%;
     }
-    .winner-photo .photo-label{
-      position: relative;
-      margin-top: -54px;
-      padding: 12px 16px;
-      background: rgba(255,255,255,.9);
-      backdrop-filter: blur(6px);
-      border-top: 1px solid rgba(201,151,43,.25);
+    .hero::after{
+      content:'';
+      position:absolute;
+      bottom:-30%; left:-10%;
+      width:300px; height:300px;
+      background:rgba(201,151,43,.06);
+      border-radius:50%;
     }
-    .winner-photo .photo-label .gold-text{
+    .badge-election{
+      background:var(--gold) !important;
+      color:var(--navy) !important;
+      font-weight:900;
+      padding:8px 20px !important;
+      border-radius:999px;
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      position:relative;
+      z-index:1;
+    }
+    .hero-title{
+      font-family:'Playfair Display', serif;
+      font-weight:900;
+      font-size:2.5rem;
+      position:relative; z-index:1;
+      margin-top:10px;
+    }
+    .hero-sub{
+      color:rgba(255,255,255,.78);
+      position:relative; z-index:1;
+      max-width:780px;
+      margin:10px auto 0;
+      font-size:1.05rem;
+    }
+
+    .main{
+      padding:22px 0 64px;
+    }
+    .card-landing{
+      background:var(--white);
+      border-radius:18px;
+      box-shadow:var(--card-shadow);
+      padding:34px 26px;
+      max-width:780px;
+      margin:-26px auto 0;
+      border:1px solid rgba(27,42,74,.06);
+    }
+
+    .winner-chip{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding:10px 16px;
+      border-radius:999px;
+      background:linear-gradient(135deg, var(--gold) 0%, var(--gold-lt) 100%);
+      color:var(--navy);
+      font-weight:900;
+      box-shadow:0 10px 30px rgba(201,151,43,.18);
+    }
+
+    .btn-gold{
+      background:linear-gradient(135deg, var(--gold) 0%, var(--gold-lt) 100%);
+      color:var(--navy);
+      border:none;
+      border-radius:14px;
+      padding:14px 18px;
+      font-weight:900;
+      box-shadow:0 10px 30px rgba(201,151,43,.18);
+      text-decoration:none;
       display:inline-flex;
       align-items:center;
-      gap:10px;
-      font-weight: 900;
-      color: var(--navy);
-      background: linear-gradient(135deg, rgba(201,151,43,.98) 0%, rgba(232,184,75,.98) 100%);
-      padding: 10px 16px;
-      border-radius: 999px;
-    }
-
-    .winner-legend{
-      display:flex;
-      flex-wrap: wrap;
-      gap: 10px;
       justify-content:center;
-      margin-top: 14px;
-      padding: 0 8px 6px;
-    }
-    .legend-item{
-      display:flex;
-      align-items:center;
       gap:10px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: rgba(248,245,239,.9);
-      border: 1px solid rgba(27,42,74,.08);
-      min-width: 220px;
+      width:100%;
     }
-    .legend-swatch{
-      width: 14px;
-      height: 14px;
-      border-radius: 4px;
-      background: var(--gold);
-      box-shadow: 0 0 0 3px rgba(201,151,43,.14);
-    }
-    .legend-item .cand{
-      font-weight: 800;
-      color: var(--navy);
-      flex:1;
-    }
-    .legend-item .votes{
-      font-weight: 900;
-      color: var(--gold);
+    .btn-outline-navy{
+      background:transparent;
+      color:var(--navy);
+      border:2px solid rgba(27,42,74,.18);
+      border-radius:14px;
+      padding:14px 18px;
+      font-weight:900;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      width:100%;
     }
 
-    @media (max-width: 420px){
-      .pie-center{ width: 240px; height:240px; }
-      .pie-svg{ width:240px; height:240px; }
-      .winner-photo img{ height: 260px; }
-      .legend-item{ min-width: 100%; }
+    .btn-row{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-top:22px;
     }
+    @media (max-width: 560px){
+      .btn-row{ grid-template-columns:1fr; }
+      .hero-title{ font-size:2.1rem; }
+    }
+
+    .note{
+      margin-top:18px;
+      color:var(--slate);
+      font-size:.95rem;
+      line-height:1.6;
+      text-align:center;
+    }
+
+    footer a{ color:var(--slate); text-decoration:none; }
+    footer a:hover{ color:var(--navy); text-decoration:underline; }
   </style>
 </head>
+
 <body>
-
-<!-- ═══ HEADER ═══ -->
-<header class="site-header">
-  <div class="container">
-    <div class="d-flex align-items-center gap-3">
-      <div class="school-crest">SJB</div>
-      <div>
-        <h1 class="text-white mb-0" style="font-size:1.25rem;">St. Josephine Bakhita</h1>
-        <small style="color:#E8B84B;">United OBs &amp; OGs — Official Election Portal</small>
-      </div>
+  <header class="site-header">
+    <div class="container">
+      <div class="d-flex align-items-center gap-3">
+        <div class="school-crest">SJB</div>
+        <div>
+          <h1 class="text-white mb-0" style="font-size:1.25rem;">St. Josephine Bakhita</h1>
+          <small style="color:#E8B84B;">United OBs &amp; OGs — Official Election</small>
+        </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<!-- ═══ HERO ═══ -->
-<div class="hero-banner">
-  <div class="container">
-    <div class="badge-election mb-3 d-inline-block">
-      <i class="bi bi-patch-check-fill"></i> 2025 / 2026 Elections
+  <section class="hero">
+    <div class="container">
+      <div class="badge-election mb-2">
+        <i class="bi bi-patch-check-fill"></i> 2025 / 2026 Elections
+      </div>
+      <div class="hero-title">Voting Closed</div>
+      <div class="hero-sub">
+        No one is supposed to vote now. Proceed to the announced results and the printable thank-you document.
+      </div>
+  </section>
+
+  <main class="main">
+    <div class="container">
+      <div class="card-landing text-center">
+        <div class="winner-chip">
+          <i class="bi bi-trophy-fill"></i>
+          Winner: <span style="color:var(--gold);">Nakaliisa Hadijah</span>
+        </div>
+
+        <div class="btn-row">
+          <a class="btn-gold" href="results.html">
+            <i class="bi bi-bar-chart-fill"></i>
+            View Results
+          </a>
+          <a class="btn-outline-navy" href="thank_you_participants.html" target="_blank">
+            <i class="bi bi-file-earmark-pdf"></i>
+            Thank You (PDF)
+          </a>
+        </div>
+
+        <div class="note">
+          Chairperson: <strong>Nakaliisa Hadijah</strong> <span style="color:rgba(27,42,74,.45);">•</span>
+          Total votes cast: <strong>18</strong>
+        </div>
     </div>
-    <h2 class="display-5 fw-bold">Elect Your Chairperson</h2>
-    <p class="lead opacity-75">Your vote shapes our association's future.</p>
-  </div>
-</div>
-
-<!-- ═══ MAIN CARD ═══ -->
-<div class="container pb-5">
-  <div class="main-card">
-
-    <!-- SCREEN 1: HOME / REGISTER -->
-    <div class="screen active" id="screen-register">
-      <h3 class="section-title"><i class="bi bi-house-fill me-2"></i>Voter Registration</h3>
-      <p class="text-muted">Enter your details to proceed to the voting form!!</p>
-      
-      <div class="info-box" id="electionInfoBox">
-        <i class="bi bi-info-circle-fill me-2"></i>
-        <strong>How it works:</strong> Fill in your details below, then click "Continue to Vote" to access the secure Google Form where you'll cast your vote.
-      </div>
-
-      <div class="stats-row">
-        <div class="stat-item">
-          <span class="number">5</span>
-          <span class="label">Candidates</span>
-        </div>
-        <div class="stat-item">
-          <span class="number">1</span>
-          <span class="label">Position</span>
-        </div>
-        <div class="stat-item">
-          <span class="number" id="votingStatus">7:30 AM</span>
-          <span class="label" id="votingStatusLabel">Opens</span>
-        </div>
-      </div>
-
-      <div style="margin-bottom: 20px;">
-        <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
-          <i class="bi bi-people-fill" style="color:var(--gold); font-size:1.1rem;"></i>
-          <span style="font-weight:600; font-size:0.95rem;">Candidates for Chairperson</span>
-        </div>
-        <div class="candidate-grid-home">
-          <div class="candidate-card-home">
-            <div class="avatar">BD</div>
-            <div class="name">Buyondo Deus</div>
-            <div class="number">#1</div>
-            <span class="badge-candidate">Candidate</span>
-          </div>
-          <div class="candidate-card-home">
-            <div class="avatar">MM</div>
-            <div class="name">Magembe Mike</div>
-            <div class="number">#2</div>
-            <span class="badge-candidate">Candidate</span>
-          </div>
-          <div class="candidate-card-home">
-            <div class="avatar">NH</div>
-            <div class="name">Nakaliisa Hadijah</div>
-            <div class="number">#3</div>
-            <span class="badge-candidate">Candidate</span>
-          </div>
-          <div class="candidate-card-home">
-            <div class="avatar">NJ</div>
-            <div class="name">Naluwaga Joan</div>
-            <div class="number">#4</div>
-            <span class="badge-candidate">Candidate</span>
-          </div>
-          <div class="candidate-card-home">
-            <div class="avatar">SA</div>
-            <div class="name">Ssemwogerere Ashiraf</div>
-            <div class="number">#5</div>
-            <span class="badge-candidate">Candidate</span>
-          </div>
-        </div>
-      </div>
-
-      <div style="background:#f8f9fa; padding:12px 16px; border-radius:10px; margin-bottom:16px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
-        <i class="bi bi-calendar-event" style="color:var(--gold); font-size:1.2rem;"></i>
-        <div style="flex:1; font-size:0.9rem;">
-          <span style="font-weight:600;">🗳️ Voting Period:</span>
-          <span id="votingPeriodDisplay">Opens at 7:30 AM — Closes June 26, 2026 at 6:00 PM</span>
-        </div>
-      </div>
-
-      <div class="feature-divider">
-        <span>Register to Vote</span>
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label fw-semibold">Full Name</label>
-        <input type="text" class="form-control" id="reg-name" placeholder="e.g. Achom Christine" autocomplete="name">
-      </div>
-      <div class="mb-3">
-        <label class="form-label fw-semibold">Graduation Year</label>
-        <select class="form-select" id="reg-year"></select>
-      </div>
-      <div class="mb-3">
-        <label class="form-label fw-semibold">Email Address</label>
-        <input type="email" class="form-control" id="reg-email" placeholder="yourname@email.com" autocomplete="email">
-      </div>
-      <div id="reg-error" class="alert alert-danger" style="display:none;"></div>
-      
-      <button class="btn btn-primary-gold" id="continueBtn" onclick="continueToVote()" disabled>
-        <i class="bi bi-lock-fill me-2"></i>Voting Closed
-      </button>
-      
-      <div class="mt-4 text-center text-muted small">
-        <i class="bi bi-shield-lock me-1"></i>
-        Your information is confidential and will only be used for election verification.
-      </div>
-    </div>
-
-    <!-- SCREEN 2: VOTE -->
-    <div class="screen" id="screen-vote">
-      <h3 class="section-title"><i class="bi bi-check2-circle me-2"></i>Cast Your Vote</h3>
-      <p class="text-muted">Complete the form below to vote for the Chairperson position.</p>
-      
-      <div class="voter-badge">
-        <i class="bi bi-person-circle"></i>
-        <div class="voter-info">
-          <div class="label">Voter</div>
-          <div class="value" id="voter-name-display">-</div>
-        </div>
-        <div class="voter-info">
-          <div class="label">Year</div>
-          <div class="value" id="voter-year-display">-</div>
-        </div>
-        <div class="voter-info">
-          <div class="label">Email</div>
-          <div class="value" id="voter-email-display">-</div>
-        </div>
-      </div>
-
-      <div class="info-box" id="voteInfoBox">
-        <i class="bi bi-google me-2"></i>
-        <strong>Google Form:</strong> Select your preferred candidate from the form below and submit your vote.
-      </div>
-
-      <!-- Embedded Google Form with Overlays -->
-      <div class="google-form-wrapper" id="googleFormWrapper">
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd8Z0HY6vebD216QRXzms8orwkySR5xyriV-frbH_5bIKbxow/viewform?usp=header" 
-                frameborder="0" 
-                marginheight="0" 
-                marginwidth="0"
-                id="googleFormIframe"
-                width="100%"
-                height="700">
-          Loading…
-        </iframe>
-        
-        <!-- Countdown Overlay -->
-        <div class="countdown-overlay" id="countdownOverlay">
-          <div class="countdown-icon">
-            <i class="bi bi-clock-history"></i>
-          </div>
-          <div class="countdown-title">Voting Starts Soon!</div>
-          <div class="countdown-subtitle">The election opens at <strong style="color: var(--gold);">7:30 AM</strong></div>
-          
-          <div class="countdown-display">
-            <div class="countdown-unit">
-              <span class="number" id="hoursDisplay">00</span>
-              <span class="label">Hours</span>
-            </div>
-            <div class="countdown-unit">
-              <span class="number" id="minutesDisplay">00</span>
-              <span class="label">Minutes</span>
-            </div>
-            <div class="countdown-unit">
-              <span class="number" id="secondsDisplay">00</span>
-              <span class="label">Seconds</span>
-            </div>
-          </div>
-          
-          <div class="countdown-message">
-            ⏰ Voting opens at <strong>7:30 AM</strong> — <span id="currentTimeDisplay">Loading time...</span>
-          </div>
-          
-          <div class="countdown-progress">
-            <div class="progress-bar" id="timerProgressBar"></div>
-          </div>
-        </div>
-        
-        <!-- Closed Overlay -->
-        <div class="closed-overlay" id="closedOverlay">
-          <div class="closed-icon">
-            <i class="bi bi-clock-fill"></i>
-          </div>
-          <div class="closed-title">Voting Has Closed</div>
-          <div class="closed-subtitle">
-            The election period has ended. Thank you to all who participated!
-          </div>
-          <div class="closed-date">
-            Closed: June 26, 2026 at 6:00 PM
-          </div>
-        </div>
-        
-        <!-- Alert Overlay -->
-        <div class="form-alert-overlay" id="formAlertOverlay">
-          <div class="form-alert-card">
-            <div class="alert-icon">
-              <i class="bi bi-shield-exclamation"></i>
-            </div>
-            <div class="alert-title">Email Address Confirmation</div>
-            <div class="alert-message">
-              Your email address will be recorded with your response. Make sure you trust this form before submitting.
-            </div>
-            
-            <div class="email-notice">
-              <i class="bi bi-envelope"></i>
-              <span>A copy of your responses will be emailed to <span class="email" id="alert-user-email">your.email@domain.com</span></span>
-            </div>
-            
-            <div class="alert-actions">
-              <button class="btn btn-outline-secondary" onclick="dismissAlert()">
-                <i class="bi bi-x-circle me-1"></i>Cancel
-              </button>
-              <button class="btn btn-primary-gold-sm" onclick="acceptAlert()">
-                <i class="bi bi-check-circle me-1"></i>OK, Continue
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mt-3 text-muted small text-center">
-        <i class="bi bi-shield-check me-1"></i>
-        Your vote is secure and confidential.
-      </div>
-      
-      <div class="footer-actions">
-      <button class="btn btn-outline-secondary w-100" onclick="goTo('screen-register')" disabled>
-          <i class="bi bi-arrow-left me-2"></i>Change Voter Details
-        </button>
-        
-    <button class="btn btn-link" id="submitVoteBtn" onclick="markVoteComplete()" type="button">
-          <i class="bi bi-check-circle me-1"></i>
-          I've submitted my vote
-        </button>
-      </div>
-    </div>
-
-    <!-- SCREEN 3: SUCCESS -->
-    <div class="screen text-center" id="screen-success">
-
-    <!-- NOTE: Voting is disabled; this screen may remain hidden. -->
-
-    <div class="winner-wrap d-none" id="winner-dashboard-wrap">
-      <div class="winner-card">
-        <div class="d-flex flex-column align-items-center text-center gap-2">
-          <div class="winner-title">Election Results</div>
-          <div class="gold-pill">
-            <i class="bi bi-trophy-fill"></i>
-            Chairperson Winner
-          </div>
-        </div>
-
-        <div class="row g-4 align-items-start mt-3">
-          <div class="col-12 col-lg-7">
-            <div class="pie-shell">
-              <div class="pie-center">
-                <div class="winner-center-name">
-                  <div class="name" id="winnerNameCenter">Nakaliisa Hadijah</div>
-                  <div class="chair">Chairperson</div>
-                </div>
-                <svg class="pie-svg" viewBox="0 0 280 280" aria-label="Vote breakdown pie chart">
-                  <circle cx="140" cy="140" r="110" fill="none" stroke="rgba(27,42,74,.06)" stroke-width="30" />
-                  <g id="winnerPieSegments"></g>
-                </svg>
-                <div class="pie-ring"></div>
-              </div>
-
-              <div class="winner-legend" id="winnerLegend">
-                <div class="legend-item"><div class="legend-swatch" style="background: var(--gold)"></div><div class="cand">#1 Buyondo Deus</div><div class="votes">3</div></div>
-                <div class="legend-item"><div class="legend-swatch" style="background: #E8B84B"></div><div class="cand">#2 Magembe Mike</div><div class="votes">0</div></div>
-                <div class="legend-item"><div class="legend-swatch" style="background: #1B2A4A"></div><div class="cand">#3 Nakaliisa Hadijah</div><div class="votes">7</div></div>
-                <div class="legend-item"><div class="legend-swatch" style="background: #6B7A99"></div><div class="cand">#4 Naluwaga Joan</div><div class="votes">2</div></div>
-                <div class="legend-item"><div class="legend-swatch" style="background: #C9972B"></div><div class="cand">#5 Ssemwogerere Ashiraf</div><div class="votes">6</div></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 col-lg-5">
-            <div class="winner-photo">
-              <img src="hadijah.jpg" alt="Nakaliisa Hadijah" />
-              <div class="photo-label d-flex justify-content-center">
-                <div class="gold-text">
-                  <i class="bi bi-star-fill"></i>
-                  Chairperson
-                </div>
-              </div>
-            </div>
-
-            <div class="alert alert-success mt-3 mb-0" style="border-radius:14px;">
-              <i class="bi bi-check-circle-fill me-2"></i>
-              Winner announced: <strong>Nakaliisa Hadijah</strong>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-      <div class="success-seal mx-auto"><i class="bi bi-patch-check-fill"></i></div>
-      <h3 class="fw-bold">Thank You for Voting!</h3>
-      <p class="text-muted">Your vote has been recorded successfully.</p>
-      
-      <div class="border border-success border-opacity-25 bg-light p-4 rounded-3 text-start mt-4">
-        <div><strong>Voter:</strong> <span id="rec-name"></span></div>
-        <div><strong>Email:</strong> <span id="rec-email"></span></div>
-        <div><strong>Status:</strong> <span class="text-success">✓ Vote Submitted via Google Forms</span></div>
-        <div><strong>Time:</strong> <span id="rec-time"></span></div>
-      </div>
-      
-      <div class="alert alert-success mt-4">
-        <i class="bi bi-check-circle-fill me-2"></i>
-        Your vote has been recorded. You can close this page now.
-      </div>
-      
-      <button class="btn btn-outline-secondary mt-3" onclick="location.reload()">
-        <i class="bi bi-house me-2"></i>Return to Home
-      </button>
-    </div>
-
-  </div>
-</div>
-
-<!-- ═══ THANK YOU OVERLAY ═══ -->
-<div class="thank-you-overlay" id="thankYouOverlay">
-  <div class="thank-you-card">
-    <div class="confetti-container" id="confettiContainer"></div>
-    <div class="sparkle" style="top: 20px; right: 30px;">✨</div>
-    <div class="sparkle" style="bottom: 20px; left: 30px; animation-delay: 1s;">🌟</div>
-    <div class="sparkle" style="top: 50%; left: 20px; animation-delay: 0.5s;">⭐</div>
-    <div class="sparkle" style="bottom: 40%; right: 20px; animation-delay: 1.5s;">🎉</div>
-    
-    <div class="check-circle">
-      <i class="bi bi-check-lg"></i>
-    </div>
-    
-    <h2>Thank You! 🎊</h2>
-    <p class="subtitle">Your vote has been cast successfully</p>
-    <div class="divider"></div>
-    
-    <p class="thank-you-message">
-      <span class="voter-name" id="thankYouName">Voter</span>, thank you for participating in the 
-      <strong>St. Josephine Bakhita</strong> leadership election. 
-      Your voice matters in shaping our association's future!
-    </p>
-    
-    <div class="divider"></div>
-    
-    <p style="font-size: 0.85rem; color: var(--slate); margin-bottom: 16px;">
-      <i class="bi bi-envelope-check me-1"></i>
-      A confirmation has been sent to <strong id="thankYouEmail">your@email.com</strong>
-    </p>
-    
-    <button class="btn-thanks" onclick="closeThankYou()">
-      <i class="bi bi-arrow-right me-2"></i>Continue to Dashboard
-    </button>
-  </div>
-</div>
-
-<!-- ═══ FOOTER ═══ -->
-<footer class="text-center py-4 text-muted small">
-  United OBs &amp; OGs of St. Josephine Bakhita<br>
-  Contact: <a href="mailto:ssemwogerere.ashiraf@stud.umu.ac.ug">ssemwogerere.ashiraf@stud.umu.ac.ug</a> |
-  <a href="https://wa.me/256701422100" target="_blank">WhatsApp +256 701 422 100</a>
-</footer>
-
-<script>
-  // ─── CONFIGURATION ─────────────────────────────────────────
-  const VOTING_START_HOUR = 7;
-  const VOTING_START_MINUTE = 30;
-  const VOTING_CLOSE_YEAR = 2026;
-  const VOTING_CLOSE_MONTH = 5; // June
-  const VOTING_CLOSE_DAY = 26;
-  const VOTING_CLOSE_HOUR = 18;
-  const VOTING_CLOSE_MINUTE = 0;
-
-  // ─── STATE ──────────────────────────────────────────────────
-  let voterData = { name: '', year: '', email: '' };
-  let timerInterval = null;
-  let isVotingOpen = false;
-  let isVotingClosed = false;
-
-  // ─── DOM REFS ──────────────────────────────────────────────
-  const screenRegister = document.getElementById('screen-register');
-  const screenVote = document.getElementById('screen-vote');
-  const screenSuccess = document.getElementById('screen-success');
-  const regName = document.getElementById('reg-name');
-  const regYear = document.getElementById('reg-year');
-  const regEmail = document.getElementById('reg-email');
-  const regError = document.getElementById('reg-error');
-  const voterNameDisplay = document.getElementById('voter-name-display');
-  const voterYearDisplay = document.getElementById('voter-year-display');
-  const voterEmailDisplay = document.getElementById('voter-email-display');
-  const alertOverlay = document.getElementById('formAlertOverlay');
-  const alertUserEmail = document.getElementById('alert-user-email');
-  const countdownOverlay = document.getElementById('countdownOverlay');
-  const closedOverlay = document.getElementById('closedOverlay');
-  const hoursDisplay = document.getElementById('hoursDisplay');
-  const minutesDisplay = document.getElementById('minutesDisplay');
-  const secondsDisplay = document.getElementById('secondsDisplay');
-  const currentTimeDisplay = document.getElementById('currentTimeDisplay');
-  const timerProgressBar = document.getElementById('timerProgressBar');
-  const thankYouOverlay = document.getElementById('thankYouOverlay');
-  const thankYouName = document.getElementById('thankYouName');
-  const thankYouEmail = document.getElementById('thankYouEmail');
-  const confettiContainer = document.getElementById('confettiContainer');
-  const votingStatus = document.getElementById('votingStatus');
-  const votingStatusLabel = document.getElementById('votingStatusLabel');
-  const continueBtn = document.getElementById('continueBtn');
-  const submitVoteBtn = document.getElementById('submitVoteBtn');
-  const votingPeriodDisplay = document.getElementById('votingPeriodDisplay');
-
-  // ─── INIT ──────────────────────────────────────────────────
-  (function init() {
-    const currentYear = new Date().getFullYear();
-    for (let y = currentYear; y >= 1990; y--) {
-      const opt = document.createElement('option');
-      opt.value = y;
-      opt.textContent = y;
-      regYear.appendChild(opt);
-    }
-
-    // Force close voting permanently and show winner dashboard.
-    isVotingClosed = true;
-    isVotingOpen = false;
-
-    if (votingStatus) {
-      votingStatus.textContent = 'Closed';
-      votingStatus.classList.add('closed');
-    }
-    if (votingStatusLabel) votingStatusLabel.textContent = 'Status';
-    if (votingPeriodDisplay) {
-      votingPeriodDisplay.textContent = '🗳️ Voting Closed — Thank you for participating!';
-    }
-    if (continueBtn) {
-      continueBtn.disabled = true;
-      continueBtn.innerHTML = '<i class="bi bi-lock-fill me-2"></i>Voting Closed';
-      continueBtn.classList.add('btn-disabled');
-    }
-
-    // Ensure the vote UI is not reachable/usable
-    if (screenRegister) screenRegister.classList.remove('active');
-    if (screenVote) screenVote.classList.remove('active');
-    if (screenSuccess) screenSuccess.classList.add('active');
-
-    // Disable iframe interactions (safety)
-    const iframe = document.getElementById('googleFormIframe');
-    if (iframe) {
-      iframe.style.pointerEvents = 'none';
-      iframe.setAttribute('aria-hidden', 'true');
-    }
-
-    // Hide any thank-you overlay and directly show winner dashboard
-    const thankYouOverlayEl = document.getElementById('thankYouOverlay');
-    if (thankYouOverlayEl) thankYouOverlayEl.classList.remove('show');
-
-    const winnerWrap = document.getElementById('winner-dashboard-wrap');
-    if (winnerWrap) winnerWrap.classList.remove('d-none');
-
-    checkVotingStatus();
-    // startCountdown intentionally not started since voting is forced closed
-  })();
-
-  // ─── CHECK VOTING STATUS ──────────────────────────────────
-  function checkVotingStatus() {
-    const now = new Date();
-    const closeDate = new Date(VOTING_CLOSE_YEAR, VOTING_CLOSE_MONTH, VOTING_CLOSE_DAY, 
-                               VOTING_CLOSE_HOUR, VOTING_CLOSE_MINUTE, 0, 0);
-    
-    if (now >= closeDate) {
-      isVotingClosed = true;
-      isVotingOpen = false;
-      votingStatus.textContent = 'Closed';
-      votingStatus.classList.add('closed');
-      votingStatusLabel.textContent = 'Status';
-      votingPeriodDisplay.textContent = '🗳️ Voting Closed — Thank you for participating!';
-      continueBtn.disabled = true;
-      continueBtn.innerHTML = '<i class="bi bi-lock-fill me-2"></i>Voting Closed';
-      continueBtn.classList.add('btn-disabled');
-      
-      const infoBox = document.getElementById('electionInfoBox');
-      infoBox.className = 'info-box-closed';
-      infoBox.innerHTML = `
-        <i class="bi bi-clock-fill me-2"></i>
-        <strong>Voting Has Closed:</strong> The election period ended on June 26, 2026 at 6:00 PM. 
-        Thank you to all who participated!
-      `;
-      return true;
-    }
-    
-    const startDate = new Date(now);
-    startDate.setHours(VOTING_START_HOUR, VOTING_START_MINUTE, 0, 0);
-    
-    if (now >= startDate) {
-      isVotingOpen = true;
-      votingStatus.textContent = 'Live Now! 🎯';
-      votingStatus.classList.remove('closed');
-      votingStatusLabel.textContent = 'Status';
-      return true;
-    }
-    return false;
-  }
-
-  // ─── COUNTDOWN FUNCTIONS ──────────────────────────────────
-  function startCountdown() {
-    const now = new Date();
-    const closeDate = new Date(VOTING_CLOSE_YEAR, VOTING_CLOSE_MONTH, VOTING_CLOSE_DAY, 
-                               VOTING_CLOSE_HOUR, VOTING_CLOSE_MINUTE, 0, 0);
-    if (now >= closeDate) {
-      checkVotingStatus();
-      return;
-    }
-    
-    const target = new Date(now);
-    target.setHours(VOTING_START_HOUR, VOTING_START_MINUTE, 0, 0);
-    if (target <= now) {
-      target.setDate(target.getDate() + 1);
-    }
-
-    timerInterval = setInterval(() => {
-      const current = new Date();
-      if (current >= closeDate) {
-        clearInterval(timerInterval);
-        checkVotingStatus();
-        if (screenVote.classList.contains('active')) {
-          countdownOverlay.classList.add('hidden');
-          closedOverlay.classList.add('show');
-        }
-        return;
-      }
-      
-      const diff = target - current;
-      currentTimeDisplay.textContent = current.toLocaleTimeString('en-US', { 
-        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true 
-      });
-
-      if (diff <= 0) {
-        clearInterval(timerInterval);
-        countdownOverlay.classList.add('hidden');
-        isVotingOpen = true;
-        votingStatus.textContent = 'Live Now! 🎯';
-        votingStatus.classList.remove('closed');
-        votingStatusLabel.textContent = 'Status';
-        if (screenVote.classList.contains('active')) {
-          setTimeout(() => showAlert(), 500);
-        }
-        return;
-      }
-
-      const hours = Math.floor(diff / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-      
-      hoursDisplay.textContent = String(hours).padStart(2, '0');
-      minutesDisplay.textContent = String(minutes).padStart(2, '0');
-      secondsDisplay.textContent = String(seconds).padStart(2, '0');
-      
-      const totalSeconds = (target - new Date()) / 1000;
-      const maxSeconds = 12 * 60 * 60;
-      const progress = Math.min(((maxSeconds - totalSeconds) / maxSeconds) * 100, 100);
-      timerProgressBar.style.width = `${Math.max(0, progress)}%`;
-    }, 1000);
-  }
-
-  // ─── NAVIGATION ──────────────────────────────────────────
-  window.goTo = function(screenId) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(screenId).classList.add('active');
-    document.querySelectorAll('.alert').forEach(el => el.style.display = 'none');
-  };
-
-  // ─── CONTINUE TO VOTE ──────────────────────────────────
-  // Voting is permanently closed; block navigation to the Google Form.
-  // Winner page is always shown.
-  window.continueToVote = function() {
-    if (isVotingClosed) {
-      showError(regError, 'Voting has closed. The election period ended on June 26, 2026 at 6:00 PM.');
-      return;
-    }
-    
-    const name = regName.value.trim();
-    const year = regYear.value;
-    const email = regEmail.value.trim().toLowerCase();
-
-    if (!name || !year || !email) {
-      return showError(regError, 'All fields are required.');
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return showError(regError, 'Please enter a valid email address.');
-    }
-
-    voterData = { name, year, email };
-    voterNameDisplay.textContent = name;
-    voterYearDisplay.textContent = year;
-    voterEmailDisplay.textContent = email;
-
-    // Decide overlays + start state BEFORE switching screens so the iframe isn't blocked unexpectedly.
-    if (isVotingClosed) {
-      countdownOverlay.classList.add('hidden');
-      closedOverlay.classList.add('show');
-    } else {
-      closedOverlay.classList.remove('show');
-      // Default to hiding countdown; show it only when voting is not open yet.
-      countdownOverlay.classList.add('hidden');
-    }
-
-    goTo('screen-vote');
-
-    if (isVotingClosed) return;
-
-    if (isVotingOpen) {
-      setTimeout(() => showAlert(), 500);
-    } else {
-      countdownOverlay.classList.remove('hidden');
-      if (!timerInterval) startCountdown();
-    }
-  };
-
-  // ─── ALERT FUNCTIONS ──────────────────────────────────
-  function showAlert() {
-    alertUserEmail.textContent = voterData.email || 'your.email@domain.com';
-    alertOverlay.classList.add('show');
-    clearTimeout(alertTimeout);
-    alertTimeout = setTimeout(() => {
-      if (alertOverlay.classList.contains('show')) alertOverlay.classList.remove('show');
-    }, 10000);
-  }
-
-  window.dismissAlert = function() { alertOverlay.classList.remove('show'); };
-  window.acceptAlert = function() {
-    alertOverlay.classList.remove('show');
-    const iframe = document.getElementById('googleFormIframe');
-    if (iframe) {
-      iframe.focus();
-      try { iframe.contentWindow.focus(); } catch(e) {}
-    }
-  };
-
-  // ─── THANK YOU ──────────────────────────────────────────
-  function showThankYou() {
-    thankYouName.textContent = voterData.name;
-    thankYouEmail.textContent = voterData.email;
-    generateConfetti();
-    thankYouOverlay.classList.add('show');
-  }
-
-  function generateConfetti() {
-    const colors = ['#C9972B', '#E8B84B', '#1B2A4A', '#28a745', '#dc3545', '#17a2b8', '#ffc107', '#6f42c1'];
-    const container = confettiContainer;
-    container.innerHTML = '';
-    for (let i = 0; i < 60; i++) {
-      const piece = document.createElement('div');
-      piece.className = 'confetti-piece';
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      const size = Math.random() * 8 + 4;
-      const left = Math.random() * 100;
-      const duration = Math.random() * 2 + 2;
-      const delay = Math.random() * 2;
-      piece.style.cssText = `
-        left: ${left}%;
-        width: ${size}px;
-        height: ${size * 1.5}px;
-        background: ${color};
-        border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
-        animation-duration: ${duration}s;
-        animation-delay: ${delay}s;
-        opacity: ${Math.random() * 0.5 + 0.5};
-      `;
-      container.appendChild(piece);
-    }
-  }
-
-  window.closeThankYou = function() {
-    thankYouOverlay.classList.remove('show');
-    goTo('screen-success');
-  };
-
-  // ─── MARK VOTE COMPLETE ──────────────────────────────────
-  window.markVoteComplete = function() {
-    if (isVotingClosed) {
-      document.getElementById('rec-name').textContent = voterData.name;
-      document.getElementById('rec-email').textContent = voterData.email;
-      document.getElementById('rec-time').textContent = new Date().toLocaleString('en-UG', { timeZone: 'Africa/Kampala' });
-      goTo('screen-success');
-      return;
-    }
-    showThankYou();
-    document.getElementById('rec-name').textContent = voterData.name;
-    document.getElementById('rec-email').textContent = voterData.email;
-    document.getElementById('rec-time').textContent = new Date().toLocaleString('en-UG', { timeZone: 'Africa/Kampala' });
-  };
-
-  // ─── HELPERS ──────────────────────────────────────────
-  function showError(el, msg) {
-    el.textContent = msg;
-    el.style.display = 'block';
-    clearTimeout(el._hideTimer);
-    el._hideTimer = setTimeout(() => { el.style.display = 'none'; }, 6000);
-  }
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && screenRegister.classList.contains('active')) {
-      const activeElement = document.activeElement;
-      if (activeElement && (activeElement.id === 'reg-name' || activeElement.id === 'reg-email' || activeElement.id === 'reg-year')) {
-        e.preventDefault();
-        window.continueToVote();
-      }
-    }
-  });
-
-  // Winner pie chart rendering (uses fixed totals)
-  (function renderWinnerPie(){
-    const votes = {
-      "Buyondo Deus": 3,
-      "Magembe Mike": 0,
-      "Nakaliisa Hadijah": 7,
-      "Naluwaga Joan": 2,
-      "Ssemwogerere Ashiraf": 6
-    };
-    const colors = {
-      "Buyondo Deus": "var(--gold)",
-      "Magembe Mike": "#E8B84B",
-      "Nakaliisa Hadijah": "#1B2A4A",
-      "Naluwaga Joan": "#6B7A99",
-      "Ssemwogerere Ashiraf": "#C9972B"
-    };
-
-    const svgG = document.getElementById('winnerPieSegments');
-    const winnerWrap = document.getElementById('winner-dashboard-wrap');
-    if (!svgG || !winnerWrap) return;
-
-    // enable dashboard
-    winnerWrap.classList.remove('d-none');
-
-    svgG.innerHTML = '';
-
-    const cx = 140, cy = 140, r = 110;
-    let startAngle = 0;
-
-    function polarToCartesian(centerX, centerY, radius, angleInDegrees){
-      const angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;
-      return {
-        x: centerX + (radius * Math.cos(angleInRadians)),
-        y: centerY + (radius * Math.sin(angleInRadians))
-      };
-    }
-
-    function describeArc(x, y, radius, startAngleDeg, endAngleDeg){
-      const start = polarToCartesian(x, y, radius, startAngleDeg);
-      const end = polarToCartesian(x, y, radius, endAngleDeg);
-      const largeArcFlag = endAngleDeg - startAngleDeg <= 180 ? "0" : "1";
-      return [
-        "M", x, y,
-        "L", start.x, start.y,
-        "A", radius, radius, 0, largeArcFlag, 1, end.x, end.y,
-        "Z"
-      ].join(" ");
-    }
-
-    const order = [
-      "Buyondo Deus",
-      "Magembe Mike",
-      "Nakaliisa Hadijah",
-      "Naluwaga Joan",
-      "Ssemwogerere Ashiraf"
-    ];
-
-    const total = Object.values(votes).reduce((a,b)=>a+b,0) || 1;
-
-    order.forEach(name => {
-      const val = votes[name] || 0;
-      const sliceAngle = (val / total) * 360;
-      const endAngle = startAngle + sliceAngle;
-
-      if (val > 0) {
-        const path = document.createElementNS('http://www.w3.org/2000/svg','path');
-        path.setAttribute('d', describeArc(cx, cy, r, startAngle, endAngle));
-        path.setAttribute('fill', colors[name]);
-        path.setAttribute('stroke', 'rgba(255,255,255,.85)');
-        path.setAttribute('stroke-width', '2');
-        path.setAttribute('opacity', '0.95');
-        svgG.appendChild(path);
-      }
-
-      startAngle = endAngle;
-    });
-  })();
-</script>
-
-
-<!-- Bootstrap bundle -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </main>
+
+  <footer class="text-center py-4 text-muted small">
+    United OBs &amp; OGs of St. Josephine Bakhita<br>
+    Contact: <a href="mailto:ssemwogerere.ashiraf@stud.umu.ac.ug">ssemwogerere.ashiraf@stud.umu.ac.ug</a> |
+    <a href="https://wa.me/256701422100" target="_blank">WhatsApp +256 701 422 100</a>
+  </footer>
 </body>
 </html>
